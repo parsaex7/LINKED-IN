@@ -49,6 +49,9 @@ public class User {
         this.jobDetails = jobDetails;
         this.registrationDate = registrationDate;
     }
+    public User(){
+
+    }
 
     public int getId() {
         return id;
