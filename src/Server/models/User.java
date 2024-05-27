@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class User {
 
-    private String id;
+    private int id;
     private String name;
     private String lastName;
     private String email;
@@ -18,7 +18,7 @@ public class User {
     private Education educationDetails;
     private Job jobDetails;
 
-    public User(String id, String name, String lastName, String email, String password, String additionalName, Contact contactDetails, String country, String city, Date birthDate, Education educationDetails, Job jobDetails) {
+    public User(int id, String name, String lastName, String email, String password, String additionalName, Contact contactDetails, String country, String city, Date birthDate, Education educationDetails, Job jobDetails) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -34,7 +34,7 @@ public class User {
         registrationDate = new Date(System.currentTimeMillis());
     }
 
-    public User(String id, String name, String lastName, String email, String password, String additionalName, Contact contactDetails, String country, String city, Date birthDate, Education educationDetails, Job jobDetails, Date registrationDate) {
+    public User(int id, String name, String lastName, String email, String password, String additionalName, Contact contactDetails, String country, String city, Date birthDate, Education educationDetails, Job jobDetails, Date registrationDate) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -50,11 +50,11 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
