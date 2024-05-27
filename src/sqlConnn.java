@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class sqlConnn {
     public static void main(String[] args) throws Exception{
         String passWord;
+        System.out.println("Enter PassWord: ");
         Scanner in = new Scanner(System.in);
         passWord = in.nextLine();
         Connection con = DriverManager.getConnection(
