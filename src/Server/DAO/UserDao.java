@@ -11,7 +11,7 @@ public class UserDao {
         connection=DataBaseConnection.getConnection();
     }
     public void saveUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (fristname,lastname,email,password,country,city,additionalname,birthdate,registrationDate) VALUES (?,?,?,?,?,?,?,?,?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (firstname,lastname,email,password,country,city,additionalname,birthdate,registrationDate) VALUES (?,?,?,?,?,?,?,?,?)");
         statement.setString(1,user.getName());
         statement.setString(2, user.getLastName());
         statement.setString(3,user.getEmail());
@@ -21,11 +21,20 @@ public class UserDao {
         statement.setString(7,user.getAdditionalName());
         statement.setDate(8,user.getBirthDate());
         statement.setDate(9,user.getRegistrationDate());
-        statement.executeUpdate();
+        try {
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            System.out.println("duplicate email");
+            return;
+        }
         Statement statement1 = connection.createStatement();
-        String query = "select id from users where email = " + "'" + user.getEmail() + "'";
+        String query = "select * from users where email = " + "'" + user.getEmail() + "'";
         ResultSet resultSet = statement1.executeQuery(query);
-        user.setId(resultSet.getInt(1));
+        resultSet.next();
+        int id;
+        id=Integer.parseInt(resultSet.getString(1));
+        user.setId(id);
     }
     public void deleteUser(User user)throws SQLException{
         PreparedStatement statement=connection.prepareStatement("DELETE FROM users WHERE id=?");
