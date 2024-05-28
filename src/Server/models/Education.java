@@ -1,5 +1,6 @@
 package Server.models;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Education {
@@ -7,13 +8,13 @@ public class Education {
         private String school;
         private String degree;
         private String fieldOfStudy;
-        private String grade;
+        private double grade;
         private ArrayList<String> activities;
         private String detail;
-        private String startDate;
-        private String endDate;
+        private Date startDate;
+        private Date endDate;
 
-        public Education(String school, String degree, String fieldOfStudy, String grade, String activities, String detail, String startDate, String endDate) {
+        public Education(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate) {
             this.school = school;
             this.degree = degree;
             this.fieldOfStudy = fieldOfStudy;
@@ -49,11 +50,11 @@ public class Education {
             this.fieldOfStudy = fieldOfStudy;
         }
 
-        public String getGrade() {
+        public double getGrade() {
             return grade;
         }
 
-        public void setGrade(String grade) {
+        public void setGrade(double grade) {
             this.grade = grade;
         }
 
@@ -65,19 +66,27 @@ public class Education {
             this.activities.add(activities);
         }
 
-        public String getStartDate() {
+        public Date getStartDate() {
             return startDate;
         }
 
-        public void setStartDate(String startDate) {
+        public void setStartDate(Date startDate) {
             this.startDate = startDate;
         }
 
-        public String getEndDate() {
+        public Date getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(String endDate) {
+        public void setEndDate(Date endDate) {
             this.endDate = endDate;
         }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
 }
