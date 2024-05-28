@@ -2,20 +2,58 @@ package Server.models;
 
 public class Contact {
 
+    enum phoneType {
+        MOBILE,
+        HOME,
+        WORK
+    }
+
+    enum access {
+        ME,
+        CONTACTS,
+        EVERYONE
+    }
+
     private String profileLink;
     private String email;
     private String phoneNumber;
-    private String numberType;
+    private phoneType numberType;
     private String address;
     private String contactId; //eg telegram id/ instagram id
+    private access birthdayAccess;
 
-    public Contact(String profileLink, String email, String phoneNumber, String numberType, String address, String contactId) {
+    public Contact(String profileLink, String email, String phoneNumber, String numberType, String address, String contactId, String birthdayAccess) {
         this.profileLink = profileLink;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.numberType = numberType;
+        switch (numberType) {
+            case "mobile":
+                this.numberType = phoneType.MOBILE;
+                break;
+            case "home":
+                this.numberType = phoneType.HOME;
+                break;
+            case "work":
+                this.numberType = phoneType.WORK;
+                break;
+        }
         this.address = address;
         this.contactId = contactId;
+        switch (birthdayAccess) {
+            case "me":
+                this.birthdayAccess = access.ME;
+                break;
+            case "contacts":
+                this.birthdayAccess = access.CONTACTS;
+                break;
+            case "everyone":
+                this.birthdayAccess = access.EVERYONE;
+                break;
+        }
+    }
+
+    public Contact() {
+
     }
 
     public String getProfileLink() {
@@ -43,11 +81,21 @@ public class Contact {
     }
 
     public String getNumberType() {
-        return numberType;
+        return numberType.name().toLowerCase();
     }
 
     public void setNumberType(String numberType) {
-        this.numberType = numberType;
+        switch (numberType) {
+            case "mobile":
+                this.numberType = phoneType.MOBILE;
+                break;
+            case "home":
+                this.numberType = phoneType.HOME;
+                break;
+            case "work":
+                this.numberType = phoneType.WORK;
+                break;
+        }
     }
 
     public String getAddress() {
@@ -64,5 +112,23 @@ public class Contact {
 
     public void setContactId(String contactId) {
         this.contactId = contactId;
+    }
+
+    public String getBirthdayAccess() {
+        return birthdayAccess.name().toLowerCase();
+    }
+
+    public void setBirthdayAccess(String birthdayAccess) {
+        switch (birthdayAccess) {
+            case "me":
+                this.birthdayAccess = access.ME;
+                break;
+            case "contacts":
+                this.birthdayAccess = access.CONTACTS;
+                break;
+            case "everyone":
+                this.birthdayAccess = access.EVERYONE;
+                break;
+        }
     }
 }
