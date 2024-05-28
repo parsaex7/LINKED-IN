@@ -10,46 +10,38 @@ public class User {
     private String email;
     private String password;
     private String additionalName;
-    private Contact contactDetails;
     private String country;
     private String city;
     private Date birthDate;
     private Date registrationDate;
-    private Education educationDetails;
-    private Job jobDetails;
 
-    public User(int id, String name, String lastName, String email, String password, String additionalName, Contact contactDetails, String country, String city, Date birthDate, Education educationDetails, Job jobDetails) {
+    public User(int id, String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.additionalName = additionalName;
-        this.contactDetails = contactDetails;
         this.country = country;
         this.city = city;
         this.birthDate = birthDate;
-        this.educationDetails = educationDetails;
-        this.jobDetails = jobDetails;
         registrationDate = new Date(System.currentTimeMillis());
     }
 
-    public User(int id, String name, String lastName, String email, String password, String additionalName, Contact contactDetails, String country, String city, Date birthDate, Education educationDetails, Job jobDetails, Date registrationDate) {
+    public User(int id, String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate, Date registrationDate) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.additionalName = additionalName;
-        this.contactDetails = contactDetails;
         this.country = country;
         this.city = city;
         this.birthDate = birthDate;
-        this.educationDetails = educationDetails;
-        this.jobDetails = jobDetails;
         this.registrationDate = registrationDate;
     }
-    public User(){
+
+    public User() {
 
     }
 
@@ -101,13 +93,6 @@ public class User {
         this.additionalName = additionalName;
     }
 
-    public Contact getContactDetails() {
-        return contactDetails;
-    }
-
-    public void setContactDetails(Contact contactDetails) {
-        this.contactDetails = contactDetails;
-    }
 
     public String getCountry() {
         return country;
@@ -141,19 +126,5 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public Education getEducationDetails() {
-        return educationDetails;
-    }
 
-    public void setEducationDetails(Education educationDetails) {
-        this.educationDetails = educationDetails;
-    }
-
-    public Job getJobDetails() {
-        return jobDetails;
-    }
-
-    public void setJobDetails(Job jobDetails) {
-        this.jobDetails = jobDetails;
-    }
 }
