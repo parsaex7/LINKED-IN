@@ -3,6 +3,7 @@ package Server.DAO;
 import Server.models.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserDao {
     private final Connection connection;
@@ -20,11 +21,20 @@ public class UserDao {
         statement.setString(7,user.getAdditionalName());
         statement.setDate(8,user.getBirthDate());
         statement.setDate(9,user.getRegistrationDate());
-        statement.executeUpdate();
+        try {
+
+            statement.executeUpdate();
+        }catch (SQLException e){
+            System.out.println("duplicate email");
+            return;
+        }
         Statement statement1 = connection.createStatement();
-        String query = "select id from users where email = " + "'" + user.getEmail() + "'";
+        String query = "select * from users where email = " + "'" + user.getEmail() + "'";
         ResultSet resultSet = statement1.executeQuery(query);
-        user.setId(resultSet.getInt(1));
+        resultSet.next();
+        int id;
+        id=Integer.parseInt(resultSet.getString(1));
+        user.setId(id);
     }
     public void deleteUser(User user)throws SQLException{
         PreparedStatement statement=connection.prepareStatement("DELETE FROM users WHERE id=?");
@@ -51,6 +61,67 @@ public class UserDao {
         statement.setInt(10,user.getId());
         statement.executeUpdate();
     }
+    public User getUser(int id) throws SQLException{
+        PreparedStatement statement=connection.prepareStatement("SELECT * FROM users WHERE id=?");
+        statement.setInt(1,id);
+        ResultSet resultSet=statement.executeQuery();
+        User toGet=new User();
+        if(resultSet.next()){
+            toGet.setId(id);
+            toGet.setAdditionalName(resultSet.getString("additionalname"));
+            toGet.setCity(resultSet.getString("city"));
+            toGet.setEmail(resultSet.getString("email"));
+            toGet.setCountry(resultSet.getString("country"));
+            toGet.setBirthDate(resultSet.getDate("birthdate"));
+            toGet.setName(resultSet.getString("fristname"));
+            toGet.setLastName(resultSet.getString("lastname"));
+            toGet.setBirthDate(resultSet.getDate("birthdate"));
+            toGet.setRegistrationDate(resultSet.getDate("registrationDate"));
+            toGet.setPassword(resultSet.getString("password"));
+        }
+        return toGet;
+    }
+    public User getUser (String name,String lastname,String password) throws SQLException{
+        PreparedStatement statement=connection.prepareStatement("SELECT * FROM users WHERE name=? AND lastname=? AND password=?");
+        statement.setString(1,name);
+        statement.setString(2,lastname);
+        statement.setString(3,password);
+        ResultSet resultSet=statement.executeQuery();
+        User toGet=new User();
+        if(resultSet.next()){
+            toGet.setAdditionalName(resultSet.getString("additionalname"));
+            toGet.setCity(resultSet.getString("city"));
+            toGet.setEmail(resultSet.getString("email"));
+            toGet.setCountry(resultSet.getString("country"));
+            toGet.setBirthDate(resultSet.getDate("birthdate"));
+            toGet.setName(resultSet.getString("fristname"));
+            toGet.setLastName(resultSet.getString("lastname"));
+            toGet.setBirthDate(resultSet.getDate("birthdate"));
+            toGet.setRegistrationDate(resultSet.getDate("registrationDate"));
+            toGet.setPassword(resultSet.getString("password"));
+        }
+        return toGet;
+    }
+    public ArrayList<User> getUssers() throws SQLException{
+        PreparedStatement statement=connection.prepareStatement("SLECT * FROM users");
+        ResultSet resultSet=statement.executeQuery();
+        ArrayList<User> toReturn=new ArrayList<>();
+        while(resultSet.next()){
+            User toAdd=new User();
+            toAdd.setId(resultSet.getInt("id"));
+            toAdd.setAdditionalName(resultSet.getString("additionalname"));
+            toAdd.setCity(resultSet.getString("city"));
+            toAdd.setEmail(resultSet.getString("email"));
+            toAdd.setCountry(resultSet.getString("country"));
+            toAdd.setBirthDate(resultSet.getDate("birthdate"));
+            toAdd.setName(resultSet.getString("fristname"));
+            toAdd.setLastName(resultSet.getString("lastname"));
+            toAdd.setBirthDate(resultSet.getDate("birthdate"));
+            toAdd.setRegistrationDate(resultSet.getDate("registrationDate"));
+            toAdd.setPassword(resultSet.getString("password"));
+            toReturn.add(toAdd);
 
-
+        }
+        return  toReturn;
+    }
 }
