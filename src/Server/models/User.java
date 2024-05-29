@@ -15,8 +15,7 @@ public class User {
     private Date birthDate;
     private Date registrationDate;
 
-    public User(int id, String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate) {
-        this.id = id;
+    public User(String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -28,8 +27,7 @@ public class User {
         registrationDate = new Date(System.currentTimeMillis());
     }
 
-    public User(int id, String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate, Date registrationDate) {
-        this.id = id;
+    public User(String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate, Date registrationDate) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;

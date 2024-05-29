@@ -29,21 +29,20 @@ public class ContactDAO {
         statement.executeUpdate();
 
     }
+public void updateContact(Contact contact, int id) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement("UPDATE contact SET email = ?, phonenumber = ?, numbertype = ?, address = ?, profilelink = ?, contactid = ?, birthdayaccess = ? WHERE id = ?");
 
-    public void updateContact(Contact contact, int id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE contact SET email = ? phonenumber = ? numbertype = ? address = ? profilelink = ? contactid = ? birthdayaccess = ? WHERE id = ?");
+    statement.setString(1, contact.getEmail());
+    statement.setString(2, contact.getPhoneNumber());
+    statement.setString(3, contact.getNumberType());
+    statement.setString(4, contact.getAddress());
+    statement.setString(5, contact.getProfileLink());
+    statement.setString(6, contact.getContactId());
+    statement.setString(7, contact.getBirthdayAccess());
+    statement.setInt(8, id);
 
-        statement.setString(1, contact.getEmail());
-        statement.setString(2, contact.getPhoneNumber());
-        statement.setString(3, contact.getNumberType());
-        statement.setString(4, contact.getAddress());
-        statement.setString(5, contact.getProfileLink());
-        statement.setString(6, contact.getContactId());
-        statement.setString(7, contact.getBirthdayAccess());
-        statement.setInt(8, id);
-
-        statement.executeUpdate();
-    }
+    statement.executeUpdate();
+}
 
     public Contact getContact(int id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM contact  WHERE id = ?");

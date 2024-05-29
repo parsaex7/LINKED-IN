@@ -69,7 +69,6 @@ public class UserDao {
         statement.setString(10, email);
         statement.executeUpdate();
     }
-
     public User getUser(int id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
         statement.setInt(1, id);
@@ -92,7 +91,6 @@ public class UserDao {
         }
         return user;
     }
-
     public User getUser(String name, String lastname, String password) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE firstname = ? AND lastname = ? AND password = ?");
         statement.setString(1, name);
