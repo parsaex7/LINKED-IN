@@ -5,6 +5,7 @@ import Server.models.User;
 
 import java.sql.Connection;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +24,7 @@ public class Main {
             System.out.println("Enter email");
             String email = scanner.nextLine();
             System.out.println("Enter password");
-            String passWord = scanner.nextLine();
+            String passWord =scanner.nextLine();
             user.setName(firstName);
             user.setLastName(lastName);
             user.setEmail(email);
@@ -54,6 +55,57 @@ public class Main {
             String number = scanner.next();
             contact.setPhoneNumber(number);
             contactDAO.updateContact(contact, id);
+        }
+        else if(command.equals("delete-users")){
+            userDao.deleteUsers();
+        }
+        else if(command.equals("update-user")){
+            String name;
+            String lastName;
+            String passWord;
+            System.out.println("please enter name and last name and password");
+            name=scanner.nextLine();
+            lastName=scanner.nextLine();
+            passWord=scanner.nextLine();
+            User toUpdate=userDao.getUser(name,lastName,passWord);
+            if(toUpdate!=null){
+                System.out.println("Enter new fristname");
+                System.out.println("Enter new last name");
+                System.out.println("Enter new email");
+                System.out.println("Enter new pass word");
+                String email=toUpdate.getEmail();
+                String newFristnName=scanner.nextLine();
+                String newLastName =scanner.nextLine();
+                String newEmail=scanner.nextLine();
+                String newPassWord=scanner.nextLine();
+                toUpdate.setEmail(newEmail);
+                toUpdate.setName(newFristnName);
+                toUpdate.setPassword(newPassWord);
+                toUpdate.setLastName(newLastName);
+                userDao.updateUser(toUpdate,email);
+            }
+            else {
+                System.out.println("not-found");
+            }
+
+        }
+        else if(command.equals("delete-user")){
+            String name;
+            String lastName;
+            String passWord;
+            System.out.println("please enter name and last name and password");
+            name=scanner.nextLine();
+            lastName=scanner.nextLine();
+            passWord=scanner.nextLine();
+            User toDelete=userDao.getUser(name,lastName,passWord);
+            userDao.deleteUser(toDelete);
+        }
+        else if(command.equals("get-users")){
+            ArrayList<User> users=new ArrayList<>();
+            users=userDao.getUsers();
+            for(User user:users){
+                System.out.println(user);
+            }
         }
     }
 }

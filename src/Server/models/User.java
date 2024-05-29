@@ -125,6 +125,11 @@ public class User {
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
+    public String toString(){
+        String result;
+        result="id:"+id+"  frist name:"+name+"  last name:"+lastName+"  email:"+email+"  pass word:"+password;
+        return result;
+    }
 
 
 }

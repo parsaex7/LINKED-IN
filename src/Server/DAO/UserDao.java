@@ -41,18 +41,22 @@ public class UserDao {
     }
 
     public void deleteUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?");
-        statement.setInt(1, user.getId());
+        if(user==null){
+            System.out.println("not-found");
+            return;
+        }
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE email = ?");
+        statement.setString(1, user.getEmail());
         statement.executeUpdate();
     }
 
     public void deleteUsers() throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE * FROM users");
-        statement.executeUpdate();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM users");
+        statement.execute();
     }
 
-    public void updateUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, country = ?, city = ?, additionalname = ?, birthdate = ?, registrationDate = ? WHERE id = ?");
+    public void updateUser(User user, String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, country = ?, city = ?, additionalname = ?, birthdate = ?, registrationDate = ? WHERE email = ?");
         statement.setString(1, user.getName());
         statement.setString(2, user.getLastName());
         statement.setString(3, user.getEmail().toLowerCase());
@@ -62,7 +66,7 @@ public class UserDao {
         statement.setString(7, user.getAdditionalName());
         statement.setDate(8, user.getBirthDate());
         statement.setDate(9, user.getRegistrationDate());
-        statement.setInt(10, user.getId());
+        statement.setString(10, email);
         statement.executeUpdate();
     }
 
@@ -90,7 +94,7 @@ public class UserDao {
     }
 
     public User getUser(String name, String lastname, String password) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE name = ? AND lastname = ? AND password = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE firstname = ? AND lastname = ? AND password = ?");
         statement.setString(1, name);
         statement.setString(2, lastname);
         statement.setString(3, password);
@@ -119,7 +123,7 @@ public class UserDao {
         ArrayList<User> users = new ArrayList<>();
         while (resultSet.next()) {
             User user = new User();
-            user.setId(resultSet.getInt("id"));
+            user.setId(Integer.parseInt(resultSet.getString(1)));
             user.setAdditionalName(resultSet.getString("additionalname"));
             user.setCity(resultSet.getString("city"));
             user.setEmail(resultSet.getString("email"));
@@ -131,7 +135,6 @@ public class UserDao {
             user.setRegistrationDate(resultSet.getDate("registrationdate"));
             user.setPassword(resultSet.getString("password"));
             users.add(user);
-
         }
         return users;
     }
