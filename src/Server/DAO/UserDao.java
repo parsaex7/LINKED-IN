@@ -52,7 +52,7 @@ public class UserDao {
     }
 
     public void updateUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, country = ?, city = ?, additionalname = ?, birthdate = ?, registrationDate = ? WHERE id = ?");
+        PreparedStatement statement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, country = ?, city = ?, additionalname = ?, birthdate = ?, registrationDate = ? WHERE email = ? AND password = ?");
         statement.setString(1, user.getName());
         statement.setString(2, user.getLastName());
         statement.setString(3, user.getEmail().toLowerCase());
@@ -62,7 +62,8 @@ public class UserDao {
         statement.setString(7, user.getAdditionalName());
         statement.setDate(8, user.getBirthDate());
         statement.setDate(9, user.getRegistrationDate());
-        statement.setInt(10, user.getId());
+        statement.setString(10, user.getEmail());
+        statement.setString(11, user.getPassword());
         statement.executeUpdate();
     }
 
@@ -89,11 +90,10 @@ public class UserDao {
         return user;
     }
 
-    public User getUser(String name, String lastname, String password) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE name = ? AND lastname = ? AND password = ?");
-        statement.setString(1, name);
-        statement.setString(2, lastname);
-        statement.setString(3, password);
+    public User getUser(String email, String password) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
+        statement.setString(1, email);
+        statement.setString(2, password);
         ResultSet resultSet = statement.executeQuery();
         User user = new User();
         if (resultSet.next()) {
