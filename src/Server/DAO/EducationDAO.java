@@ -32,23 +32,23 @@ public class EducationDAO {
         statement.executeUpdate();
     }
 
-    public void editEducationDetail(Education education, int id, String school) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE education school = ? degree = ? fieldofstudy = ? grade = ? detail = ? startdate = ? enddate = ? workdetail = ? eduaccess = ? WHERE id = ? AND school = ?");
+   public void editEducationDetail(Education education, int id, String school) throws SQLException {
+    PreparedStatement statement = connection.prepareStatement("UPDATE education SET school = ?, degree = ?, fieldofstudy = ?, grade = ?, detail = ?, startdate = ?, enddate = ?, workdetail = ?, eduaccess = ? WHERE id = ? AND school = ?");
 
-        statement.setString(1, education.getSchool());
-        statement.setString(2, education.getDegree());
-        statement.setString(3, education.getFieldOfStudy());
-        statement.setDouble(4, education.getGrade());
-        statement.setString(5, education.getDetail());
-        statement.setDate(6, education.getStartDate());
-        statement.setDate(7, education.getEndDate());
-        statement.setString(8, education.getWorkDetail());
-        statement.setString(9, education.getEduAccess());
-        statement.setInt(10, id);
-        statement.setString(11, school);
+    statement.setString(1, education.getSchool());
+    statement.setString(2, education.getDegree());
+    statement.setString(3, education.getFieldOfStudy());
+    statement.setDouble(4, education.getGrade());
+    statement.setString(5, education.getDetail());
+    statement.setDate(6, education.getStartDate());
+    statement.setDate(7, education.getEndDate());
+    statement.setString(8, education.getWorkDetail());
+    statement.setString(9, education.getEduAccess());
+    statement.setInt(10, id);
+    statement.setString(11, school);
 
-        statement.executeUpdate();
-    }
+    statement.executeUpdate();
+}
 
     //return all of a user educations
     public ArrayList<Education> getAllEducationDetail(int id) throws SQLException {
