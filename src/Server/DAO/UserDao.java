@@ -30,23 +30,21 @@ public class UserDao {
         } catch (SQLException e) {
             System.out.println("duplicate email");
         }
-        //this part of code set the unique id which is in database to users id
-        PreparedStatement statement1 = connection.prepareStatement("select * from users where email = ?");
-        statement1.setString(1, user.getEmail().toLowerCase());
-        ResultSet resultSet = statement1.executeQuery();
-        resultSet.next();
-        int id = resultSet.getInt(1);
-        user.setId(id);
-
     }
 
     public void deleteUser(User user) throws SQLException {
-        if(user==null){
+        if (user == null) {
             System.out.println("not-found");
             return;
         }
         PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE email = ?");
         statement.setString(1, user.getEmail());
+        statement.executeUpdate();
+    }
+
+    public void deleteUser(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE email = ?");
+        statement.setString(1, email);
         statement.executeUpdate();
     }
 
@@ -80,38 +78,13 @@ public class UserDao {
         statement.setString(7, user.getAdditionalName());
         statement.setDate(8, user.getBirthDate());
         statement.setDate(9, user.getRegistrationDate());
-        statement.setInt(10, user.getId());
         statement.setString(10, user.getEmail());
         statement.setString(11, user.getPassword());
         statement.executeUpdate();
     }
-    public User getUser(int id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        User user = new User();
-        if (resultSet.next()) {
-            user.setId(id);
-            user.setAdditionalName(resultSet.getString("additionalname"));
-            user.setCity(resultSet.getString("city"));
-            user.setEmail(resultSet.getString("email"));
-            user.setCountry(resultSet.getString("country"));
-            user.setBirthDate(resultSet.getDate("birthdate"));
-            user.setName(resultSet.getString("firstname"));
-            user.setLastName(resultSet.getString("lastname"));
-            user.setBirthDate(resultSet.getDate("birthdate"));
-            user.setRegistrationDate(resultSet.getDate("registrationdate"));
-            user.setPassword(resultSet.getString("password"));
-        } else {
-            return null;
-        }
-        return user;
-    }
-    public User getUser(String name, String lastname, String password) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE firstname = ? AND lastname = ? AND password = ?");
-        statement.setString(1, name);
-        statement.setString(2, lastname);
-        statement.setString(3, password);
+    public User getUser(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+        statement.setString(1, email);
         ResultSet resultSet = statement.executeQuery();
         User user = new User();
         if (resultSet.next()) {
@@ -130,6 +103,7 @@ public class UserDao {
         }
         return user;
     }
+
     public User getUser(String email, String password) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
         statement.setString(1, email);
@@ -159,7 +133,6 @@ public class UserDao {
         ArrayList<User> users = new ArrayList<>();
         while (resultSet.next()) {
             User user = new User();
-            user.setId(Integer.parseInt(resultSet.getString(1)));
             user.setAdditionalName(resultSet.getString("additionalname"));
             user.setCity(resultSet.getString("city"));
             user.setEmail(resultSet.getString("email"));

@@ -12,6 +12,7 @@ public class Education {
         EVERYONE
     }
 
+    private String email;
     private String school;
     private String degree;
     private String fieldOfStudy;
@@ -23,7 +24,7 @@ public class Education {
     private Date endDate;
     private access eduAccess;
 
-    public Education(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu) {
+    public Education(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) {
         this.school = school;
         this.degree = degree;
         this.fieldOfStudy = fieldOfStudy;
@@ -45,10 +46,19 @@ public class Education {
                 this.eduAccess = access.EVERYONE;
                 break;
         }
+        this.email = email;
     }
 
     public Education() {
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSchool() {

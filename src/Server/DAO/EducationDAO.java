@@ -15,90 +15,126 @@ public class EducationDAO {
         connection = DataBaseConnection.getConnection();
     }
 
-    public void saveEducationDetail(Education education, int id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO education VALUES (?,?,?,?,?,?,?,?,?,?)");
+    public void saveEducationDetail(Education education, String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO education (school, degree, fieldofstudy, grade, detail, startdate, enddate, workdetail, eduaccess, email) VALUES (?,?,?,?,?,?,?,?,?,?)");
 
-        statement.setInt(1, id);
-        statement.setString(2, education.getSchool());
-        statement.setString(3, education.getDegree());
-        statement.setString(4, education.getFieldOfStudy());
-        statement.setDouble(5, education.getGrade());
-        statement.setString(6, education.getDetail());
-        statement.setDate(7, education.getStartDate());
-        statement.setDate(8, education.getEndDate());
-        statement.setString(9, education.getWorkDetail());
-        statement.setString(10, education.getEduAccess());
+        statement.setString(1, education.getSchool());
+        statement.setString(2, education.getDegree());
+        statement.setString(3, education.getFieldOfStudy());
+        statement.setDouble(4, education.getGrade());
+        statement.setString(5, education.getDetail());
+        statement.setDate(6, education.getStartDate());
+        statement.setDate(7, education.getEndDate());
+        statement.setString(8, education.getWorkDetail());
+        statement.setString(9, education.getEduAccess());
+        statement.setString(10, email);
 
         statement.executeUpdate();
     }
 
-   public void editEducationDetail(Education education, int id, String school) throws SQLException {
-    PreparedStatement statement = connection.prepareStatement("UPDATE education SET school = ?, degree = ?, fieldofstudy = ?, grade = ?, detail = ?, startdate = ?, enddate = ?, workdetail = ?, eduaccess = ? WHERE id = ? AND school = ?");
+    public void editEducationDetail(Education education, String email, String school) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("UPDATE education SET school = ?, degree = ?, fieldofstudy = ?, grade = ?, detail = ?, startdate = ?, enddate = ?, workdetail = ?, eduaccess = ? WHERE email = ? AND school = ?");
 
-    statement.setString(1, education.getSchool());
-    statement.setString(2, education.getDegree());
-    statement.setString(3, education.getFieldOfStudy());
-    statement.setDouble(4, education.getGrade());
-    statement.setString(5, education.getDetail());
-    statement.setDate(6, education.getStartDate());
-    statement.setDate(7, education.getEndDate());
-    statement.setString(8, education.getWorkDetail());
-    statement.setString(9, education.getEduAccess());
-    statement.setInt(10, id);
-    statement.setString(11, school);
+        statement.setString(1, education.getSchool());
+        statement.setString(2, education.getDegree());
+        statement.setString(3, education.getFieldOfStudy());
+        statement.setDouble(4, education.getGrade());
+        statement.setString(5, education.getDetail());
+        statement.setDate(6, education.getStartDate());
+        statement.setDate(7, education.getEndDate());
+        statement.setString(8, education.getWorkDetail());
+        statement.setString(9, education.getEduAccess());
+        statement.setString(10, email);
+        statement.setString(11, school);
 
-    statement.executeUpdate();
-}
+        statement.executeUpdate();
+    }
 
-    //return all of a user educations
-    public ArrayList<Education> getAllEducationDetail(int id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM education WHERE id = ?");
-
-        statement.setInt(1, id);
-
-        ResultSet resultset = statement.executeQuery();
+    public ArrayList<Education> getEducations(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM education WHERE email = ?");
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+        Education education = new Education();
         ArrayList<Education> educations = new ArrayList<>();
-        while (resultset.next()) {
-            Education education = new Education();
-            education.setSchool(resultset.getString("school"));
-            education.setDegree(resultset.getString("degree"));
-            education.setFieldOfStudy(resultset.getString("fieldofstudy"));
-            education.setGrade(resultset.getDouble("grade"));
-            education.setDetail(resultset.getString("detail"));
-            education.setStartDate(resultset.getDate("startdate"));
-            education.setEndDate(resultset.getDate("enddate"));
-            education.setWorkDetail(resultset.getString("workdetail"));
-            education.setEduAccess(resultset.getString("eduaccess"));
-
+        while (resultSet.next()) {
+            education.setDegree(resultSet.getString("degree"));
+            education.setDetail(resultSet.getString("detail"));
+            education.setSchool(resultSet.getString("school"));
+            education.setFieldOfStudy(resultSet.getString("fieldofstudy"));
+            education.setGrade(resultSet.getDouble("grade"));
+            education.setEndDate(resultSet.getDate("enddate"));
+            education.setStartDate(resultSet.getDate("startdate"));
+            education.setWorkDetail(resultSet.getString("workdetail"));
+            education.setEduAccess(resultSet.getString("eduaccess"));
+            education.setEmail(email);
             educations.add(education);
         }
-
         return educations;
     }
-    public void deleteEducation(int id) throws SQLException {
-        PreparedStatement statement=connection.prepareStatement("DELETE FROM education where =?");
-        statement.setInt(1,id);
+
+    public Education getEducation(String email, String school) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM education WHERE email = ? AND school = ?");
+        statement.setString(1, email);
+        statement.setString(2, school);
+        ResultSet resultSet = statement.executeQuery();
+        Education education = new Education();
+        if (resultSet.next()) {
+            education.setDegree(resultSet.getString("degree"));
+            education.setDetail(resultSet.getString("detail"));
+            education.setSchool(resultSet.getString("school"));
+            education.setFieldOfStudy(resultSet.getString("fieldofstudy"));
+            education.setGrade(resultSet.getDouble("grade"));
+            education.setEndDate(resultSet.getDate("enddate"));
+            education.setStartDate(resultSet.getDate("startdate"));
+            education.setWorkDetail(resultSet.getString("workdetail"));
+            education.setEduAccess(resultSet.getString("eduaccess"));
+            education.setEmail(email);
+            return education;
+        } else {
+            return null;
+        }
+    }
+
+    public ArrayList<Education> getEducations() throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM education");
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Education> educations = new ArrayList<>();
+        while (resultSet.next()) {
+            Education education = new Education();
+            education.setDegree(resultSet.getString("degree"));
+            education.setDetail(resultSet.getString("detail"));
+            education.setSchool(resultSet.getString("school"));
+            education.setFieldOfStudy(resultSet.getString("fieldofstudy"));
+            education.setGrade(resultSet.getDouble("grade"));
+            education.setEndDate(resultSet.getDate("enddate"));
+            education.setStartDate(resultSet.getDate("startdate"));
+            education.setWorkDetail(resultSet.getString("workdetail"));
+            education.setEduAccess(resultSet.getString("eduaccess"));
+            education.setEmail(resultSet.getString("email"));
+            educations.add(education);
+        }
+        return educations;
+    }
+
+    public void deleteEducation(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM education WHERE email = ?");
+        statement.setString(1, email);
         statement.executeUpdate();
     }
-    public Education getEducation(int id) throws SQLException {
-        PreparedStatement statement=connection.prepareStatement("SELECT * from education WHERE id=?");
-        statement.setInt(1,id);
-        ResultSet resultSet=statement.executeQuery();
-        Education toReturn=new Education();
-        if(resultSet.next()){
-            toReturn.setDegree(resultSet.getString("degree"));
-            toReturn.setDetail(resultSet.getString("detail"));
-            toReturn.setSchool(resultSet.getString("school"));
-            toReturn.setFieldOfStudy(resultSet.getString("fieldofstudy"));
-            toReturn.setGrade(resultSet.getDouble("grade"));
-            toReturn.setEndDate(resultSet.getDate("enddate"));
-            toReturn.setStartDate(resultSet.getDate("enddate"));
-        }
-        return toReturn;
+
+    public void deleteEducation(String email, String school) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM education WHERE email = ? AND school = ?");
+
+        statement.setString(1, email);
+        statement.setString(2, school);
+
+        statement.executeUpdate();
     }
-    public void deleteAllEducation() throws SQLException {
-        PreparedStatement statement=connection.prepareStatement("DELETE FROM education");
+
+
+    public void deleteEducations() throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE * FROM education");
         statement.execute();
     }
-        //id-school-degree-fieldostudy-grade-detail-startdae-enddate-workdetail-eduaccess
+
 }
