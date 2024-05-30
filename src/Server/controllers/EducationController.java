@@ -21,4 +21,13 @@ public class EducationController {
         Education  toUpdate=new Education(school,degree,fieldOfStudy,grade,activities,detail,startDate,endDate,workDetail,accessEdu);
         educationDAO.editEducationDetail(toUpdate,id,school);
     }
+    public void deleteEducation(int id) throws SQLException {
+        educationDAO.deleteEducation(id);
+    }
+    public Education gerEducationById(int id) throws SQLException {
+            return educationDAO.getEducation(id);
+    }
+    public void deleteAllEducation() throws SQLException {
+        educationDAO.deleteAllEducation();
+    }
 }

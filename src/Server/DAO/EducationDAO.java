@@ -75,5 +75,30 @@ public class EducationDAO {
 
         return educations;
     }
+    public void deleteEducation(int id) throws SQLException {
+        PreparedStatement statement=connection.prepareStatement("DELETE FROM education where =?");
+        statement.setInt(1,id);
+        statement.executeUpdate();
+    }
+    public Education getEducation(int id) throws SQLException {
+        PreparedStatement statement=connection.prepareStatement("SELECT * from education WHERE id=?");
+        statement.setInt(1,id);
+        ResultSet resultSet=statement.executeQuery();
+        Education toReturn=new Education();
+        if(resultSet.next()){
+            toReturn.setDegree(resultSet.getString("degree"));
+            toReturn.setDetail(resultSet.getString("detail"));
+            toReturn.setSchool(resultSet.getString("school"));
+            toReturn.setFieldOfStudy(resultSet.getString("fieldofstudy"));
+            toReturn.setGrade(resultSet.getDouble("grade"));
+            toReturn.setEndDate(resultSet.getDate("enddate"));
+            toReturn.setStartDate(resultSet.getDate("enddate"));
+        }
+        return toReturn;
+    }
+    public void deleteAllEducation() throws SQLException {
+        PreparedStatement statement=connection.prepareStatement("DELETE FROM education");
+        statement.execute();
+    }
         //id-school-degree-fieldostudy-grade-detail-startdae-enddate-workdetail-eduaccess
 }
