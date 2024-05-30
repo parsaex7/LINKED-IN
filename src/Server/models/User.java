@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class User {
 
-    private int id;
     private String name;
     private String lastName;
     private String email;
@@ -41,14 +40,6 @@ public class User {
 
     public User() {
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -123,9 +114,10 @@ public class User {
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
-    public String toString(){
+
+    public String toString() {
         String result;
-        result="id:"+id+"  frist name:"+name+"  last name:"+lastName+"  email:"+email+"  pass word:"+password;
+        result = "first name:" + name + "  last name:" + lastName + "  email:" + email + "  pass word:" + password;
         return result;
     }
 

@@ -5,29 +5,46 @@ import Server.models.Education;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EducationController {
-    static int id=1;
-    private final EducationDAO  educationDAO;
-    public EducationController(){
-        educationDAO=new EducationDAO();
+    private final EducationDAO educationDAO;
+
+    public EducationController() {
+        educationDAO = new EducationDAO();
     }
-    public void createEducation(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu) throws SQLException {
-        Education toAdd=new Education(school,degree,fieldOfStudy,grade,activities,detail,startDate,endDate,workDetail,accessEdu);
-        educationDAO.saveEducationDetail(toAdd,id);
-        id++;
+
+    public void createEducation(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) throws SQLException {
+        Education education = new Education(school, degree, fieldOfStudy, grade, activities, detail, startDate, endDate, workDetail, accessEdu, email);
+        educationDAO.saveEducationDetail(education, email);
     }
-    public void updateEducation(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu,int id) throws SQLException {
-        Education  toUpdate=new Education(school,degree,fieldOfStudy,grade,activities,detail,startDate,endDate,workDetail,accessEdu);
-        educationDAO.editEducationDetail(toUpdate,id,school);
+
+    public void updateEducation(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) throws SQLException {
+        Education education = new Education(school, degree, fieldOfStudy, grade, activities, detail, startDate, endDate, workDetail, accessEdu, email);
+        educationDAO.editEducationDetail(education, email, school);
     }
-    public void deleteEducation(int id) throws SQLException {
-        educationDAO.deleteEducation(id);
+
+    public void deleteEducationByEmail(String email) throws SQLException {
+        educationDAO.deleteEducation(email);
     }
-    public Education gerEducationById(int id) throws SQLException {
-            return educationDAO.getEducation(id);
+
+    public void deleteEducationByEmailAndSchool(String email, String school) throws SQLException {
+        educationDAO.deleteEducation(email, school);
     }
+
+    public ArrayList<Education> getEducations(String email) throws SQLException {
+        return educationDAO.getEducations(email);
+    }
+
+    public Education getEducationByEmailAndSchool(String email, String school) throws SQLException {
+        return educationDAO.getEducation(email, school);
+    }
+
     public void deleteAllEducation() throws SQLException {
-        educationDAO.deleteAllEducation();
+        educationDAO.deleteEducations();
+    }
+
+    public ArrayList<Education> getAllEducations() throws SQLException {
+        return educationDAO.getEducations();
     }
 }
