@@ -13,8 +13,8 @@ public class User {
     private String city;
     private Date birthDate;
     private Date registrationDate;
-
-    public User(String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate) {
+//firstName, lastName, email, passWord, country, city, additionalName
+    public User(String name, String lastName, String email, String password, String country, String city, String additionalName, Date birthDate) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -26,7 +26,7 @@ public class User {
         registrationDate = new Date(System.currentTimeMillis());
     }
 
-    public User(String name, String lastName, String email, String password, String additionalName, String country, String city, Date birthDate, Date registrationDate) {
+    public User(String name, String lastName, String email, String password, String country, String city, String additionalName, Date birthDate, Date registrationDate) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
