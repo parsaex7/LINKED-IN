@@ -39,7 +39,6 @@ public void updateContact(Contact contact) throws SQLException {
     statement.setString(5, contact.getContactId());
     statement.setString(6, contact.getBirthdayAccess());
     statement.setString(7, contact.getEmail());
-
     statement.executeUpdate();
 }
 
