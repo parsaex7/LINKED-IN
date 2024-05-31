@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class EducationDAO {
     private final Connection connection;
 
-    public EducationDAO() {
+    public EducationDAO(){
         connection = DataBaseConnection.getConnection();
     }
 
