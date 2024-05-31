@@ -2,6 +2,10 @@ package Server.controllers;
 
 import Server.DAO.ContactDAO;
 import Server.DAO.UserDao;
+import Server.Exceptions.ContactNotExistException;
+import Server.Exceptions.DuplicateContactException;
+import Server.Exceptions.DuplicateUserException;
+import Server.Exceptions.UserNotExistException;
 import Server.models.Contact;
 import Server.models.User;
 
@@ -22,39 +26,49 @@ public class UserController {
         contactDAO = new ContactDAO();
     }
 
-    public void createUser(String firstName, String lastName, String email, String passWord, String country, String city, String additionalName, String birthDay, String registrationDate) throws SQLException {
+    public void createUser(String firstName, String lastName, String email, String passWord, String country, String city, String additionalName, String birthDay, String registrationDate) throws SQLException, DuplicateUserException {
 //        Date birthDaydate = Date.valueOf(birthDay);
 //        Date registrationDate1 = Date.valueOf(registrationDate);
         User user = new User(firstName, lastName, email, passWord, country, city, additionalName, null, null);
-        if (userDao.getUser(user.getEmail(), user.getPassword()) == null) {
-            userDao.saveUser(user);
+        if (userDao.getUser(user.getEmail(), user.getPassword()) != null) {
+            throw new DuplicateUserException();
         } else {
-            userDao.updateUser(user);
+            userDao.saveUser(user);
         }
     }
 
-    public void createContact(String email, String phoneNumber, String numberType, String address, String profileLink, String contactId, String birthdayAccess) throws SQLException {
+    public void createContact(String email, String phoneNumber, String numberType, String address, String profileLink, String contactId, String birthdayAccess) throws SQLException, UserNotExistException, DuplicateContactException {
         User user = userDao.getUser(email);
         if (user == null) {
-            //TODO: throw exception
+            throw new UserNotExistException();
         } else {
             Contact contact = new Contact(profileLink, email, phoneNumber, numberType, address, contactId, birthdayAccess);
             if (contactDAO.getContact(email) != null) {
-                contactDAO.updateContact(contact);
+                throw new DuplicateContactException();
             } else {
                 contactDAO.saveContatcDetail(contact);
             }
         }
     }
 
-    public void deleteUserByEmail(String email) throws SQLException {
+    public void deleteUserByEmail(String email) throws SQLException, UserNotExistException {
         User user = userDao.getUser(email);
-        userDao.deleteUser(user);
+        if (user == null) {
+            throw new UserNotExistException();
+        } else {
+            userDao.deleteUser(user);
+
+        }
     }
 
-    public void deleteUserByEmailAndPassword(String email, String passWord) throws SQLException {
+    public void deleteUserByEmailAndPassword(String email, String passWord) throws SQLException, UserNotExistException {
         User user = userDao.getUser(email, passWord);
-        userDao.deleteUser(user);
+        if (user == null) {
+            throw new UserNotExistException();
+        } else {
+            userDao.deleteUser(user);
+
+        }
     }
 
     public void deleteContactByEmail(String email) throws SQLException {
@@ -62,33 +76,53 @@ public class UserController {
     }
 
 
-    public void UpdateUser(String firstName, String lastName, String email, String passWord, String country, String city, String additionalName, Date birthDay, Date registrationDate) throws SQLException {
-        User user = new User(firstName, lastName, email, passWord, country, city, additionalName, birthDay, registrationDate);
-        userDao.updateUser(user);
+    public void UpdateUser(String firstName, String lastName, String email, String passWord, String country, String city, String additionalName, Date birthDay, Date registrationDate) throws SQLException, UserNotExistException {
+        if (userDao.getUser(email) != null) {
+            User user = new User(firstName, lastName, email, passWord, country, city, additionalName, birthDay, registrationDate);
+            userDao.updateUser(user);
+        } else {
+            throw new UserNotExistException();
+        }
     }
 
 
-    public void updateContact(String email, String phoneNumber, String numberType, String address, String profileLink, String contactId, String birthdayAccess) throws SQLException {
+    public void updateContact(String email, String phoneNumber, String numberType, String address, String profileLink, String contactId, String birthdayAccess) throws SQLException, ContactNotExistException {
+        if (contactDAO.getContact(email) != null) {
         Contact contact = new Contact(profileLink, email, phoneNumber, numberType, address, contactId, birthdayAccess);
         contactDAO.updateContact(contact);
+        } else {
+            throw new ContactNotExistException();
+        }
     }
 
-    public String getUserByEmail(String email) throws SQLException, JsonProcessingException {
+    public String getUserByEmail(String email) throws SQLException, JsonProcessingException, UserNotExistException {
         User user = userDao.getUser(email);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(user);
+        if (user == null) {
+            throw new UserNotExistException();
+        } else {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(user);
+        }
     }
 
-    public String getUserByEmailAndPassword(String email, String password) throws SQLException, JsonProcessingException {
+    public String getUserByEmailAndPassword(String email, String password) throws SQLException, JsonProcessingException, UserNotExistException {
         User user = userDao.getUser(email, password);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(user);
+        if (user == null) {
+            throw new UserNotExistException();
+        } else {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(user);
+        }
     }
 
-    public String getContactByEmail(String email) throws SQLException, JsonProcessingException {
+    public String getContactByEmail(String email) throws SQLException, JsonProcessingException, ContactNotExistException {
         Contact contact = contactDAO.getContact(email);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(contact);
+        if (contact == null) {
+            throw new ContactNotExistException();
+        } else {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(contact);
+        }
     }
 
     public void deleteAllUsers() throws SQLException {
