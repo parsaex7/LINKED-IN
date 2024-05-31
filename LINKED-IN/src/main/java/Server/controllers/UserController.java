@@ -26,10 +26,8 @@ public class UserController {
         contactDAO = new ContactDAO();
     }
 
-    public void createUser(String firstName, String lastName, String email, String passWord, String country, String city, String additionalName, String birthDay, String registrationDate) throws SQLException, DuplicateUserException {
-//        Date birthDaydate = Date.valueOf(birthDay);
-//        Date registrationDate1 = Date.valueOf(registrationDate);
-        User user = new User(firstName, lastName, email, passWord, country, city, additionalName, null, null);
+    public void createUser(String firstName, String lastName, String email, String passWord, String country, String city, String additionalName, Date birthDay, Date registrationDate) throws SQLException, DuplicateUserException {
+        User user = new User(firstName, lastName, email, passWord, country, city, additionalName, birthDay, registrationDate);
         if (userDao.getUser(user.getEmail(), user.getPassword()) != null) {
             throw new DuplicateUserException();
         } else {
@@ -105,10 +103,10 @@ public class UserController {
         }
     }
 
-    public String getUserByEmailAndPassword(String email, String password) throws SQLException, JsonProcessingException, UserNotExistException {
+    public String getUserByEmailAndPassword(String email, String password) throws SQLException, JsonProcessingException {
         User user = userDao.getUser(email, password);
         if (user == null) {
-            throw new UserNotExistException();
+            return null;
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(user);

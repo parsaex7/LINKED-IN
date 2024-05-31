@@ -2,38 +2,42 @@ package Server.controllers;
 
 import Server.DAO.ContactDAO;
 import Server.models.Contact;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ContactController {
-    private final ContactDAO contactDAO;
-    public ContactController(ContactDAO contactDAO) {
-        this.contactDAO = contactDAO;
-    }
+    private final ContactDAO contactDAO = new ContactDAO();
+
     public void createContact(String profileLink, String email, String phoneNumber, String numberType, String address, String contactId, String birthdayAccess) throws SQLException {
-        Contact toAdd=new Contact(profileLink,email,phoneNumber,numberType,address,contactId,birthdayAccess);
-        contactDAO.saveContatcDetail(toAdd);
+        Contact contact = new Contact(profileLink, email, phoneNumber, numberType, address, contactId, birthdayAccess);
+        contactDAO.saveContatcDetail(contact);
     }
-    public void upDate(Contact contact,String newPhoneNumber,String newAddress,String newBirthdayAccess,String newNumberType,String newProfileLink) throws SQLException {
-        contact.setPhoneNumber(newPhoneNumber);
-        contact.setAddress(newAddress);
-        contact.setBirthdayAccess(newBirthdayAccess);
-        contact.setNumberType(newNumberType);
-        contact.setProfileLink(newProfileLink);
+
+    public void updateContact(String profileLink, String email, String phoneNumber, String numberType, String address, String contactId, String birthdayAccess) throws SQLException {
+        Contact contact = new Contact(profileLink, email, phoneNumber, numberType, address, contactId, birthdayAccess);
         contactDAO.updateContact(contact);
     }
-    public Contact getContact(String email) throws SQLException {
-        Contact toreturn=contactDAO.getContact(email);
-        return toreturn;
+
+    public String getContact(String email) throws SQLException, JsonProcessingException {
+        Contact contact = contactDAO.getContact(email);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(contact);
     }
+
     public void deleteContact(String email) throws SQLException {
         contactDAO.deleteContact(email);
     }
+
     public void deleteContacts() throws SQLException {
         contactDAO.deleteContacts();
     }
-    public ArrayList<Contact> getContacts() throws SQLException {
-       return contactDAO.getContacts();
+
+    public String getContacts() throws SQLException, JsonProcessingException {
+        ArrayList<Contact> contacts = contactDAO.getContacts();
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(contacts);
     }
 }
