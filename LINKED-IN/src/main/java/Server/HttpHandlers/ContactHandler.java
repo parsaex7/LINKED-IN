@@ -99,18 +99,6 @@ public class ContactHandler implements HttpHandler {
             }
 
             if (email != null) {
-                if (contactController.getContact(email) != null) {
-                    contactController.updateContact(
-                            jsonObject.getString("profilelink"),
-                            email,
-                            jsonObject.getString("phonenumber"),
-                            jsonObject.getString("numbertype"),
-                            jsonObject.getString("address"),
-                            jsonObject.getString("contactid"),
-                            jsonObject.getString("birthdayaccess")
-                    );
-                    response = "Contact updated successfully";
-                } else {
                     contactController.createContact(
                             jsonObject.getString("profilelink"),
                             email,
@@ -118,17 +106,11 @@ public class ContactHandler implements HttpHandler {
                             jsonObject.getString("numbertype"),
                             jsonObject.getString("address"),
                             jsonObject.getString("contactid"),
-                            jsonObject.getString("birthdayaccess")
-                    );
+                            jsonObject.getString("birthdayaccess"));
                     response = "Contact added successfully";
-                }
                 exchange.sendResponseHeaders(200, response.length());
+                }
             } else {
-                response = "Unauthorized";
-                exchange.sendResponseHeaders(401, response.length());
-            }
-
-        } else {
             response = "Invalid request";
             exchange.sendResponseHeaders(400, response.length());
         }

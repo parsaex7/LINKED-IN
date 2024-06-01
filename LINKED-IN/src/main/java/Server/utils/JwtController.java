@@ -9,8 +9,8 @@ import java.util.Date;
 
 
 public class JwtController {
-    private static final Key key = Keys.hmacShaKeyFor("ParsaExir@13842005asdfddfghjklkjhgcfvghjklkjhgv".getBytes(StandardCharsets.UTF_8));
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private static final Key key = Keys.hmacShaKeyFor("ParsaExir@13842005-Am13841384-LINKED-IN".getBytes(StandardCharsets.UTF_8));
+    private static final long EXPIRATION_TIME = 1_000 * 60 * 60  * 3; // 3 hour
     private static final SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
 
     public static String createToken(String email) {
