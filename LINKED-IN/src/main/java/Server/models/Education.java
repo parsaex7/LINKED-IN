@@ -1,8 +1,6 @@
 package Server.models;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class Education {
 
@@ -17,20 +15,17 @@ public class Education {
     private String degree;
     private String fieldOfStudy;
     private double grade;
-    private ArrayList<String> activities;
     private String workDetail;
     private String detail;
     private Date startDate;
     private Date endDate;
     private access eduAccess;
 
-    public Education(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) {
+    public Education(String school, String degree, String fieldOfStudy, double grade, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) {
         this.school = school;
         this.degree = degree;
         this.fieldOfStudy = fieldOfStudy;
         this.grade = grade;
-        this.activities = new ArrayList<>();
-        this.activities.add(activities);
         this.detail = detail;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -91,14 +86,6 @@ public class Education {
 
     public void setGrade(double grade) {
         this.grade = grade;
-    }
-
-    public ArrayList<String> getActivities() {
-        return activities;
-    }
-
-    public void setNewActivities(String activities) {
-        this.activities.add(activities);
     }
 
     public Date getStartDate() {

@@ -16,13 +16,13 @@ public class EducationController {
         educationDAO = new EducationDAO();
     }
 
-    public void createEducation(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) throws SQLException {
-        Education education = new Education(school, degree, fieldOfStudy, grade, activities, detail, startDate, endDate, workDetail, accessEdu, email);
+    public void createEducation(String school, String degree, String fieldOfStudy, double grade, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) throws SQLException {
+        Education education = new Education(school, degree, fieldOfStudy, grade, detail, startDate, endDate, workDetail, accessEdu, email);
         educationDAO.saveEducationDetail(education, email);
     }
 
-    public void updateEducation(String school, String degree, String fieldOfStudy, double grade, String activities, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) throws SQLException {
-        Education education = new Education(school, degree, fieldOfStudy, grade, activities, detail, startDate, endDate, workDetail, accessEdu, email);
+    public void updateEducation(String school, String degree, String fieldOfStudy, double grade, String detail, Date startDate, Date endDate, String workDetail, String accessEdu, String email) throws SQLException {
+        Education education = new Education(school, degree, fieldOfStudy, grade, detail, startDate, endDate, workDetail, accessEdu, email);
         educationDAO.editEducationDetail(education, email, school);
     }
 
@@ -40,8 +40,13 @@ public class EducationController {
         return objectMapper.writeValueAsString(educations);
     }
 
-    public Education getEducationByEmailAndSchool(String email, String school) throws SQLException {
-        return educationDAO.getEducation(email, school);
+    public String getEducationByEmailAndSchool(String email, String school) throws SQLException, JsonProcessingException {
+        Education education = educationDAO.getEducation(email, school);
+        if (education  == null) {
+            return null;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(education);
     }
 
     public void deleteAllEducation() throws SQLException {
