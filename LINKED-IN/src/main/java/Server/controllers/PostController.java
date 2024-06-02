@@ -64,4 +64,8 @@ public class PostController {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(postDAO.getAllPosts());
     }
+
+    public boolean postExists(int postId) throws SQLException {
+        return postDAO.isPostExist(postId);
+    }
 }
