@@ -15,6 +15,56 @@ import java.sql.SQLException;
 
 public class ContactHandler implements HttpHandler {
 
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+
+        ContactController ContactController = new ContactController();
+        String request = exchange.getRequestMethod();
+        String path = exchange.getRequestURI().getPath();
+        String[] pathParts = path.split("/");
+        String response = "";
+
+        try {
+            try {
+                String email = JwtController.verifyToken(exchange);
+                if (email == null) {
+                    response = "Unauthorized";
+                    exchange.sendResponseHeaders(401, response.length());
+                    sendResponse(exchange, response);
+                    return;
+                }
+            } catch (Exception e) {
+                response = "Unauthorized";
+                exchange.sendResponseHeaders(401, response.length());
+                sendResponse(exchange, response);
+                return;
+            }
+            switch (request) {
+                case "GET":
+                    response = handleGetRequest(exchange, ContactController, pathParts);
+                    break;
+                case "POST":
+                    response = handlePostRequest(exchange, ContactController, pathParts);
+                    break;
+                case "DELETE":
+                    response = handleDeleteRequest(exchange, ContactController, pathParts);
+                    break;
+                case "PUT":
+                    response = handlePutRequest(exchange, ContactController, pathParts);
+                    break;
+                default:
+                    response = "Method not allowed";
+                    exchange.sendResponseHeaders(405, response.length());
+            }
+        } catch (Exception e) {
+            response = "Internal server error";
+            exchange.sendResponseHeaders(500, response.length());
+            e.printStackTrace();
+        }
+        sendResponse(exchange, response);
+
+    }
+
     private String handleGetRequest(HttpExchange exchange, ContactController contactController, String[] pathParts) throws SQLException, IOException {
         String response = "";
         if (pathParts.length == 3) {
@@ -49,41 +99,6 @@ public class ContactHandler implements HttpHandler {
         return response;
     }
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-
-        ContactController ContactController = new ContactController();
-        String request = exchange.getRequestMethod();
-        String path = exchange.getRequestURI().getPath();
-        String[] pathParts = path.split("/");
-        String response = "";
-
-        try {
-            switch (request) {
-                case "GET":
-                    response = handleGetRequest(exchange, ContactController, pathParts);
-                    break;
-                case "POST":
-                    response = handlePostRequest(exchange, ContactController, pathParts);
-                    break;
-                case "DELETE":
-                    response = handleDeleteRequest(exchange, ContactController, pathParts);
-                    break;
-                case "PUT":
-                    response = handlePutRequest(exchange, ContactController, pathParts);
-                    break;
-                default:
-                    response = "Method not allowed";
-                    exchange.sendResponseHeaders(405, response.length());
-            }
-        } catch (Exception e) {
-            response = "Internal server error";
-            exchange.sendResponseHeaders(500, response.length());
-            e.printStackTrace();
-        }
-        sendResponse(exchange, response);
-
-    }
 
     private String handlePostRequest(HttpExchange exchange, ContactController contactController, String[] pathParts) throws IOException, SQLException {
         String response = "";

@@ -1,9 +1,6 @@
 package Server;
 
-import Server.HttpHandlers.ContactHandler;
-import Server.HttpHandlers.EducationHandler;
-import Server.HttpHandlers.LoginHandler;
-import Server.HttpHandlers.UserHandler;
+import Server.HttpHandlers.*;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -16,8 +13,10 @@ public class Server {
 
             server.createContext("/user", new UserHandler()); //for sign up
             server.createContext("/login", new LoginHandler()); //for login
-            server.createContext("/contact", new ContactHandler()); //for make/update Contact Details
-            server.createContext("/education", new EducationHandler()); //for make/update Education Details
+            server.createContext("/contact", new ContactHandler()); //for make/update/delete/get Contact Details
+            server.createContext("/education", new EducationHandler()); //for make/update/delete/get Education Details
+            server.createContext("/post", new PostHandler()); //for make/update/delete/get Post
+            server.createContext("/like", new LikeHandler()); //for like/unlike post and get all likes of one post and get all likes of one user
 
             server.start();
 
