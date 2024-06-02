@@ -1,6 +1,7 @@
 package Server;
 
 import Server.HttpHandlers.ContactHandler;
+import Server.HttpHandlers.EducationHandler;
 import Server.HttpHandlers.LoginHandler;
 import Server.HttpHandlers.UserHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -16,6 +17,7 @@ public class Server {
             server.createContext("/user", new UserHandler()); //for sign up
             server.createContext("/login", new LoginHandler()); //for login
             server.createContext("/contact", new ContactHandler()); //for make/update Contact Details
+            server.createContext("/education", new EducationHandler()); //for make/update Education Details
 
             server.start();
 
