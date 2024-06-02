@@ -15,6 +15,40 @@ import java.sql.SQLException;
 
 public class ContactHandler implements HttpHandler {
 
+    private String handleGetRequest(HttpExchange exchange, ContactController contactController, String[] pathParts) throws SQLException, IOException {
+        String response = "";
+        if (pathParts.length == 3) {
+            if (pathParts[2].equals("all")) { // contact/all
+                response = contactController.getContacts();
+                exchange.sendResponseHeaders(200, response.length());
+            } else {
+                response = "Invalid request";
+                exchange.sendResponseHeaders(400, response.length());
+            }
+        } else if (pathParts.length == 2) {
+            String email = JwtController.verifyToken(exchange);
+            if (email != null) {
+                response = contactController.getContact(email);
+                if (response == null) {
+                    response = "Contact not found";
+                    exchange.sendResponseHeaders(404, response.length());
+                } else {
+                    exchange.sendResponseHeaders(200, response.length());
+                    return response;
+                }
+            } else {
+                response = "Unauthorized";
+                exchange.sendResponseHeaders(401, response.length());
+            }
+        }
+        else {
+            response = "Invalid request";
+            exchange.sendResponseHeaders(400, response.length());
+        }
+
+        return response;
+    }
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
@@ -49,40 +83,6 @@ public class ContactHandler implements HttpHandler {
         }
         sendResponse(exchange, response);
 
-    }
-
-    private String handleGetRequest(HttpExchange exchange, ContactController contactController, String[] pathParts) throws SQLException, IOException {
-        String response = "";
-        if (pathParts.length == 3) {
-            if (pathParts[2].equals("all")) { // contact/all
-                response = contactController.getContacts();
-                exchange.sendResponseHeaders(200, response.length());
-            } else {
-                response = "Invalid request";
-                exchange.sendResponseHeaders(400, response.length());
-            }
-        } else if (pathParts.length == 2) {
-            String email = JwtController.verifyToken(exchange);
-            if (email != null) {
-                response = contactController.getContact(email);
-                if (response == null) {
-                    response = "Contact not found";
-                    exchange.sendResponseHeaders(404, response.length());
-                } else {
-                    exchange.sendResponseHeaders(200, response.length());
-                    return response;
-                }
-            } else {
-                response = "Unauthorized";
-                exchange.sendResponseHeaders(401, response.length());
-            }
-        }
-        else {
-            response = "Invalid request";
-            exchange.sendResponseHeaders(400, response.length());
-        }
-
-        return response;
     }
 
     private String handlePostRequest(HttpExchange exchange, ContactController contactController, String[] pathParts) throws IOException, SQLException {

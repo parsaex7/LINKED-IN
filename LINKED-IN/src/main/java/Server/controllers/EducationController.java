@@ -2,6 +2,8 @@ package Server.controllers;
 
 import Server.DAO.EducationDAO;
 import Server.models.Education;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -32,8 +34,10 @@ public class EducationController {
         educationDAO.deleteEducation(email, school);
     }
 
-    public ArrayList<Education> getEducations(String email) throws SQLException {
-        return educationDAO.getEducations(email);
+    public String getEducations(String email) throws SQLException, JsonProcessingException {
+        ArrayList<Education> educations= educationDAO.getEducations(email);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(educations);
     }
 
     public Education getEducationByEmailAndSchool(String email, String school) throws SQLException {
@@ -44,7 +48,9 @@ public class EducationController {
         educationDAO.deleteEducations();
     }
 
-    public ArrayList<Education> getAllEducations() throws SQLException {
-        return educationDAO.getEducations();
+    public String  getAllEducations() throws SQLException, JsonProcessingException {
+        ArrayList<Education> educations= educationDAO.getEducations();
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(educations);
     }
 }
