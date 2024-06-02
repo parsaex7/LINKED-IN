@@ -23,6 +23,20 @@ public class EducationHandler implements HttpHandler {
         String response = "";
 
         try {
+            try {
+                String email = JwtController.verifyToken(exchange);
+                if (email == null) {
+                    response = "Unauthorized";
+                    exchange.sendResponseHeaders(401, response.length());
+                    sendResponse(exchange, response);
+                    return;
+                }
+            } catch (Exception e) {
+                response = "Unauthorized";
+                exchange.sendResponseHeaders(401, response.length());
+                sendResponse(exchange, response);
+                return;
+            }
             switch (request) {
                 case "GET":
                     response = handleGetRequest(exchange, educationController, pathParts);
