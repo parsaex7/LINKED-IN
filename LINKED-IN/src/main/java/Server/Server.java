@@ -19,6 +19,7 @@ public class Server {
             server.createContext("/like", new LikeHandler()); //for like/unlike post and get all likes of one post and get all likes of one user
             server.createContext("/comment", new CommentHandler()); //for make/update/delete/get Comment
             server.createContext("/follow", new FollowHandler()); //for follow/unfollow user and get all followers of one user and get all following of one user
+            server.createContext("/search", new SearchHandler()); //for searching among users
 
             server.start();
 
