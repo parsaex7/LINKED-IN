@@ -17,6 +17,8 @@ public class FollowHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
 
 
+
+
         FollowController followController = new FollowController();
         String request = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
@@ -40,6 +42,9 @@ public class FollowHandler implements HttpHandler {
         }
         try {
             switch (request) {
+                case "GET":
+                    response = handleGetRequest(exchange, followController, pathParts);
+                    break;
                 case "POST":
                     response = handlePostRequest(exchange, followController, pathParts);
                     break;
@@ -54,6 +59,7 @@ public class FollowHandler implements HttpHandler {
                     exchange.sendResponseHeaders(405, response.length());
             }
         } catch (Exception e) {
+
             response = "Internal server error";
             exchange.sendResponseHeaders(500, response.length());
         }
@@ -67,6 +73,7 @@ public class FollowHandler implements HttpHandler {
         }
         exchange.close();
     }
+
 
     private String handlePostRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
         String response = "";
@@ -85,13 +92,6 @@ public class FollowHandler implements HttpHandler {
             } catch (UserNotExistException e) {
                 response = "User not found";
                 exchange.sendResponseHeaders(404, response.length());
-            }
-        } else {
-            response = "Invalid request";
-            exchange.sendResponseHeaders(400, response.length());
-        }
-        return response;
-    }
 
     public String handleDeleteRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
         String response = "";
@@ -107,13 +107,16 @@ public class FollowHandler implements HttpHandler {
                 }
                 followController.deleteFollow(follower_email, following_email, email);
                 response = "User unfollowed successfully OR User deleted from followers";
+
                 exchange.sendResponseHeaders(200, response.length());
             } catch (UserNotExistException e) {
                 response = "user not found";
                 exchange.sendResponseHeaders(404, response.length());
+
             } catch (AccessDeniedException e) {
                 response = "Access denied";
                 exchange.sendResponseHeaders(403, response.length());
+
             }
         } else {
             response = "Invalid request";
@@ -121,6 +124,7 @@ public class FollowHandler implements HttpHandler {
         }
         return response;
     }
+
 
     public String handleGetRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
         String response = "";
@@ -168,6 +172,7 @@ public class FollowHandler implements HttpHandler {
                 }
             } else {
                 response = "Invalid request";
+
                 exchange.sendResponseHeaders(400, response.length());
             }
         } else {

@@ -4,7 +4,10 @@ import Server.Exceptions.AccessDeniedException;
 import Server.Exceptions.UserNotExistException;
 import Server.models.Follow;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FollowDAO {
@@ -71,12 +74,38 @@ public class FollowDAO {
         }
     }
 
+
     public boolean isFollowExist(String follower_email, String following_email) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM follows WHERE follower_email = ? AND following_email = ?");
         statement.setString(1, follower_email);
         statement.setString(2, following_email);
         ResultSet resultSet = statement.executeQuery();
         return resultSet.next();
+    }
+
+    public ArrayList<String> getfollowers(String email) throws SQLException {
+        ArrayList<String> result=new ArrayList<>();
+        PreparedStatement statement= connection.prepareStatement("SELECT * FROM follow WHERE email2=?");
+        statement.setString(1,email);
+        ResultSet resultSet=statement.executeQuery();
+        String emailToAdd;
+        while (resultSet.next()){
+            emailToAdd=resultSet.getString("email1");
+            result.add(emailToAdd);
+        }
+        return result;
+    }
+    public ArrayList<String> getfollowings(String email) throws SQLException {
+        ArrayList<String> result=new ArrayList<>();
+        PreparedStatement statement= connection.prepareStatement("SELECT * FROM follow WHERE email2=?");
+        statement.setString(1,email);
+        ResultSet resultSet=statement.executeQuery();
+        String emailToAdd;
+        while (resultSet.next()){
+            emailToAdd=resultSet.getString("email2");
+            result.add(emailToAdd);
+        }
+        return result;
     }
 
 }

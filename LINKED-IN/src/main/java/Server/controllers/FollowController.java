@@ -50,4 +50,14 @@ public class FollowController {
     public boolean isFollowExist(String follower_email, String following_email) throws SQLException {
         return followDAO.isFollowExist(follower_email, following_email);
     }
+    public String getFollowers(String email) throws SQLException, JsonProcessingException {
+        ArrayList<String> result=followDAO.getfollowers(email);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(result);
+    }
+    public String getFollowings(String email) throws SQLException, JsonProcessingException {
+        ArrayList<String> result=followDAO.getfollowings(email);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(result);
+    }
 }
