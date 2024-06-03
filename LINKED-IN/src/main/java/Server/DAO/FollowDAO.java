@@ -5,7 +5,9 @@ import Server.models.Follow;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FollowDAO {
     private final Connection connection;
@@ -34,5 +36,29 @@ public class FollowDAO {
     PreparedStatement statement= connection.prepareStatement("DELETE FROM follow WHERE emial1=? AND email2=?");
         statement.setString(1,email1);
         statement.setString(2,email2);
+    }
+    public ArrayList<String> getfollowers(String email) throws SQLException {
+        ArrayList<String> result=new ArrayList<>();
+        PreparedStatement statement= connection.prepareStatement("SELECT * FROM follow WHERE email2=?");
+        statement.setString(1,email);
+        ResultSet resultSet=statement.executeQuery();
+        String emailToAdd;
+        while (resultSet.next()){
+            emailToAdd=resultSet.getString("email1");
+            result.add(emailToAdd);
+        }
+        return result;
+    }
+    public ArrayList<String> getfollowings(String email) throws SQLException {
+        ArrayList<String> result=new ArrayList<>();
+        PreparedStatement statement= connection.prepareStatement("SELECT * FROM follow WHERE email2=?");
+        statement.setString(1,email);
+        ResultSet resultSet=statement.executeQuery();
+        String emailToAdd;
+        while (resultSet.next()){
+            emailToAdd=resultSet.getString("email2");
+            result.add(emailToAdd);
+        }
+        return result;
     }
 }
