@@ -129,4 +129,11 @@ public class UserDao {
         }
         return users;
     }
+
+    public boolean isUserExist(String email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
 }
