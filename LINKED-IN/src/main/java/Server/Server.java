@@ -17,6 +17,7 @@ public class Server {
             server.createContext("/education", new EducationHandler()); //for make/update/delete/get Education Details
             server.createContext("/post", new PostHandler()); //for make/update/delete/get Post
             server.createContext("/like", new LikeHandler()); //for like/unlike post and get all likes of one post and get all likes of one user
+            server.createContext("/comment", new CommentHandler()); //for make/update/delete/get Comment
 
             server.start();
 

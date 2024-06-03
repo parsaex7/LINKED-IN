@@ -42,11 +42,6 @@ public class UserDao {
         statement.executeUpdate();
     }
 
-    public void deleteUser(String email) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE email = ?");
-        statement.setString(1, email);
-        statement.executeUpdate();
-    }
 
     public void deleteUsers() throws SQLException {
         PreparedStatement statement = connection.prepareStatement("DELETE FROM users");
@@ -67,21 +62,8 @@ public class UserDao {
         statement.setString(10, email);
         statement.executeUpdate();
     }
-    public void updateUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, country = ?, city = ?, additionalname = ?, birthdate = ?, registrationDate = ? WHERE email = ? AND password = ?");
-        statement.setString(1, user.getName());
-        statement.setString(2, user.getLastName());
-        statement.setString(3, user.getEmail().toLowerCase());
-        statement.setString(4, user.getPassword());
-        statement.setString(5, user.getCountry());
-        statement.setString(6, user.getCity());
-        statement.setString(7, user.getAdditionalName());
-        statement.setDate(8, user.getBirthDate());
-        statement.setDate(9, user.getRegistrationDate());
-        statement.setString(10, user.getEmail());
-        statement.setString(11, user.getPassword());
-        statement.executeUpdate();
-    }
+
+
     public User getUser(String email) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
         statement.setString(1, email);

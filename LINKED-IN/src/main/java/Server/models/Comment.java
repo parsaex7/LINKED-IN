@@ -14,6 +14,12 @@ public class Comment {
         this.comment_id = comment_id;
     }
 
+    public Comment(String user_email, String comment, int post_id) {
+        this.user_email = user_email;
+        this.comment = comment;
+        this.post_id = post_id;
+    }
+
     public String getUser_email() {
         return user_email;
     }
