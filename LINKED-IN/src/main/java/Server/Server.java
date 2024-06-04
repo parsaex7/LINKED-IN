@@ -21,6 +21,7 @@ public class Server {
             server.createContext("/follow", new FollowHandler()); //for follow/unfollow user and get all followers of one user and get all following of one user
             server.createContext("/search", new SearchHandler()); //for searching among users
             server.createContext("/follow",new FollowHandler());//for follow /unfollow/get followers/get followings
+            server.createContext("/send", new SendMessageHandler()); //for sending message in private // need work
 
 
             server.start();
