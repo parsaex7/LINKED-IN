@@ -1,7 +1,7 @@
 package Server.DAO;
 
 
-import Server.Exceptions.AlreadyFollowed;
+import Server.Exceptions.AlreadyFollowedException;
 import Server.Exceptions.UserNotExistException;
 import Server.Exceptions.followingNotFound;
 import Server.models.Follow;
@@ -21,14 +21,14 @@ public class FollowDAO {
     }
 
 
-    public void follow(Follow follow) throws SQLException, UserNotExistException, AlreadyFollowed {//following_email wants to follow follower_email
+    public void follow(Follow follow) throws SQLException, UserNotExistException, AlreadyFollowedException {//following_email wants to follow follower_email
         String following_email = follow.getFollowing_email();
         String follower_email = follow.getFollower_email();
         if ((userDao.getUser(following_email) == null) || (userDao.getUser(follower_email) == null)) {
             throw new UserNotExistException();
         }
         if (isFollowExist(follower_email, following_email)) {
-            throw new AlreadyFollowed();
+            throw new AlreadyFollowedException();
         }
         PreparedStatement statement = connection.prepareStatement("INSERT INTO follows (following_email, follower_email) VALUES (?,?)");
         statement.setString(1, following_email);

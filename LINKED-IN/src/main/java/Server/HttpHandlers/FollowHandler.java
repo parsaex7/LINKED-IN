@@ -1,6 +1,6 @@
 package Server.HttpHandlers;
 
-import Server.Exceptions.AlreadyFollowed;
+import Server.Exceptions.AlreadyFollowedException;
 import Server.Exceptions.UserNotExistException;
 import Server.Exceptions.followingNotFound;
 import Server.controllers.FollowController;
@@ -81,7 +81,7 @@ public class FollowHandler implements HttpHandler {
             } catch (UserNotExistException e) {
                 response = "User not found";
                 exchange.sendResponseHeaders(404, response.length());
-            } catch (AlreadyFollowed e) {
+            } catch (AlreadyFollowedException e) {
                 response = "User already followed";
                 exchange.sendResponseHeaders(400, response.length());
             }
@@ -92,7 +92,7 @@ public class FollowHandler implements HttpHandler {
         return response;
     }
 
-        private String handleDeleteRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
+        private String handleDeleteRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException{
             String response = "";
             String email = JwtController.verifyToken(exchange);
             if (pathParts.length == 3) {//follow/follower_email
