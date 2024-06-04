@@ -1,7 +1,9 @@
 package Server.controllers;
 
 import Server.DAO.FollowDAO;
+import Server.Exceptions.AlreadyFollowed;
 import Server.Exceptions.UserNotExistException;
+import Server.Exceptions.followingNotFound;
 import Server.models.Follow;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +13,12 @@ import java.util.ArrayList;
 
 public class FollowController {
     private final FollowDAO followDAO=new FollowDAO();
-    public void follow(String email1,String email2) throws SQLException, UserNotExistException {
+    public void follow(String email1,String email2) throws SQLException, UserNotExistException, AlreadyFollowed {
         //email 1 wants to follow email2
         Follow follow=new Follow(email1,email2);
         followDAO.follow(follow);
     }
-    public void unFollow(String email1,String email2) throws SQLException, UserNotExistException {
+    public void unFollow(String email1,String email2) throws SQLException, UserNotExistException, followingNotFound {
         //email 1 wants to unfollow email2
         Follow follow=new Follow(email1,email2);
         followDAO.unFollow(follow);
