@@ -13,6 +13,22 @@ public class LikeDAO {
 
     public LikeDAO() {
         connection = DataBaseConnection.getConnection();
+        try {
+            createLikeTable();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    private void createLikeTable() throws SQLException {
+        PreparedStatement statement= connection.prepareStatement("CREATE TABLE IF NOT EXISTS `likes` (\n" +
+                "  `post_id` int NOT NULL,\n" +
+                "  `user_email` varchar(40) NOT NULL,\n" +
+                "  PRIMARY KEY (`post_id`,`user_email`),\n" +
+                "  KEY `user_email` (`user_email`),\n" +
+                "  CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE,\n" +
+                "  CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE\n" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
+        statement.execute();
     }
 
     public void saveLike(Like like) throws SQLException {

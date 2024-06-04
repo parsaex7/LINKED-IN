@@ -13,6 +13,27 @@ public class ContactDAO {
 
     public ContactDAO() {
         connection = DataBaseConnection.getConnection();
+        try {
+            createContactTable();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    private void createContactTable() throws SQLException {
+        PreparedStatement statement= connection.prepareStatement("CREATE TABLE  IF NOT EXISTS`contact` (\n" +
+                "  `id` int unsigned NOT NULL AUTO_INCREMENT,\n" +
+                "  `email` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                "  `phonenumber` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                "  `numbertype` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                "  `address` varchar(220) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,\n" +
+                "  `contactid` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,\n" +
+                "  `profilelink` varchar(100) DEFAULT NULL,\n" +
+                "  `birthdayaccess` varchar(20) NOT NULL,\n" +
+                "  PRIMARY KEY (`id`),\n" +
+                "  UNIQUE KEY `email` (`email`),\n" +
+                "  CONSTRAINT `FK_contact_users` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE\n" +
+                ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
+        statement.execute();
     }
 
     public void saveContatcDetail(Contact contact) throws SQLException {

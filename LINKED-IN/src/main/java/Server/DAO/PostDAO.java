@@ -13,6 +13,22 @@ public class PostDAO {
 
     public PostDAO() {
         connection = DataBaseConnection.getConnection();
+        try {
+            createPostTable();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    private void createPostTable() throws SQLException {
+        PreparedStatement statement= connection.prepareStatement("CREATE TABLE IF NOT EXISTS `posts` (\n" +
+                "  `post_id` int NOT NULL AUTO_INCREMENT,\n" +
+                "  `user_email` varchar(40) DEFAULT NULL,\n" +
+                "  `post_text` varchar(3000) NOT NULL,\n" +
+                "  PRIMARY KEY (`post_id`),\n" +
+                "  KEY `user_email` (`user_email`),\n" +
+                "  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE\n" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
+        statement.execute();
     }
 
     public void savePost(Post post) throws SQLException {

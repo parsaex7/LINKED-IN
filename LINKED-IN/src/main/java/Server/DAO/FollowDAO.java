@@ -18,8 +18,23 @@ public class FollowDAO {
 
     public FollowDAO() {
         this.connection = DataBaseConnection.getConnection();
+        try {
+            createFollowTable();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
-
+    private void createFollowTable() throws SQLException {
+        PreparedStatement statement= connection.prepareStatement("CREATE TABLE IF NOT EXISTS `follows` (\n" +
+                "  `follower_email` varchar(40) NOT NULL,\n" +
+                "  `following_email` varchar(40) NOT NULL,\n" +
+                "  PRIMARY KEY (`follower_email`,`following_email`),\n" +
+                "  KEY `following_email` (`following_email`),\n" +
+                "  CONSTRAINT `follows_ibfk_1` FOREIGN KEY (`follower_email`) REFERENCES `users` (`email`) ON DELETE CASCADE,\n" +
+                "  CONSTRAINT `follows_ibfk_2` FOREIGN KEY (`following_email`) REFERENCES `users` (`email`) ON DELETE CASCADE\n" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
+        statement.execute();
+    }
 
     public void follow(Follow follow) throws SQLException, UserNotExistException, AlreadyFollowedException {//following_email wants to follow follower_email
         String following_email = follow.getFollowing_email();
