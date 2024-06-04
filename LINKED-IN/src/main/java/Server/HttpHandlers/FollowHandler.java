@@ -16,11 +16,17 @@ public class FollowHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+
+
+
+
         FollowController followController = new FollowController();
         String request = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         String[] pathParts = path.split("/");
         String response = "";
+
+
         try {
             String email = JwtController.verifyToken(exchange);
             if (email == null) {
@@ -46,12 +52,16 @@ public class FollowHandler implements HttpHandler {
                 case "DELETE":
                     response = handleDeleteRequest(exchange, followController, pathParts);
                     break;
+                case "GET":
+                    response = handleGetRequest(exchange, followController, pathParts);
+                    break;
                 default:
-                    response = "Method not allowed";
+                    response = "Invalid request";
                     exchange.sendResponseHeaders(405, response.length());
             }
         } catch (Exception e) {
-            response = "Server side problem";
+
+            response = "Internal server error";
             exchange.sendResponseHeaders(500, response.length());
         }
         sendResponse(exchange, response);
@@ -65,76 +75,101 @@ public class FollowHandler implements HttpHandler {
         exchange.close();
     }
 
-    private String handlePostRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException {
-        String response = "";
-        String email1 = JwtController.verifyToken(exchange);
-        if (pathParts.length == 2) {//follow/email2
-            try {
-                followController.follow(email1, pathParts[1]);
-                response = "followed";
-                exchange.sendResponseHeaders(200, response.length());
-            } catch (UserNotExistException e) {
-                response = "user not found";
-                exchange.sendResponseHeaders(404, response.length());
-            }catch (AlreadyFollowed e){
-                response="Already Followed";
-                exchange.sendResponseHeaders(400, response.length());
-            }
-            catch (IOException | SQLException e) {
-                response = "Server side problem";
-                exchange.sendResponseHeaders(400, response.length());
-            }
-        } else {
-            response = "Invalid request";
-            exchange.sendResponseHeaders(400, response.length());
-        }
-        return response;
-    }
 
-    public String handleDeleteRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException {
-        String response ="";
-        String email1 = JwtController.verifyToken(exchange);
-        if (pathParts.length == 2) {//unFollow/email2
-            try {
-                followController.unFollow(email1, pathParts[1]);
-                response = "Unfollowed";
-                exchange.sendResponseHeaders(200, response.length());
-            } catch (UserNotExistException e) {
-                response = "user not found";
-                exchange.sendResponseHeaders(404, response.length());
-            } catch (followingNotFound e){
-                response="following not found";
-                exchange.sendResponseHeaders(400, response.length());
-            }
-            catch (IOException | SQLException e) {
-                response = "Server side problem";
-                exchange.sendResponseHeaders(400, response.length());
-            }
-        } else {
-            response = "Invalid request";
-            exchange.sendResponseHeaders(400, response.length());
-        }
-        return response;
-    }
-
-    public String handleGetRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException {
+    private String handlePostRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
         String response = "";
         String email = JwtController.verifyToken(exchange);
-        if(email==null){
-            response="user not found";
+        if (pathParts.length == 3) {//follow/follower_email
+            String follower_email = pathParts[2];
+            try {
+                if (followController.isFollowExist(follower_email, email)) {
+                    response = "User already followed";
+                    exchange.sendResponseHeaders(400, response.length());
+                    return response;
+                }
+                followController.createFollow(follower_email, email);
+                response = "User followed successfully";
+                exchange.sendResponseHeaders(200, response.length());
+            } catch (UserNotExistException e) {
+                response = "User not found";
+                exchange.sendResponseHeaders(404, response.length());
+
+
+    public String handleDeleteRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
+        String response = "";
+        String email = JwtController.verifyToken(exchange);
+        if (pathParts.length == 4) {//follow/follower_email/following_email
+            try {
+                String follower_email = pathParts[2];
+                String following_email = pathParts[3];
+                if (!followController.isFollowExist(follower_email, following_email)) {
+                    response = "User not followed";
+                    exchange.sendResponseHeaders(400, response.length());
+                    return response;
+                }
+                followController.deleteFollow(follower_email, following_email, email);
+                response = "User unfollowed successfully OR User deleted from followers";
+
+                exchange.sendResponseHeaders(200, response.length());
+            } catch (UserNotExistException e) {
+                response = "user not found";
+                exchange.sendResponseHeaders(404, response.length());
+            }
+        } else {
+            response = "Invalid request";
             exchange.sendResponseHeaders(400, response.length());
         }
-        else if (pathParts.length == 2) {
-            try {
-                if (pathParts[1].equals("getfollowers")) {//follow/getfollowers
-                    response = followController.getFollowers(email);
-                    exchange.sendResponseHeaders(200, response.length());
-                } else if (pathParts[1].equals("getfollowings")) {//follow/getfollowings
-                    response = followController.getFollowings(email);
+        return response;
+    }
+
+
+    public String handleGetRequest(HttpExchange exchange, FollowController followController, String[] pathParts) throws IOException, SQLException {
+        String response = "";
+        String email = JwtController.verifyToken(exchange);
+        if (pathParts.length == 3) {//follow/followers
+            if (pathParts[2].equals("follower")) {
+                response = followController.getAllFollowers(email);
+                if (response == null) {
+                    response = "No followers found";
+                    exchange.sendResponseHeaders(404, response.length());
+                } else {
                     exchange.sendResponseHeaders(200, response.length());
                 }
-            } catch (Exception e) {
-                response = "Server side problem";
+            } else if (pathParts[2].equals("following")) {
+                response = followController.getAllFollowings(email);
+                if (response == null) {
+                    response = "No followings found";
+                    exchange.sendResponseHeaders(404, response.length());
+                } else {
+                    exchange.sendResponseHeaders(200, response.length());
+                }
+            } else {
+                response = "Invalid request";
+                exchange.sendResponseHeaders(400, response.length());
+            }
+
+        } else if (pathParts.length == 4) {//follow/followings/email
+            if (pathParts[2].equals("following")) {
+                String user_email = pathParts[3];
+                response = followController.getAllFollowings(user_email);
+                if (response == null) {
+                    response = "No followings found";
+                    exchange.sendResponseHeaders(404, response.length());
+                } else {
+                    exchange.sendResponseHeaders(200, response.length());
+                }
+            } else if (pathParts[2].equals("follower")) {
+                String user_email = pathParts[3];
+                response = followController.getAllFollowers(user_email);
+                if (response == null) {
+                    response = "No followers found";
+                    exchange.sendResponseHeaders(404, response.length());
+                } else {
+                    exchange.sendResponseHeaders(200, response.length());
+                }
+            } else {
+                response = "Invalid request";
+
                 exchange.sendResponseHeaders(400, response.length());
             }
         } else {

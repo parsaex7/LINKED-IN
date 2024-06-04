@@ -1,29 +1,27 @@
 package Server.models;
 
 public class Follow {
-    private String email1;//email1
-    private String email2;//email
-    //email1 wants to follow email2
+    private String follower_email;
+    private String following_email;
 
-
-    public Follow(String email1, String email2) {
-        this.email1 = email1;
-        this.email2 = email2;
+    public Follow(String follower_email, String following_email) {
+        this.follower_email = follower_email;
+        this.following_email = following_email;
     }
 
-    public String getEmail1() {
-        return email1;
+    public String getFollowing_email() {
+        return following_email;
     }
 
-    public void setEmail1(String email1) {
-        this.email1 = email1;
+    public void setFollowing_email(String following_email) {
+        this.following_email = following_email;
     }
 
-    public String getEmail2() {
-        return email2;
+    public String getFollower_email() {
+        return follower_email;
     }
 
-    public void setEmail2(String email2) {
-        this.email2 = email2;
+    public void setFollower_email(String follower_email) {
+        this.follower_email = follower_email;
     }
 }

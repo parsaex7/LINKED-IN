@@ -1,5 +1,6 @@
 package Server.DAO;
 
+
 import Server.Exceptions.AlreadyFollowed;
 import Server.Exceptions.UserNotExistException;
 import Server.Exceptions.followingNotFound;
@@ -13,11 +14,12 @@ import java.util.ArrayList;
 
 public class FollowDAO {
     private final Connection connection;
-    UserDao userDao=new UserDao();
+    private UserDao userDao = new UserDao();
 
     public FollowDAO() {
         this.connection = DataBaseConnection.getConnection();
     }
+
 
     public void follow(Follow follow) throws SQLException, UserNotExistException, AlreadyFollowed {//email1 wants to follow email2
         String email1= follow.getEmail1();
@@ -55,6 +57,16 @@ public class FollowDAO {
         statement.setString(2,email2);
         statement.executeUpdate();
     }
+
+
+    public boolean isFollowExist(String follower_email, String following_email) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM follows WHERE follower_email = ? AND following_email = ?");
+        statement.setString(1, follower_email);
+        statement.setString(2, following_email);
+        ResultSet resultSet = statement.executeQuery();
+        return resultSet.next();
+    }
+
     public ArrayList<String> getfollowers(String email) throws SQLException {
         ArrayList<String> result=new ArrayList<>();
         PreparedStatement statement= connection.prepareStatement("SELECT * FROM follow WHERE email2=?");
@@ -79,4 +91,5 @@ public class FollowDAO {
         }
         return result;
     }
+
 }
