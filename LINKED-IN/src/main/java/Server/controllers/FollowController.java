@@ -1,8 +1,9 @@
 package Server.controllers;
 
 import Server.DAO.FollowDAO;
-import Server.Exceptions.AccessDeniedException;
+import Server.Exceptions.AlreadyFollowed;
 import Server.Exceptions.UserNotExistException;
+import Server.Exceptions.followingNotFound;
 import Server.models.Follow;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,44 +12,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FollowController {
-    private FollowDAO followDAO;
-
-    public FollowController() {
-        followDAO = new FollowDAO();
+    private final FollowDAO followDAO=new FollowDAO();
+    public void follow(String email1,String email2) throws SQLException, UserNotExistException, AlreadyFollowed {
+        //email 1 wants to follow email2
+        Follow follow=new Follow(email1,email2);
+        followDAO.follow(follow);
     }
-
-    public void createFollow(String follower_email, String following_email) throws SQLException, UserNotExistException {
-        Follow newFollow = new Follow(follower_email, following_email);
-        followDAO.createFollow(newFollow);
-    }
-
-    public void deleteFollow(String follower_email, String following_email, String email) throws SQLException, UserNotExistException, AccessDeniedException {
-        Follow follow = new Follow(follower_email, following_email);
-        followDAO.deleteFollow(follow, email);
-    }
-
-    public String getAllFollowers(String email) throws SQLException, JsonProcessingException {
-        ArrayList<Follow> followers = followDAO.getAllFollowers(email);
-        if (followers == null) {
-            return null;
-        } else {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(followers);
-        }
-    }
-
-    public String getAllFollowings(String email) throws SQLException, JsonProcessingException {
-        ArrayList<Follow> followings = followDAO.getAllFollowings(email);
-        if (followings == null) {
-            return null;
-        } else {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(followings);
-        }
-    }
-
-    public boolean isFollowExist(String follower_email, String following_email) throws SQLException {
-        return followDAO.isFollowExist(follower_email, following_email);
+    public void unFollow(String email1,String email2) throws SQLException, UserNotExistException, followingNotFound {
+        //email 1 wants to unfollow email2
+        Follow follow=new Follow(email1,email2);
+        followDAO.unFollow(follow);
     }
     public String getFollowers(String email) throws SQLException, JsonProcessingException {
         ArrayList<String> result=followDAO.getfollowers(email);

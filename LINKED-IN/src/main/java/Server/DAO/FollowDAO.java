@@ -1,7 +1,9 @@
 package Server.DAO;
 
-import Server.Exceptions.AccessDeniedException;
+
+import Server.Exceptions.AlreadyFollowed;
 import Server.Exceptions.UserNotExistException;
+import Server.Exceptions.followingNotFound;
 import Server.models.Follow;
 
 import java.sql.Connection;
@@ -18,60 +20,42 @@ public class FollowDAO {
         this.connection = DataBaseConnection.getConnection();
     }
 
-    public void createFollow(Follow follow) throws SQLException, UserNotExistException {
-        if (userDao.isUserExist(follow.getFollower_email()) && userDao.isUserExist(follow.getFollowing_email())) {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO follows (follower_email, following_email) VALUES (?,?)");
-            statement.setString(1, follow.getFollower_email());
-            statement.setString(2, follow.getFollowing_email());
-            statement.executeUpdate();
-        } else {
+
+    public void follow(Follow follow) throws SQLException, UserNotExistException, AlreadyFollowed {//email1 wants to follow email2
+        String email1= follow.getEmail1();
+        String email2= follow.getEmail2();
+        if((userDao.getUser(email1)==null)||(userDao.getUser(email2)==null)){
             throw new UserNotExistException();
         }
+        PreparedStatement checkStatement= connection.prepareStatement("SELECT  * FROM follow WHERE email1=? And email2=? ");
+        checkStatement.setString(1,email1);
+        checkStatement.setString(2,email2);
+        ResultSet resultSet=checkStatement.executeQuery();
+        if(resultSet==null){
+            throw new AlreadyFollowed();
+        }
+        PreparedStatement statement= connection.prepareStatement("INSERT INTO follow(email1,email2) VALUES (?,?)");
+        statement.setString(1,email1);
+        statement.setString(2,email2);
+        statement.executeUpdate();
     }
-
-    public void deleteFollow(Follow follow, String email) throws SQLException, AccessDeniedException, UserNotExistException {
-        if (userDao.isUserExist(follow.getFollower_email()) && userDao.isUserExist(follow.getFollowing_email())) {
-            if (email.equals(follow.getFollowing_email()) || email.equals(follow.getFollower_email())) {
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM follows WHERE follower_email = ? AND following_email = ?");
-                statement.setString(1, follow.getFollower_email());
-                statement.setString(2, follow.getFollowing_email());
-                statement.executeUpdate();
-            } else {
-                throw new AccessDeniedException();
-            }
-        } else throw new UserNotExistException();
-    }
-
-    public ArrayList<Follow> getAllFollowers(String email) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM follows WHERE follower_email = ?");
-        statement.setString(1, email);
-        ResultSet resultSet = statement.executeQuery();
-        ArrayList<Follow> followers = new ArrayList<>();
-        while (resultSet.next()) {
-            Follow follow = new Follow(resultSet.getString("follower_email"), resultSet.getString("following_email"));
-            followers.add(follow);
+    public void unFollow(Follow follow) throws SQLException, UserNotExistException, followingNotFound {//email1 wants to unFollow email2
+        String email1= follow.getEmail1();
+        String email2= follow.getEmail2();
+        if((userDao.getUser(email1)==null)||(userDao.getUser(email2)==null)){
+            throw new UserNotExistException();
         }
-        if (followers.isEmpty()) {
-            return null;
-        } else {
-            return followers;
+        PreparedStatement checkStatement= connection.prepareStatement("SELECT  * FROM follow WHERE email1=? And email2=? ");
+        checkStatement.setString(1,email1);
+        checkStatement.setString(2,email2);
+        ResultSet resultSet=checkStatement.executeQuery();
+        if(resultSet==null){
+            throw new followingNotFound();
         }
-    }
-
-    public ArrayList<Follow> getAllFollowings(String email) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM follows WHERE following_email = ?");
-        statement.setString(1, email);
-        ResultSet resultSet = statement.executeQuery();
-        ArrayList<Follow> followings = new ArrayList<>();
-        while (resultSet.next()) {
-            Follow follow = new Follow(resultSet.getString("follower_email"), resultSet.getString("following_email"));
-            followings.add(follow);
-        }
-        if (followings.isEmpty()) {
-            return null;
-        } else {
-            return followings;
-        }
+        PreparedStatement statement= connection.prepareStatement("DELETE FROM follow WHERE emial1=? AND email2=?");
+        statement.setString(1,email1);
+        statement.setString(2,email2);
+        statement.executeUpdate();
     }
 
 
