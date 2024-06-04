@@ -12,25 +12,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FollowController {
-    private final FollowDAO followDAO=new FollowDAO();
-    public void follow(String email1,String email2) throws SQLException, UserNotExistException, AlreadyFollowed {
-        //email 1 wants to follow email2
-        Follow follow=new Follow(email1,email2);
+    private final FollowDAO followDAO = new FollowDAO();
+
+    public void follow(String following_email, String follower_email) throws SQLException, UserNotExistException, AlreadyFollowed {
+        //following_email wants to follow follower_email
+        Follow follow = new Follow(following_email, follower_email);
         followDAO.follow(follow);
     }
-    public void unFollow(String email1,String email2) throws SQLException, UserNotExistException, followingNotFound {
-        //email 1 wants to unfollow email2
-        Follow follow=new Follow(email1,email2);
+
+    public void unFollow(String following_email, String follower_email) throws SQLException, UserNotExistException, followingNotFound {
+        //following_email wants to unfollow follower_email
+        Follow follow = new Follow(following_email, follower_email);
         followDAO.unFollow(follow);
     }
-    public String getFollowers(String email) throws SQLException, JsonProcessingException {
-        ArrayList<String> result=followDAO.getfollowers(email);
+
+    public String getFollowers(String email) throws SQLException, JsonProcessingException, followingNotFound, UserNotExistException {
+        ArrayList<String> followers = followDAO.getFollowers(email);
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return objectMapper.writeValueAsString(followers);
     }
-    public String getFollowings(String email) throws SQLException, JsonProcessingException {
-        ArrayList<String> result=followDAO.getfollowings(email);
+
+    public String getFollowings(String email) throws SQLException, JsonProcessingException, followingNotFound, UserNotExistException {
+        ArrayList<String> followings = followDAO.getFollowings(email);
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(result);
+        return objectMapper.writeValueAsString(followings);
     }
 }
