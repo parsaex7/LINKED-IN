@@ -1,6 +1,8 @@
 package Server.HttpHandlers;
 
+import Server.Exceptions.AlreadyFollowed;
 import Server.Exceptions.UserNotExistException;
+import Server.Exceptions.followingNotFound;
 import Server.controllers.FollowController;
 import Server.utils.JwtController;
 import com.sun.net.httpserver.HttpExchange;
@@ -74,7 +76,11 @@ public class FollowHandler implements HttpHandler {
             } catch (UserNotExistException e) {
                 response = "user not found";
                 exchange.sendResponseHeaders(404, response.length());
-            } catch (IOException | SQLException e) {
+            }catch (AlreadyFollowed e){
+                response="Already Followed";
+                exchange.sendResponseHeaders(400, response.length());
+            }
+            catch (IOException | SQLException e) {
                 response = "Server side problem";
                 exchange.sendResponseHeaders(400, response.length());
             }
@@ -96,7 +102,11 @@ public class FollowHandler implements HttpHandler {
             } catch (UserNotExistException e) {
                 response = "user not found";
                 exchange.sendResponseHeaders(404, response.length());
-            } catch (IOException | SQLException e) {
+            } catch (followingNotFound e){
+                response="following not found";
+                exchange.sendResponseHeaders(400, response.length());
+            }
+            catch (IOException | SQLException e) {
                 response = "Server side problem";
                 exchange.sendResponseHeaders(400, response.length());
             }
