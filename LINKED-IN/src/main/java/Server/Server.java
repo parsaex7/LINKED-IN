@@ -22,6 +22,8 @@ public class Server {
             server.createContext("/search", new SearchHandler()); //for searching among users
             server.createContext("/follow",new FollowHandler());//for follow /unfollow/get followers/get followings
             server.createContext("/send", new SendMessageHandler()); //for sending message in private // need work
+            server.createContext("/hashtag",new HashTagHandler());//for search hashtag in post
+
 
 
             server.start();
