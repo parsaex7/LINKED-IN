@@ -13,6 +13,30 @@ public class EducationDAO {
 
     public EducationDAO(){
         connection = DataBaseConnection.getConnection();
+        try {
+            createEducationTable();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    private void createEducationTable() throws SQLException {
+        PreparedStatement statement= connection.prepareStatement("CREATE TABLE IF NOT EXISTS `education` (\n" +
+                "  `id` int unsigned NOT NULL AUTO_INCREMENT,\n" +
+                "  `school` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,\n" +
+                "  `degree` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,\n" +
+                "  `fieldofstudy` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,\n" +
+                "  `grade` double NOT NULL DEFAULT '0',\n" +
+                "  `detail` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,\n" +
+                "  `startdate` date DEFAULT NULL,\n" +
+                "  `enddate` date DEFAULT NULL,\n" +
+                "  `workdetail` varchar(500) DEFAULT NULL,\n" +
+                "  `eduaccess` varchar(10) DEFAULT NULL,\n" +
+                "  `email` varchar(40) NOT NULL,\n" +
+                "  KEY `id` (`id`),\n" +
+                "  KEY `email` (`email`),\n" +
+                "  CONSTRAINT `FK_education_users` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE\n" +
+                ") ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
+        statement.execute();
     }
 
     public void saveEducationDetail(Education education, String email) throws SQLException {

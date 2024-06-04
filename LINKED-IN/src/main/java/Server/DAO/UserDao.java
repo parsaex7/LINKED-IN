@@ -11,6 +11,28 @@ public class UserDao {
 
     public UserDao() {
         connection = DataBaseConnection.getConnection();
+        try {
+            createUserTable();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    private void createUserTable() throws SQLException {
+        PreparedStatement statement=connection.prepareStatement("CREATE TABLE IF NOT EXISTS `users` (\n" +
+                "  `\u206Fid` int unsigned NOT NULL AUTO_INCREMENT,\n" +
+                "  `firstname` varchar(20) NOT NULL,\n" +
+                "  `lastname` varchar(40) NOT NULL,\n" +
+                "  `email` varchar(40) NOT NULL,\n" +
+                "  `password` varchar(40) NOT NULL,\n" +
+                "  `country` varchar(30) DEFAULT NULL,\n" +
+                "  `city` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,\n" +
+                "  `additionalname` varchar(40) DEFAULT NULL,\n" +
+                "  `birthdate` date DEFAULT NULL,\n" +
+                "  `registrationDate` date DEFAULT NULL,\n" +
+                "  PRIMARY KEY (`\u206Fid`),\n" +
+                "  UNIQUE KEY `email_UNIQUE` (`email`)\n" +
+                ") ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci");
+        statement.execute();
     }
 
 
