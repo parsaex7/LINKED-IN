@@ -29,7 +29,7 @@ public class logInViewController {
             } else if (!email.getText().endsWith("@gmail.com")) {
                 result.setText("please check your email");
             } else {
-                URL url = new URL("http://localhost:8000/login/" + email.getText() + "/" + passWord.getText());
+                URL url = new URL(ManageUrl.getFristOfUrl()+"login/" + email.getText() + "/" + passWord.getText());
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 int responseCode = con.getResponseCode();
