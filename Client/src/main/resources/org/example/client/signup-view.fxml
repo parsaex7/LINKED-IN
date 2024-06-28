@@ -48,7 +48,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="signUp" onAction="#onSignUp" layoutX="416.0" layoutY="544.0" mnemonicParsing="false" text="Sign Up">
+      <Button fx:id="signUp" layoutX="416.0" layoutY="544.0" mnemonicParsing="false" onAction="#onSignUp" text="Sign Up">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
@@ -60,6 +60,6 @@
       <TextField fx:id="country" layoutX="342.0" layoutY="322.0" />
       <TextField fx:id="city" layoutX="295.0" layoutY="376.0" />
       <TextField fx:id="additionalname" layoutX="426.0" layoutY="423.0" />
-      <Label fx:id="result" layoutX="450.0" layoutY="492.0" textFill="#ec0808" />
+      <Label fx:id="result" alignment="CENTER" layoutX="450.0" layoutY="492.0" textFill="#ec0808" />
    </children>
 </AnchorPane>
