@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.signUpController">
    <children>
       <Label layoutX="375.0" layoutY="14.0" text="Sign Up" textFill="#0977ec">
          <font>
@@ -48,18 +48,18 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="416.0" layoutY="544.0" mnemonicParsing="false" text="Sign Up">
+      <Button fx:id="signUp" onAction="#onSignUp" layoutX="416.0" layoutY="544.0" mnemonicParsing="false" text="Sign Up">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Button>
-      <TextField layoutX="314.0" layoutY="120.0" />
-      <TextField layoutX="476.0" layoutY="169.0" />
-      <TextField layoutX="375.0" layoutY="216.0" />
-      <TextField layoutX="369.0" layoutY="268.0" />
-      <TextField layoutX="342.0" layoutY="322.0" />
-      <TextField layoutX="295.0" layoutY="376.0" />
-      <TextField layoutX="426.0" layoutY="423.0" />
-      <Label layoutX="450.0" layoutY="492.0" textFill="#ec0808" />
+      <TextField fx:id="email" layoutX="314.0" layoutY="120.0" />
+      <TextField fx:id="passWord" layoutX="476.0" layoutY="169.0" />
+      <TextField fx:id="fristName" layoutX="375.0" layoutY="216.0" />
+      <TextField fx:id="lastName" layoutX="369.0" layoutY="268.0" />
+      <TextField fx:id="country" layoutX="342.0" layoutY="322.0" />
+      <TextField fx:id="city" layoutX="295.0" layoutY="376.0" />
+      <TextField fx:id="additionalname" layoutX="426.0" layoutY="423.0" />
+      <Label fx:id="result" layoutX="450.0" layoutY="492.0" textFill="#ec0808" />
    </children>
 </AnchorPane>

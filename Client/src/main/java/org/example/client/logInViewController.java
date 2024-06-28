@@ -24,7 +24,7 @@ public class logInViewController {
     private Label result;
     public void onDone()  {
         try {
-            if ((email.getText() == "") || (passWord.getText() == "")) {
+            if ((email.getText() .equals("") ) || (passWord.getText() .equals(""))) {
                 result.setText("Please compelte fields");
             } else if (!email.getText().endsWith("@gmail.com")) {
                 result.setText("please check your email");
