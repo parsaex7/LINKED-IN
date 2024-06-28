@@ -9,7 +9,8 @@ module org.example.client {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires org.json;
 
     opens org.example.client to javafx.fxml;
-    exports org.example.client;
+    exports rg.example.client;
 }

@@ -1,4 +1,4 @@
-package org.example.client;
+package rg.example.client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
+import org.json.JSONObject;
 public class signUpController {
     @FXML
     private TextField email;
@@ -38,10 +38,10 @@ public class signUpController {
         }
         else{
             try {
-
-                URL url = new URL(ManageUrl.getFristOfUrl() + ".......");
+                URL url = new URL(ManageUrl.getFristOfUrl() + "user");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
+
             } catch (Exception e) {
                 result.setText("connection failed");
             }
