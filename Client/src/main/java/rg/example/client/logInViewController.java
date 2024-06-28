@@ -50,7 +50,7 @@ public class logInViewController {
                 } else if (response.equals("Method not allowed")) {
                     result.setText("Method not allowed");
                 } else if (response.startsWith("Welcome")) {
-                    //new page
+                    //go to home page
                 }
             }
         }catch (Exception e){
