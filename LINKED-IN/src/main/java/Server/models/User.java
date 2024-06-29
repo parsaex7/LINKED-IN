@@ -42,6 +42,13 @@ public class User {
 
     }
 
+    public User(String firstName, String lastName, String email, String passWord) {
+        this.name = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = passWord;
+    }
+
     public String getName() {
         return name;
     }

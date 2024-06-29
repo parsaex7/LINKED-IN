@@ -8,12 +8,12 @@
 
 <AnchorPane prefHeight="670.0" prefWidth="950.0" style="-fx-background-color: -fx-background-color: black;" styleClass="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.introViewController">
    <children>
-      <Button fx:id="logIn" layoutX="260.0" layoutY="434.0" mnemonicParsing="false" onAction="#onLogIn" text="Log in ">
+      <Button fx:id="loginButton" layoutX="260.0" layoutY="434.0" mnemonicParsing="false" onAction="#loginController" text="Log in ">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="signUp" layoutX="634.0" layoutY="434.0" mnemonicParsing="false" onAction="#onSignUp" text="Sign Up">
+      <Button fx:id="signupButton" layoutX="634.0" layoutY="434.0" mnemonicParsing="false" onAction="#signupController" text="Sign Up">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>

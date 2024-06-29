@@ -3,6 +3,7 @@ package Server.DAO;
 import Server.models.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UserDao {
@@ -37,7 +38,7 @@ public class UserDao {
 
 
     public void saveUser(User user) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (firstname, lastname, email, password, country, city, additionalname, birthdate, registrationDate) VALUES (?,?,?,?,?,?,?,?,?)");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (firstname, lastname, email, password, country, city, additionalname, birthdate, registrationdate) VALUES (?,?,?,?,?,?,?,?,?)");
         statement.setString(1, user.getName());
         statement.setString(2, user.getLastName());
         statement.setString(3, user.getEmail().toLowerCase());
@@ -52,6 +53,18 @@ public class UserDao {
         } catch (SQLException e) {
             System.out.println("duplicate email");
         }
+    }
+
+    public void signupUser(User user) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO users (firstname, lastname, email, password, registrationdate) VALUES (?,?,?,?,?)");
+
+        statement.setString(1, user.getName());
+        statement.setString(2, user.getLastName());
+        statement.setString(3, user.getEmail().toLowerCase());
+        statement.setString(4, user.getPassword());
+        statement.setDate(5, Date.valueOf(LocalDate.now()));
+
+        statement.executeUpdate();
     }
 
     public void deleteUser(User user) throws SQLException {
