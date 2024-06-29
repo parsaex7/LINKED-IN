@@ -1,4 +1,4 @@
-package rg.example.client;
+package org.example.client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -6,11 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 public class logInViewController {
@@ -28,7 +25,7 @@ public class logInViewController {
                 result.setText("Please compelte fields");
             } else if (!email.getText().endsWith("@gmail.com")) {
                 result.setText("please check your email");
-            } else {
+            } else { //http://localhost:8000/login/email/password
                 URL url = new URL(ManageUrl.getFristOfUrl()+"login/" + email.getText() + "/" + passWord.getText());
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
@@ -41,6 +38,7 @@ public class logInViewController {
                 }
                 in.close();
                 String response = response1.toString();
+                System.out.println(response);
                 if (response.equals("User not found OR invalid password")) {
                     result.setText("User not found OR invalid password");
                 } else if (response.equals("Error in login user")) {
@@ -55,6 +53,7 @@ public class logInViewController {
             }
         }catch (Exception e){
             result.setText("connection failed");
+            e.printStackTrace();
         }
     }
 }

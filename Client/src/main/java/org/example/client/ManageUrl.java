@@ -1,4 +1,4 @@
-package rg.example.client;
+package org.example.client;
 
 public class ManageUrl {
     public static String getFristOfUrl(){
