@@ -3,6 +3,7 @@ package Server.HttpHandlers;
 import Server.Exceptions.DuplicateUserException;
 import Server.Exceptions.UserNotExistException;
 import Server.controllers.UserController;
+import Server.utils.JwtController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -39,7 +40,7 @@ public class UserHandler implements HttpHandler {
                     exchange.sendResponseHeaders(405, response.length());
             }
         } catch (Exception e) {
-            response = "Internal server error";
+            response = "serverError";
             exchange.sendResponseHeaders(500, response.length());
             e.printStackTrace();
         } finally {
@@ -69,28 +70,29 @@ public class UserHandler implements HttpHandler {
         return response;
     }
 
-    private String handlePostRequest(HttpExchange exchange, UserController userController, String[] pathParts) throws IOException, SQLException, DuplicateUserException {
+    private String handlePostRequest(HttpExchange exchange, UserController userController, String[] pathParts) throws IOException, SQLException {
         String response = "";
         if (pathParts.length == 2) {
-            JSONObject jsonObject = getJsonObject(exchange);
-            if (isValidJson(jsonObject)) {
-                userController.createUser(
-                        jsonObject.getString("firstname"),
-                        jsonObject.getString("lastname"),
-                        jsonObject.getString("email"),
-                        jsonObject.getString("password"),
-                        jsonObject.getString("country"),
-                        jsonObject.getString("city"),
-                        jsonObject.getString("additionalname"),
-                        new Date(jsonObject.getLong("birthday")), new Date(jsonObject.getLong("registrationdate")));
-                response = "User added successfully";
-                exchange.sendResponseHeaders(200, response.length());
-            } else {
-                response = "Bad request";
-                exchange.sendResponseHeaders(400, response.length());
+            try {
+                JSONObject jsonObject = getJsonObject(exchange);
+                if (isValidJson(jsonObject)) {
+                    userController.signupUser(
+                            jsonObject.getString("firstname"),
+                            jsonObject.getString("lastname"),
+                            jsonObject.getString("email"),
+                            jsonObject.getString("password"));
+                    response = JwtController.createToken(jsonObject.getString("email"));
+                    exchange.sendResponseHeaders(200, response.length());
+                } else {
+                    response = "invalidRequest";
+                    exchange.sendResponseHeaders(400, response.length());
+                }
+            } catch (DuplicateUserException e) {
+                response = "duplicate";
+                exchange.sendResponseHeaders(409, response.length());
             }
         } else {
-            response = "Invalid path";
+            response = "invalidRequest";
             exchange.sendResponseHeaders(400, response.length());
         }
         return response;
@@ -123,9 +125,7 @@ public class UserHandler implements HttpHandler {
 
     private static boolean isValidJson(JSONObject jsonObject) {
         return jsonObject.has("firstname") && jsonObject.has("lastname") &&
-                jsonObject.has("email") && jsonObject.has("password") &&
-                jsonObject.has("country") && jsonObject.has("city") &&
-                jsonObject.has("additionalname");
+                jsonObject.has("email") && jsonObject.has("password");
     }
 
     private void sendResponse(HttpExchange exchange, String response) throws IOException {

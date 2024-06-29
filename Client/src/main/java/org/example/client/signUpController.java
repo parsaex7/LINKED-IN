@@ -1,89 +1,87 @@
 package org.example.client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import javafx.stage.Stage;
 import org.json.JSONObject;
 public class signUpController {
-    @FXML
-    private TextField email;
-    @FXML
-    private TextField passWord;
-    @FXML
-    private TextField fristName;
-    @FXML
-    private TextField lastName;
-    @FXML
-    private TextField country;
-    @FXML
-    private TextField city;
-    @FXML
-    private TextField additionalname;
-    @FXML
-    private Button signUp;
-    @FXML
-    private Label result;
-    public void onSignUp(){
-        if((email.getText().equals(""))||(passWord.getText().equals(""))){
-            result.setText("Check your email or password");
-        }
-        else if(!email.getText().endsWith("@gmail.com")){
-            result.setText("enter a valid email");
-        }
-        else{
-            try {
-                URL url = new URL(ManageUrl.getFristOfUrl() + "user");
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("POST");
-                con.setDoOutput(true);
-                //to create JSON object with data
-                JSONObject json = new JSONObject();
-                json.put("firstname",fristName.getText());
-                json.put("lastname",lastName.getText());
-                json.put("email",email.getText());
-                json.put("password",passWord.getText());
-                json.put("country",country.getText());
-                json.put("city",city.getText());
-                json.put("additionalname",additionalname.getText());
-                // to Write the JSON data to the output stream
-                OutputStream os = con.getOutputStream();
-                os.write(json.toString().getBytes());
-                os.flush();
-                os.close();
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputline;
-                StringBuffer response1 = new StringBuffer();
-                while ((inputline = in.readLine()) != null) {
-                    response1.append(inputline);
-                }
-                in.close();
-                String response = response1.toString();
-                if(response.equals("Method not allowed")){
-                    result.setText("Method not allowed");
-                }
-                else if(response.equals("Internal server error")){
-                    result.setText("Internal server error");
-                }
-                else if(response.equals("Bad request")){
-                    result.setText("Bad request");
-                }
-                else if(response.equals("Invalid path")){
-                    result.setText("Invalid path");
-                }
-                else{
-                    //go to home page
-                }
 
+    @FXML
+    private TextField emailTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
+    private TextField firstNameTextField;
+    @FXML
+    private TextField lastNameTextField;
+    @FXML
+    private Button signupButton;
+    @FXML
+    private Label resultLabel;
+    @FXML
+    private Button loginButton;
+
+    public void signupController(ActionEvent event) {
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        if (!Functions.patternMatches(email)) {
+            resultLabel.setText("Invalid email");
+        } else if (password.length() < 8) {
+            resultLabel.setText("Invalid password. At least 8 Character");
+        } else {
+            try {
+                URL url = new URL(Functions.getFirstOfUrl() + "user");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                JSONObject json = new JSONObject();
+                json.put("firstname",firstNameTextField.getText());
+                json.put("lastname",lastNameTextField.getText());
+                json.put("email", email);
+                json.put("password",passwordTextField.getText());
+
+                //write to server and read response
+                Functions.sendResponse(connection, json.toString());
+                int statusCode = connection.getResponseCode();
+
+                //check response
+                if (statusCode == 409) {
+                    resultLabel.setText("Email already Exists");
+                } else if (statusCode >= 400) {
+                    resultLabel.setText("Internal Error");
+                } else {
+                    resultLabel.setText("Signup successful");
+                    String response = Functions.getResponse(connection);
+                    Functions.saveUser(email, password, firstNameTextField.getText(), lastNameTextField.getText(), response);
+                    //TODO: move to next page
+                }
             } catch (Exception e) {
-                result.setText("connection failed");
+                resultLabel.setText("Internal Error");
+                e.printStackTrace();
             }
         }
+    }
+
+    public void loginButtonController(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

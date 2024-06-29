@@ -35,6 +35,15 @@ public class UserController {
         }
     }
 
+    public void signupUser(String firstName, String lastName, String email, String passWord) throws SQLException, DuplicateUserException {
+        User user = new User(firstName, lastName, email, passWord);
+        if (userDao.getUser(user.getEmail()) != null) {
+            throw new DuplicateUserException();
+        } else {
+            userDao.signupUser(user);
+        }
+    }
+
 
     public void deleteUserByEmail(String email) throws SQLException, UserNotExistException {
         User user = userDao.getUser(email);

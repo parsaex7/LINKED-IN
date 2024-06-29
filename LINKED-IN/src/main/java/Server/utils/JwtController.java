@@ -35,5 +35,4 @@ public class JwtController {
             return null;
         }
     }
-
 }

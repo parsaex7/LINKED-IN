@@ -1,59 +1,70 @@
 package org.example.client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class logInViewController {
     @FXML
-    private TextField email;
+    private TextField emailTextField;
     @FXML
-    private TextField passWord;
+    private TextField passwordTextField;
     @FXML
-    private Button done;
+    private Button loginButton;
     @FXML
-    private Label result;
-    public void onDone()  {
+    private Label resultLabel;
+    @FXML
+    private Button signUpButton;
+
+    public void loginButtonClicked() {
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
         try {
-            if ((email.getText() .equals("") ) || (passWord.getText() .equals(""))) {
-                result.setText("Please compelte fields");
-            } else if (!email.getText().endsWith("@gmail.com")) {
-                result.setText("please check your email");
-            } else { //http://localhost:8000/login/email/password
-                URL url = new URL(ManageUrl.getFristOfUrl()+"login/" + email.getText() + "/" + passWord.getText());
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("GET");
-                int responseCode = con.getResponseCode();
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String inputline;
-                StringBuffer response1 = new StringBuffer();
-                while ((inputline = in.readLine()) != null) {
-                    response1.append(inputline);
-                }
-                in.close();
-                String response = response1.toString();
-                System.out.println(response);
-                if (response.equals("User not found OR invalid password")) {
-                    result.setText("User not found OR invalid password");
-                } else if (response.equals("Error in login user")) {
-                    result.setText("Error in login user");
-                } else if (response.equals("Invalid request")) {
-                    result.setText("Invalid request");
-                } else if (response.equals("Method not allowed")) {
-                    result.setText("Method not allowed");
-                } else if (response.startsWith("Welcome")) {
-                    //go to home page
+            if (!Functions.patternMatches(email)) {
+                resultLabel.setText("Invalid email");
+            } else if (password.length() < 8) {
+                resultLabel.setText("Invalid password");
+            } else {
+                //http://localhost:8000/login/email/password
+                URL url = new URL(Functions.getFirstOfUrl() + "login/" + emailTextField.getText() + "/" + passwordTextField.getText());
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                int statusCode = connection.getResponseCode();
+                if (statusCode == 404) { //user not found
+                    resultLabel.setText("User not found");
+                } else if (statusCode >= 400) {
+                    resultLabel.setText("Server error");
+                } else {
+                    resultLabel.setText("Login successful");
+                    String response = Functions.getResponse(connection);
+                    Functions.saveUser(email, password, null, null, response);
+                    //TODO: open new window
                 }
             }
-        }catch (Exception e){
-            result.setText("connection failed");
+        } catch (Exception e) {
+            resultLabel.setText("connection failed");
             e.printStackTrace();
         }
+    }
+
+    public void signUpButtonController(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("signup-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) signUpButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

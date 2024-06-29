@@ -23,7 +23,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="45.0" layoutY="211.0" text="please Enter your Frist Name :">
+      <Label layoutX="45.0" layoutY="211.0" text="please Enter your First Name :">
          <font>
             <Font size="24.0" />
          </font>
@@ -33,33 +33,21 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="45.0" layoutY="317.0" text="please Enter your Country :">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="45.0" layoutY="371.0" text="please Enter your City :">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="45.0" layoutY="418.0" text="please Enter your Additionalname :">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="signUp" layoutX="416.0" layoutY="544.0" mnemonicParsing="false" onAction="#onSignUp" text="Sign Up">
+      <Button fx:id="signupButton" layoutX="416.0" layoutY="544.0" mnemonicParsing="false" onAction="#signupController" text="Sign Up">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Button>
-      <TextField fx:id="email" layoutX="314.0" layoutY="120.0" />
-      <TextField fx:id="passWord" layoutX="476.0" layoutY="169.0" />
-      <TextField fx:id="fristName" layoutX="375.0" layoutY="216.0" />
-      <TextField fx:id="lastName" layoutX="369.0" layoutY="268.0" />
-      <TextField fx:id="country" layoutX="342.0" layoutY="322.0" />
-      <TextField fx:id="city" layoutX="295.0" layoutY="376.0" />
-      <TextField fx:id="additionalname" layoutX="426.0" layoutY="423.0" />
-      <Label fx:id="result" alignment="CENTER" layoutX="450.0" layoutY="492.0" textFill="#ec0808" />
+      <TextField fx:id="emailTextField" layoutX="314.0" layoutY="120.0" />
+      <TextField fx:id="passwordTextField" layoutX="476.0" layoutY="169.0" />
+      <TextField fx:id="firstNameTextField" layoutX="375.0" layoutY="216.0" />
+      <TextField fx:id="lastNameTextField" layoutX="369.0" layoutY="268.0" />
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="450.0" layoutY="492.0" textFill="#ec0808" />
+      <Label layoutX="45.0" layoutY="335.0" text="Already Have an Account?">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="loginButton" layoutX="284.0" layoutY="335.0" mnemonicParsing="false" onAction="#loginButtonController" text="Login" />
    </children>
 </AnchorPane>

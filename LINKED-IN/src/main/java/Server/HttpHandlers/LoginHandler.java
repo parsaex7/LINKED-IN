@@ -27,21 +27,18 @@ public class LoginHandler implements HttpHandler {
                     try {
                         response = userController.getUserByEmailAndPassword(email, password);
                         if (response == null) {
-                            response = "User not found OR invalid password";
+                            response = "inputError";
                             exchange.sendResponseHeaders(404, response.length());
                         } else {
                             String token = JwtController.createToken(email);
-                            System.out.println(token);
                             Headers responseHeaders = exchange.getResponseHeaders();
                             responseHeaders.add("JWT", token); // Add JWT to response headers
-                            response = "Welcome " + email + ", your token is: " + token;
-                            System.out.println(response);
+                            response = token;
                             exchange.sendResponseHeaders(200, response.length());
                         }
                     } catch (Exception e) {
-                        response = "Error in login user";
+                        response = "serverError";
                         exchange.sendResponseHeaders(500, response.length());
-                        System.out.println("Error in login user");
                         e.printStackTrace();
                     } finally {
                         OutputStream os = exchange.getResponseBody();
@@ -49,7 +46,7 @@ public class LoginHandler implements HttpHandler {
                         os.close();
                     }
                 } else {
-                    response = "Invalid request";
+                    response = "invalidRequest";
                     exchange.sendResponseHeaders(400, response.length());
                     OutputStream os = exchange.getResponseBody();
                     os.write(response.getBytes());
@@ -58,7 +55,7 @@ public class LoginHandler implements HttpHandler {
                 break;
 
             default:
-                response = "Method not allowed";
+                response = "invalidRequest";
                 exchange.sendResponseHeaders(405, response.length());
                 OutputStream os = exchange.getResponseBody();
                 os.write(response.getBytes());
