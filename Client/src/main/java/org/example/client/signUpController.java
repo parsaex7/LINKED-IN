@@ -1,4 +1,4 @@
-package rg.example.client;
+package org.example.client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -6,12 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import org.json.JSONObject;
 public class signUpController {

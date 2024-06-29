@@ -12,5 +12,5 @@ module org.example.client {
     requires org.json;
 
     opens org.example.client to javafx.fxml;
-    exports rg.example.client;
+    exports org.example.client;
 }

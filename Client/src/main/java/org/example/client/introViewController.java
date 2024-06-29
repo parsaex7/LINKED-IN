@@ -1,4 +1,4 @@
-package rg.example.client;
+package org.example.client;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
