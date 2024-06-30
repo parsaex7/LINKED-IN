@@ -23,6 +23,6 @@
             <Font name="System Bold Italic" size="50.0" />
          </font>
       </Button>
-      <Label fx:id="result" layoutX="461.0" layoutY="480.0" textFill="#f4f0f0" />
+      <Label fx:id="result" layoutX="461.0" layoutY="480.0" prefHeight="18.0" prefWidth="202.0" textFill="#f4f0f0" />
    </children>
 </AnchorPane>

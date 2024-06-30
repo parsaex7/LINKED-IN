@@ -48,14 +48,22 @@ public class postViewController {
             connection.setDoOutput(true);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("message", textArea.getText());
+            Functions.sendResponse(connection, jsonObject.toString());
             int statusCode = connection.getResponseCode();
             if (statusCode == 200) {
-                String response = Functions.getResponse(connection);
+                result.setText("Posted Successfully");
+                Thread.sleep(5000);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+                Stage stage = (Stage) textArea.getScene().getWindow();
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             } else {
-                result.setText("EROR");
+                result.setText("EROR1");
             }
         }catch (Exception e){
-            result.setText("EROR");
+            result.setText("EROR2");
         }
     }
 }
