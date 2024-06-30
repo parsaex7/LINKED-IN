@@ -52,7 +52,6 @@ public class postViewController {
             int statusCode = connection.getResponseCode();
             if (statusCode == 200) {
                 result.setText("Posted Successfully");
-                Thread.sleep(5000);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
                 Stage stage = (Stage) textArea.getScene().getWindow();
                 Parent root = loader.load();

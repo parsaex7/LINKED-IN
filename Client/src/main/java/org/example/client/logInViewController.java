@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +50,15 @@ public class logInViewController {
                 } else {
                     resultLabel.setText("Login successful");
                     String response = Functions.getResponse(connection);
-                    Functions.saveUser(email, password, null, null, response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    System.out.println(jsonObject.getString("name"));
+                    String token = connection.getHeaderField("JWT");
+                    String name = jsonObject.isNull("name") ? null : jsonObject.getString("name");
+                    String lastName = jsonObject.isNull("lastName") ? null : jsonObject.getString("lastName");
+                    String country = jsonObject.isNull("country") ? null : jsonObject.getString("country");
+                    String city = jsonObject.isNull("city") ? null : jsonObject.getString("city");
+                    String additionalName = jsonObject.isNull("additionalName") ? null : jsonObject.getString("additionalName");
+                    Functions.saveUser(email, password, name, lastName, country, city, additionalName, token);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) loginButton.getScene().getWindow();
