@@ -59,10 +59,10 @@ public class postViewController {
                 stage.setScene(scene);
                 stage.show();
             } else {
-                result.setText("EROR1");
+                result.setText("Internal Error");
             }
         }catch (Exception e){
-            result.setText("EROR2");
+            result.setText("Internal Error");
         }
     }
 }

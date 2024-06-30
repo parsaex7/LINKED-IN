@@ -1,5 +1,6 @@
 package Server.HttpHandlers;
 
+import Server.Exceptions.UserNotExistException;
 import Server.controllers.UserController;
 import Server.utils.JwtController;
 import com.sun.net.httpserver.Headers;
@@ -8,6 +9,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
 
 public class LoginHandler implements HttpHandler {
 
@@ -41,6 +43,23 @@ public class LoginHandler implements HttpHandler {
                         exchange.sendResponseHeaders(500, response.length());
                         e.printStackTrace();
                     } finally {
+                        OutputStream os = exchange.getResponseBody();
+                        os.write(response.getBytes());
+                        os.close();
+                    }
+                } else if (pathParts.length == 2) {
+                    System.out.println("HERE");
+                    String email = JwtController.verifyToken(exchange);
+                    if (email == null) {
+                        response = "Unauthorized";
+                        exchange.sendResponseHeaders(401, response.length());
+                    } else {
+                        try {
+                            response = userController.getUserByEmail(email);
+                        } catch (SQLException | UserNotExistException e) {
+                            throw new RuntimeException(e);
+                        }
+                        exchange.sendResponseHeaders(200, response.length());
                         OutputStream os = exchange.getResponseBody();
                         os.write(response.getBytes());
                         os.close();

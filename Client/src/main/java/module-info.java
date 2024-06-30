@@ -11,6 +11,7 @@ module org.example.client {
     requires eu.hansolo.tilesfx;
     requires org.json;
     requires java.sql;
+    requires GNAvatarView;
 
     opens org.example.client to javafx.fxml;
     exports org.example.client;
