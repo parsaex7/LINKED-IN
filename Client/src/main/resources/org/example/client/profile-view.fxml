@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.Avatar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="400.0" prefWidth="73.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="HOME" />
+            <Button mnemonicParsing="false" text="PROFILE" />
+            <Button fx:id="postButton" mnemonicParsing="false" onAction="#postButtonController" text="POST" />
+            <Button mnemonicParsing="false" text="SETTING" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <StackPane prefHeight="670.0" prefWidth="884.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="731.0" prefWidth="877.0">
+               <children>
+                  <VBox prefHeight="208.0" prefWidth="877.0" style="-fx-background-color: #ff0123;" />
+                  <VBox prefHeight="541.0" prefWidth="877.0" spacing="10.0">
+                     <children>
+                        <Label text="NAME" />
+                     </children>
+                     <padding>
+                        <Insets left="50.0" top="100.0" />
+                     </padding></VBox>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Avatar layoutX="54.0" layoutY="113.0" radius="60.0" style="-fx-background-color: #000000;">
+                     <image>
+                        <Image url="@../assets/user.png" />
+                     </image></Avatar>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
