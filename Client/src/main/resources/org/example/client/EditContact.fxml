@@ -43,7 +43,7 @@
             <Font name="System Bold Italic" size="42.0" />
          </font>
       </Label>
-      <Button layoutX="434.0" layoutY="550.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Edit" textFill="#eae5e5">
+      <Button onAction="#onEdit" layoutX="434.0" layoutY="550.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Edit" textFill="#eae5e5">
          <font>
             <Font name="System Bold Italic" size="42.0" />
          </font>
@@ -53,11 +53,12 @@
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Button>
-      <TextField layoutX="339.0" layoutY="140.0" />
-      <TextField layoutX="400.0" layoutY="201.0" />
-      <TextField layoutX="376.0" layoutY="264.0" />
-      <TextField layoutX="265.0" layoutY="335.0" />
-      <TextField layoutX="302.0" layoutY="388.0" />
-      <TextField layoutX="414.0" layoutY="450.0" />
+      <TextField fx:id="profileLink" layoutX="339.0" layoutY="140.0" />
+      <TextField fx:id="phoneNumber" layoutX="400.0" layoutY="201.0" />
+      <TextField fx:id="numberType" layoutX="376.0" layoutY="264.0" />
+      <TextField fx:id="address" layoutX="265.0" layoutY="335.0" />
+      <TextField fx:id="contactId" layoutX="302.0" layoutY="388.0" />
+      <TextField fx:id="birthdayAccess" layoutX="414.0" layoutY="450.0" />
+      <Label fx:id="result" layoutX="475.0" layoutY="524.0" />
    </children>
 </AnchorPane>
