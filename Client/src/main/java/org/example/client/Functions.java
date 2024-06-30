@@ -41,4 +41,7 @@ public class Functions {
     public static void saveUser(String email, String password, String firstName, String lastName, String token) {
         LinkedInApplication.user = new User(email, password, token, firstName, lastName);
     }
+    public static void saveUser(String email, String password, String firstName, String lastName, String country, String city, String additionalname, String token) {
+        LinkedInApplication.user = new User(email, password, token, firstName, lastName, country, city, additionalname);
+    }
 }

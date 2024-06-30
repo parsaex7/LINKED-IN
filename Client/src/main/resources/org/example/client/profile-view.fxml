@@ -33,16 +33,16 @@
                   <VBox prefHeight="208.0" prefWidth="877.0" style="-fx-background-color: #ff0123;" />
                   <VBox prefHeight="541.0" prefWidth="877.0" spacing="10.0">
                      <children>
-                        <Label text="NAME" />
+                        <Label fx:id="nameLabel" text="NAME" />
                      </children>
                      <padding>
-                        <Insets left="50.0" top="100.0" />
+                        <Insets left="40.0" top="90.0" />
                      </padding></VBox>
                </children>
             </VBox>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="93.0" layoutY="80.0" mnemonicParsing="false" prefHeight="125.0" prefWidth="127.0" style="-fx-background-radius: 60px; -fx-background-color: green;" AnchorPane.rightAnchor="662.0" AnchorPane.topAnchor="100.0" />
+                  <Button layoutX="34.0" layoutY="103.0" mnemonicParsing="false" prefHeight="125.0" prefWidth="127.0" style="-fx-background-radius: 60px; -fx-background-color: green;" AnchorPane.rightAnchor="704.0" AnchorPane.topAnchor="103.0" />
                </children>
             </AnchorPane>
          </children>
