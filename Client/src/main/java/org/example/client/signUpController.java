@@ -67,7 +67,12 @@ public class signUpController {
                     resultLabel.setText("Signup successful");
                     String response = Functions.getResponse(connection);
                     Functions.saveUser(email, password, firstNameTextField.getText(), lastNameTextField.getText(), response);
-                    //TODO: move to next page
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
                 }
             } catch (Exception e) {
                 resultLabel.setText("Internal Error");
