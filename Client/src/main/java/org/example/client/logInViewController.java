@@ -50,7 +50,12 @@ public class logInViewController {
                     resultLabel.setText("Login successful");
                     String response = Functions.getResponse(connection);
                     Functions.saveUser(email, password, null, null, response);
-                    //TODO: open new window
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
                 }
             }
         } catch (Exception e) {
