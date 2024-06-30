@@ -1,5 +1,6 @@
 package org.example.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -59,6 +58,18 @@ public class logInViewController {
                     String city = jsonObject.isNull("city") ? null : jsonObject.getString("city");
                     String additionalName = jsonObject.isNull("additionalName") ? null : jsonObject.getString("additionalName");
                     Functions.saveUser(email, password, name, lastName, country, city, additionalName, token);
+
+                    //save token for next time login
+                    try {
+                        File file = new File("src/main/resources/org/example/assets/token.txt");
+                        FileWriter fileWriter = new FileWriter(file);
+                        fileWriter.write(token);
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        System.out.println("error in saving token");
+                        e.printStackTrace();
+                    }
+
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -69,6 +80,49 @@ public class logInViewController {
             }
         } catch (Exception e) {
             resultLabel.setText("connection failed");
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void initialize() {
+        try {
+            File file = new File("src/main/resources/org/example/assets/token.txt");
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String token = bufferedReader.readLine();
+            System.out.println(token);
+            if (token != null) {
+                URL url = new URL(Functions.getFirstOfUrl() + "login");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("JWT", token);
+                int statusCode = connection.getResponseCode();
+                if (statusCode == 200) {
+                    String response = Functions.getResponse(connection);
+                    JSONObject jsonObject = new JSONObject(response);
+                    String name = jsonObject.isNull("name") ? null : jsonObject.getString("name");
+                    String lastName = jsonObject.isNull("lastName") ? null : jsonObject.getString("lastName");
+                    String country = jsonObject.isNull("country") ? null : jsonObject.getString("country");
+                    String city = jsonObject.isNull("city") ? null : jsonObject.getString("city");
+                    String additionalName = jsonObject.isNull("additionalName") ? null : jsonObject.getString("additionalName");
+                    Functions.saveUser(jsonObject.getString("email"), jsonObject.getString("password"), name, lastName, country, city, additionalName, token);    Platform.runLater(() -> {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+                            Parent root = loader.load();
+                            Stage stage = (Stage) resultLabel.getScene().getWindow();
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+        } catch (Exception e) {
+            System.out.println("connection failed");
             e.printStackTrace();
         }
     }

@@ -11,6 +11,7 @@ public class Server {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
+            //http://localhost:8000/login
             server.createContext("/user", new UserHandler()); //for sign up
             server.createContext("/login", new LoginHandler()); //for login
             server.createContext("/contact", new ContactHandler()); //for make/update/delete/get Contact Details
