@@ -1,4 +1,45 @@
-#blurredVBox {
-    -fx-background-color: rgba(255, 255, 255, 0.5); /* Optional background color */
-    -fx-padding: 20; /* Optional padding */
+.text-field{
+    -fx-stroke-width: 0;
+    -fx-border-color: #2C66D7FF;
+    -fx-background-color: linear-gradient(to right,#2250ab , #131313);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-transition: all 0.6s ease 0s;
+    -fx-font family: 'Comic Sans MS';
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+}
+.text-field:hover {
+    -fx-background-color: linear-gradient(to right, #2C66D7, #2250ab);
+    -fx-cursor: hand;
+    -fx-transition: all 0.6s ease 0s;
+    -fx-prompt-text-fill: white;
+}
+.text-field:focused {
+    -fx-prompt-text-fill: white;
+}
+#signUpButton:hover {
+    -fx-scale-x:1;
+    -fx-scale-y:1;
+}
+.button{
+    -fx-background-color: linear-gradient(to right, #2949da, #131313);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.3s ease 0s;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #4A90E2, #2250ab);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-cursor: hand;
+}
+.text-area{
+    -fx-prompt-text-fill: black;
+    -fx-stroke-width: 0;
+    -fx-border-color: #2C66D7FF;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 }

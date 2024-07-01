@@ -1,5 +1,6 @@
 package org.example.client;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.example.model.GlassPane;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -27,6 +31,12 @@ public class logInViewController {
     private Label resultLabel;
     @FXML
     private Button signUpButton;
+    @FXML
+    private StackPane mainPane;
+    @FXML
+    private Label welcomeLabel;
+
+    private GlassPane glassPane;
 
     public void loginButtonClicked() {
         String email = emailTextField.getText();
@@ -37,6 +47,7 @@ public class logInViewController {
             } else if (password.length() < 8) {
                 resultLabel.setText("Invalid password");
             } else {
+                Functions.buttonAnimation(loginButton);
                 //http://localhost:8000/login/email/password
                 URL url = new URL(Functions.getFirstOfUrl() + "login/" + emailTextField.getText() + "/" + passwordTextField.getText());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -84,11 +95,26 @@ public class logInViewController {
     @FXML
     public void initialize() {
         try {
+            glassPane = new GlassPane();
+            glassPane.setPickOnBounds(false);
+            mainPane.getChildren().add(glassPane);
+            loginButton.setMouseTransparent(false);
+            signUpButton.setMouseTransparent(false);
+            passwordTextField.setMouseTransparent(false);
+            emailTextField.setMouseTransparent(false);
+            welcomeLabel.setOpacity(0);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(2), welcomeLabel);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.setCycleCount(1);
+            fadeIn.setAutoReverse(false);
+            fadeIn.play();
+
             File file = new File("src/main/resources/org/example/assets/token.txt");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String token = bufferedReader.readLine();
-            System.out.println(token);
             if (token != null) {
                 URL url = new URL(Functions.getFirstOfUrl() + "login");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -107,7 +133,7 @@ public class logInViewController {
                         try {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
                             Parent root = loader.load();
-                            Stage stage = (Stage) resultLabel.getScene().getWindow();
+                            Stage stage = (Stage) LinkedInApplication.scene.getWindow();
                             Scene scene = new Scene(root);
                             Functions.fadeScene(stage, scene);
                         } catch (IOException e) {
