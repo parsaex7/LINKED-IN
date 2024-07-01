@@ -43,12 +43,12 @@
                 <Font name="System Bold Italic" size="30.0" />
             </font>
         </Label>
-        <Button layoutX="434.0" layoutY="550.0" mnemonicParsing="false"  style="-fx-background-color: black;" text="Edit" textFill="#eae5e5">
+        <Button onAction="#onEdit" fx:id="edit" layoutX="434.0" layoutY="550.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Edit" textFill="#eae5e5">
             <font>
                 <Font name="System Bold Italic" size="42.0" />
             </font>
         </Button>
-        <Button layoutX="25.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;Back" textFill="#efeaea">
+        <Button onAction="#onBack" fx:id="back" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;Back" textFill="#efeaea">
             <font>
                 <Font name="System Bold Italic" size="20.0" />
             </font>
@@ -69,14 +69,14 @@
             <Font name="System Bold Italic" size="30.0" />
          </font>
       </Label>
-      <TextField layoutX="191.0" layoutY="111.0" />
-      <TextField layoutX="192.0" layoutY="157.0" />
-      <TextField layoutX="298.0" layoutY="203.0" />
-      <TextField layoutX="185.0" layoutY="249.0" />
-      <TextField layoutX="186.0" layoutY="295.0" />
-      <TextField layoutX="237.0" layoutY="341.0" />
-      <TextField layoutX="209.0" layoutY="387.0" />
-      <TextField layoutX="250.0" layoutY="433.0" />
-      <TextField layoutX="335.0" layoutY="479.0" />
+      <TextField fx:id="school" layoutX="191.0" layoutY="111.0" />
+      <TextField fx:id="degree" layoutX="192.0" layoutY="157.0" />
+      <TextField fx:id="fieldOfStudy" layoutX="298.0" layoutY="203.0" />
+      <TextField fx:id="grade" layoutX="185.0" layoutY="249.0" />
+      <TextField fx:id="detail" layoutX="186.0" layoutY="295.0" />
+      <TextField fx:id="startDate" layoutX="237.0" layoutY="341.0" />
+      <TextField fx:id="endDate" layoutX="209.0" layoutY="387.0" />
+      <TextField fx:id="workDetail" layoutX="250.0" layoutY="433.0" />
+      <TextField fx:id="accessEdu" layoutX="335.0" layoutY="479.0" />
     </children>
 </AnchorPane>

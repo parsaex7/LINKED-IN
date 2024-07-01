@@ -23,6 +23,12 @@ public class Functions {
                 .matcher(emailAddress)
                 .matches();
     }
+    public static boolean datePattern(String date){
+        String regexPattern="\\d{2}/\\d{2}/\\d{2}";
+        return Pattern.compile(regexPattern)
+                .matcher(date)
+                .matches();
+    }
 
     public static String getFirstOfUrl(){
         return "http://localhost:8000/";
