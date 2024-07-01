@@ -4,10 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.introViewController">
    <children>
@@ -16,29 +16,36 @@
             <Image url="@../assets/background.jpg" />
          </image>
       </ImageView>
-      <VBox id="blurredVBox" fx:id="bluredVbox" alignment="CENTER" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" stylesheets="@../assets/style.css">
+      <StackPane fx:id="mainPane" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
          <children>
-            <Label text="WELCOME">
-               <font>
-                  <Font name="System Bold Italic" size="58.0" />
-               </font>
-            </Label>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginController" text="Log in ">
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="signupButton" mnemonicParsing="false" onAction="#signupController" text="Sign Up">
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
-            </Button>
-            <Label text="LINKED_IN" textFill="#112fbd">
-               <font>
-                  <Font name="System Bold Italic" size="41.0" />
-               </font>
-            </Label>
+            <VBox fx:id="blurredVbox" alignment="CENTER" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0" stylesheets="@../assets/style.css">
+               <children>
+                  <VBox prefHeight="279.0" prefWidth="500.0">
+                     <children>
+                        <Label fx:id="welcomeLabel" text="WELCOME TO LINKEDIN" textAlignment="CENTER" textFill="#2949da" wrapText="true">
+                           <font>
+                              <Font name="Comic Sans MS Bold Italic" size="53.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                     <children>
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginController" text="Log in ">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="signupButton" mnemonicParsing="false" onAction="#signupController" text="Sign Up">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </StackPane>
    </children>
 </StackPane>

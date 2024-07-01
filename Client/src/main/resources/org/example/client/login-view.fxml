@@ -1,44 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.logInViewController">
+
+<StackPane maxHeight="670.0" maxWidth="950.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.logInViewController">
    <children>
-      <Label layoutX="377.0" layoutY="53.0" text="Log IN">
-         <font>
-            <Font name="System Bold Italic" size="64.0" />
-         </font>
-      </Label>
-      <Label layoutX="365.0" layoutY="187.0" text="please enter your Email : ">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="emailTextField" layoutX="401.0" layoutY="268.0" />
-      <Label layoutX="300.0" layoutY="326.0" text="Please choose a password for yourself : ">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="passwordTextField" layoutX="402.0" layoutY="400.0" />
-      <Button fx:id="loginButton" layoutX="454.0" layoutY="536.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Send" />
-      <Label fx:id="resultLabel" layoutX="395.0" layoutY="548.0" textFill="#df0707">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <Label layoutX="333.0" layoutY="460.0" text="Dont Have an Account?">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <Button fx:id="signUpButton" layoutX="497.0" layoutY="457.0" mnemonicParsing="false" onAction="#signUpButtonController" prefHeight="25.0" prefWidth="43.0" text="Sign Up">
-         <font>
-            <Font size="8.0" />
-         </font>
-      </Button>
+      <ImageView fitHeight="670.0" fitWidth="950.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assets/background.jpg" />
+         </image>
+      </ImageView>
+      <StackPane fx:id="mainPane" maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
+         <children>
+            <VBox maxHeight="500.0" maxWidth="500.0" prefHeight="500.0" prefWidth="500.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="108.0" prefWidth="500.0">
+                     <children>
+                        <Label fx:id="welcomeLabel" prefHeight="108.0" prefWidth="317.0" text="LINKED IN" textFill="#2949d9">
+                           <font>
+                              <Font name="System Bold Italic" size="64.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="258.0" prefWidth="500.0" spacing="10.0" style="-fx-font-family: Comic Sans MS;">
+                     <children>
+                        <Label text="EMAIL" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="20.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="500.0">
+                           <children>
+                              <TextField fx:id="emailTextField" layoutX="125.0" layoutY="6.0" maxHeight="15.0" maxWidth="250.0" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <ImageView fitHeight="39.0" fitWidth="56.0" layoutX="86.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/email.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Label text="PASSWORD" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="20.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane maxHeight="36.0" maxWidth="338.0" prefHeight="36.0" prefWidth="338.0">
+                           <children>
+                              <TextField fx:id="passwordTextField" layoutX="44.0" maxHeight="15.0" maxWidth="250.0" prefHeight="15.0" prefWidth="250.0" stylesheets="@../assets/style.css">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="12.0" />
+                                 </font>
+                              </TextField>
+                              <ImageView fitHeight="36.0" fitWidth="43.0" layoutX="8.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/password.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <HBox alignment="TOP_CENTER" prefHeight="53.0" prefWidth="500.0">
+                           <children>
+                              <Label text="Dont Have an Account?" textFill="WHITE">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="13.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </Label>
+                              <Button id="signUpButton" fx:id="signUpButton" mnemonicParsing="false" onAction="#signUpButtonController" prefHeight="16.0" prefWidth="43.0" style="-fx-font-family: Comic Sans MS;" stylesheets="@../assets/style.css" text="Sign Up">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="500.0" spacing="10.0">
+                           <children>
+                              <Label fx:id="resultLabel" style="-fx-font-family: Comic Sans MS;" textFill="#df0707">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="29.0" prefWidth="71.0" style="-fx-font-family: Comic Sans MS;" stylesheets="@../assets/style.css" text="Send" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
    </children>
-</AnchorPane>
+</StackPane>
