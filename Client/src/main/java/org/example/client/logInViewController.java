@@ -50,7 +50,6 @@ public class logInViewController {
                     resultLabel.setText("Login successful");
                     String response = Functions.getResponse(connection);
                     JSONObject jsonObject = new JSONObject(response);
-                    System.out.println(jsonObject.getString("name"));
                     String token = connection.getHeaderField("JWT");
                     String name = jsonObject.isNull("name") ? null : jsonObject.getString("name");
                     String lastName = jsonObject.isNull("lastName") ? null : jsonObject.getString("lastName");
@@ -74,8 +73,7 @@ public class logInViewController {
                     Parent root = loader.load();
                     Stage stage = (Stage) loginButton.getScene().getWindow();
                     Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
+                    Functions.fadeScene(stage, scene);
                 }
             }
         } catch (Exception e) {
@@ -111,8 +109,7 @@ public class logInViewController {
                             Parent root = loader.load();
                             Stage stage = (Stage) resultLabel.getScene().getWindow();
                             Scene scene = new Scene(root);
-                            stage.setScene(scene);
-                            stage.show();
+                            Functions.fadeScene(stage, scene);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -132,7 +129,6 @@ public class logInViewController {
         Parent root = loader.load();
         Stage stage = (Stage) signUpButton.getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Functions.fadeScene(stage, scene);
     }
 }

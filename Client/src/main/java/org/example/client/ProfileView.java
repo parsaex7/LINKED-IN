@@ -31,8 +31,7 @@ public class ProfileView {
         Parent root = loader.load();
         Stage stage = (Stage) postButton.getScene().getWindow();
         Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Functions.fadeScene(stage, scene);
     }
 
     @FXML
@@ -51,8 +50,7 @@ public class ProfileView {
             Parent root = loader.load();
             Stage stage = (Stage) logoutButton.getScene().getWindow();
             Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            Functions.fadeScene(stage, scene);
         } catch (Exception e) {
             e.printStackTrace();
         }
