@@ -19,7 +19,7 @@
             <Button mnemonicParsing="false" text="HOME" />
             <Button mnemonicParsing="false" text="PROFILE" />
             <Button fx:id="postButton" mnemonicParsing="false" onAction="#postButtonController" text="POST" />
-            <Button blendMode="DARKEN" mnemonicParsing="false" text="SETTING" />
+            <Button fx:id="setting" onAction="#onSetting" blendMode="DARKEN" mnemonicParsing="false" text="SETTING" />
             <VBox alignment="BOTTOM_LEFT" prefHeight="429.0" prefWidth="89.0">
                <opaqueInsets>
                   <Insets />

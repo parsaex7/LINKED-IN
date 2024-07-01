@@ -23,6 +23,14 @@ public class Functions {
                 .matcher(emailAddress)
                 .matches();
     }
+    public static boolean datePattern(String date){
+        String[] parts=date.split("/");
+        if(parts.length!=3){
+            return false;
+        }
+        return (parts[0].matches("//d+")) &&(parts[1].matches("//d+")) &&(parts[2].matches("//d+"));
+
+    }
 
     public static String getFirstOfUrl(){
         return "http://localhost:8000/";

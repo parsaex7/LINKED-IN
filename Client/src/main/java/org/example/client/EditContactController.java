@@ -1,9 +1,15 @@
 package org.example.client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
@@ -32,7 +38,7 @@ public class EditContactController {
         if((!birthdayAccess.getText().equalsIgnoreCase("me"))&&(!birthdayAccess.getText().equalsIgnoreCase("contacts"))&&(!birthdayAccess.getText().equalsIgnoreCase("everyone"))){
             result.setText("check the birthday access");
         }
-            else if((!numberType.getText().equalsIgnoreCase("mobile"))||(!numberType.getText().equalsIgnoreCase("home"))||(!numberType.getText().equalsIgnoreCase("work"))){
+            else if((!numberType.getText().equalsIgnoreCase("mobile"))&&(!numberType.getText().equalsIgnoreCase("home"))&&(!numberType.getText().equalsIgnoreCase("work"))){
             result.setText("check the number type");
         }
         else{
@@ -62,7 +68,15 @@ public class EditContactController {
             }
         }
     }
-    public void onBack(){
-        //go to previous page;
+    public void onback(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

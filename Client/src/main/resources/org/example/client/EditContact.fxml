@@ -48,7 +48,7 @@
             <Font name="System Bold Italic" size="42.0" />
          </font>
       </Button>
-      <Button layoutX="25.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;Back" textFill="#efeaea">
+      <Button onAction="#onback" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;Back" textFill="#efeaea">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
