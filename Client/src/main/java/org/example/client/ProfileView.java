@@ -4,6 +4,7 @@ import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ProfileView {
+    @FXML
+    private Button setting;
     @FXML
     private Button postButton;
     @FXML
@@ -49,6 +52,17 @@ public class ProfileView {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("intro-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) logoutButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void onSetting(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEducation.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             Functions.fadeScene(stage, scene);
         } catch (Exception e) {
