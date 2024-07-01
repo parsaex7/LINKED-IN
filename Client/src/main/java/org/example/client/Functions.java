@@ -24,10 +24,12 @@ public class Functions {
                 .matches();
     }
     public static boolean datePattern(String date){
-        String regexPattern="\\d{2}/\\d{2}/\\d{2}";
-        return Pattern.compile(regexPattern)
-                .matcher(date)
-                .matches();
+        String[] parts=date.split("/");
+        if(parts.length!=3){
+            return false;
+        }
+        return (parts[0].matches("//d+")) &&(parts[1].matches("//d+")) &&(parts[2].matches("//d+"));
+
     }
 
     public static String getFirstOfUrl(){
