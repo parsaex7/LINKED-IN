@@ -1,10 +1,13 @@
 package org.example.client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.json.JSONObject;
@@ -20,9 +23,14 @@ public class SearchController {
     private VBox personContainer;
     @FXML
     private TextField searchTextField;
+    @FXML
+    private ScrollPane resultScrollPane;
 
     public void onSerach(){
         try {
+            if(personContainer.getChildren().size()>0){
+                personContainer.getChildren().clear();
+            }
             URL url = new URL(Functions.getFirstOfUrl() + "search/" + searchTextField.getText());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -47,9 +55,18 @@ public class SearchController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void resultClicked(String email) {
+        searchTextField.setText(email);
+    }
     public VBox createPersonBlock(String email){
         Label nameLabel = new Label(email);
         VBox personBlock = new VBox(nameLabel);
+        personBlock.setCursor(Cursor.CLOSED_HAND);
+        personBlock.setOnMouseClicked(evnt->{
+            resultClicked(email);
+        });
         personBlock.setStyle("-fx-border-color: black; -fx-padding: 10px;");
         return personBlock;
     }
