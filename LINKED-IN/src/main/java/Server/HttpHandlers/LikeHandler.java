@@ -189,3 +189,10 @@ public class LikeHandler implements HttpHandler {
         exchange.sendResponseHeaders(200, response.length());
     }
 }
+/*
+* <dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20210307</version> <!-- Use the latest version -->
+</dependency>
+* */
