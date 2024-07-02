@@ -39,6 +39,9 @@
                            <font>
                               <Font name="Comic Sans MS" size="20.0" />
                            </font>
+                           <padding>
+                              <Insets left="-120.0" />
+                           </padding>
                         </Label>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="500.0">
                            <children>
@@ -58,6 +61,12 @@
                            <font>
                               <Font name="Comic Sans MS" size="20.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="-120.0" />
+                           </padding>
                         </Label>
                         <AnchorPane maxHeight="36.0" maxWidth="338.0" prefHeight="36.0" prefWidth="338.0">
                            <children>
@@ -104,7 +113,11 @@
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="29.0" prefWidth="71.0" style="-fx-font-family: Comic Sans MS;" stylesheets="@../assets/style.css" text="Send" />
+                              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="29.0" prefWidth="71.0" style="-fx-font-family: Comic Sans MS;" stylesheets="@../assets/style.css" text="Send">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </VBox>
                      </children>
