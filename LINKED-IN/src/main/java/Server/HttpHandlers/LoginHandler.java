@@ -33,6 +33,7 @@ public class LoginHandler implements HttpHandler {
                             exchange.sendResponseHeaders(404, response.length());
                         } else {
                             String token = JwtController.createToken(email);
+                            System.out.println(token);
                             Headers responseHeaders = exchange.getResponseHeaders();
                             responseHeaders.add("JWT", token); // Add JWT to response headers
                             response = userController.getUserByEmail(email);

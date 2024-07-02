@@ -19,8 +19,6 @@ public class EditContactController {
     @FXML
     private Button back;
     @FXML
-    private Button edit;
-    @FXML
     private TextField profileLink;
     @FXML
     private TextField phoneNumber;
@@ -68,7 +66,7 @@ public class EditContactController {
             }
         }
     }
-    public void onback(ActionEvent event) {
+    public void onBack(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
             Parent root = loader.load();

@@ -43,12 +43,12 @@
             <Font name="System Bold Italic" size="42.0" />
          </font>
       </Label>
-      <Button onAction="#onEdit" layoutX="434.0" layoutY="550.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Edit" textFill="#eae5e5">
+      <Button layoutX="434.0" layoutY="550.0" mnemonicParsing="false" onAction="#onEdit" style="-fx-background-color: black;" text="Edit" textFill="#eae5e5">
          <font>
             <Font name="System Bold Italic" size="42.0" />
          </font>
       </Button>
-      <Button onAction="#onback" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: black;" text="&lt;Back" textFill="#efeaea">
+      <Button fx:id="back" layoutX="25.0" layoutY="22.0" mnemonicParsing="false" onAction="#onBack" style="-fx-background-color: black;" text="&lt;Back" textFill="#efeaea">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
