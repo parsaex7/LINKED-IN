@@ -26,20 +26,20 @@ public class PostHandler implements HttpHandler {
         String response = "";
 
         try {
-            try {
-                String email = JwtController.verifyToken(exchange);
-                if (email == null) {
-                    response = "Unauthorized";
-                    exchange.sendResponseHeaders(401, response.length());
-                    sendResponse(exchange, response);
-                    return;
-                }
-            } catch (Exception e) {
-                response = "Unauthorized";
-                exchange.sendResponseHeaders(401, response.length());
-                sendResponse(exchange, response);
-                return;
-            }
+//            try {
+//                String email = JwtController.verifyToken(exchange);
+//                if (email == null) {
+//                    response = "Unauthorized";
+//                    exchange.sendResponseHeaders(401, response.length());
+//                    sendResponse(exchange, response);
+//                    return;
+//                }
+//            } catch (Exception e) {
+//                response = "Unauthorized";
+//                exchange.sendResponseHeaders(401, response.length());
+//                sendResponse(exchange, response);
+//                return;
+//            }
             switch (request) {
                 case "GET":
                     response = handleGetRequest(exchange, postController, pathParts);
@@ -114,11 +114,12 @@ public class PostHandler implements HttpHandler {
     }
 
     private String handlePostRequest(HttpExchange exchange, PostController postController, String[] pathParts) throws IOException, SQLException {
-        String response = "";
+        String response = "";//post
         if (pathParts.length == 2) {
             JSONObject jsonObject = getJsonObject(exchange);
             String message = jsonObject.getString("message");
             String email = JwtController.verifyToken(exchange);
+            System.out.println(exchange.getRequestHeaders().get("JWT"));
             if (email != null) {
                 postController.addPost(message, email);
                 response = "Post added";
