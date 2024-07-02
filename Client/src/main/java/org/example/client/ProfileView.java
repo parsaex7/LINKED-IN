@@ -28,6 +28,8 @@ public class ProfileView {
     private GNAvatarView profileGNAvatar;
     @FXML
     private Button logoutButton;
+    @FXML
+    private Button searchButton;
 
     public void postButtonController(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("post-view.fxml"));
@@ -61,6 +63,18 @@ public class ProfileView {
     public void onSetting(ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEducation.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void searchButtonController(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("searchUser-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
