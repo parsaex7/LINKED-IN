@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.example.model.Post;
@@ -75,7 +76,15 @@ public class postOfFollowing {
     public VBox createPersonBlock(Post post) {
         Label nameLabel = new Label(post.getSenderEmail());
         Label message = new Label(post.getMessage());
-        VBox personBlock = new VBox(nameLabel, message);
+        Button like=new Button("LIKE");
+        Button coment=new Button("Coment");
+        VBox personBlock = new VBox(nameLabel, message,like,coment);
+        like.setOnMouseClicked(mouseEvent -> {
+            //TODO:
+        });
+        coment.setOnMouseClicked(mouseEvent -> {
+            //ToDO:
+        });
         personBlock.setCursor(Cursor.CLOSED_HAND);
         personBlock.setOnMouseClicked(evnt -> {
 //            TODO:move to profile page
