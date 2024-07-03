@@ -11,12 +11,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-public class Follow {
+public class FollowerController {
     @FXML
     private VBox followers;
-    @FXML
-    private VBox followings;
-    private void onFollower(){
+    private void initialize(){
         try {
 
             URL url = new URL(Functions.getFirstOfUrl() + "follow/" + "follower");
@@ -42,35 +40,6 @@ public class Follow {
             }
         }catch (Exception e){
                 createPersonBlock("Server Error");
-        }
-    }
-    public void onFollowing(){
-        try {
-
-            URL url = new URL(Functions.getFirstOfUrl() + "follow/" + "following");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-            int statusCode = connection.getResponseCode();
-            if (statusCode == 404) {
-                //TODO: show user not found
-                createPersonBlock("Not Found");
-            } else if (statusCode >= 400) {
-                createPersonBlock("Server Error");
-                System.out.println("Server error");
-                System.out.println(statusCode);
-            } else {
-                String response = Functions.getResponse(connection);
-                ObjectMapper objectMapper = new ObjectMapper();
-                List<String> emails = objectMapper.readValue(response, new TypeReference<List<String>>() {
-                });
-                System.out.println(emails);
-                for (String email : emails) {
-                    followings.getChildren().add(createPersonBlock(email));
-                }
-            }
-        }catch (Exception e){
-            createPersonBlock("Server Error");
         }
     }
     public VBox createPersonBlock(String email){
