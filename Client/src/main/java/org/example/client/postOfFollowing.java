@@ -9,16 +9,20 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import org.example.model.Like;
 import org.example.model.Post;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class postOfFollowing {
+    private boolean likecliked=false;
     @FXML
     private VBox postContainer;
 
@@ -73,7 +77,7 @@ public class postOfFollowing {
         }
     }
 
-    public VBox createPersonBlock(Post post) {
+    public VBox createPersonBlock(Post post)  {
         Label nameLabel = new Label(post.getSenderEmail());
         Label message = new Label(post.getMessage());
         Button like=new Button("LIKE");
@@ -81,6 +85,31 @@ public class postOfFollowing {
         VBox personBlock = new VBox(nameLabel, message,like,coment);
         like.setOnMouseClicked(mouseEvent -> {
             //TODO:
+            if(likecliked==false){
+                try {
+                    URL url=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                    int statusCode = connection.getResponseCode();
+                    if(statusCode==200){
+                        connection.disconnect();
+                        like.setStyle("-fx-background-color: RED");
+                        likecliked=true;
+                        URL url1=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
+                        HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
+                        connection1.setRequestMethod("GET");
+                        connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                        int statusCode1 = connection.getResponseCode();
+                        String response1 = Functions.getResponse(connection1);
+                        List<Like> likes=parseLikes(response1);
+                        like.setText(String.valueOf(likes.size()));
+
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
         coment.setOnMouseClicked(mouseEvent -> {
             //ToDO:
@@ -122,5 +151,33 @@ public class postOfFollowing {
             e.printStackTrace();
         }
         return posts;
+    }
+    public List<Like> parseLikes(String jsonResponse) {
+        List<Like> likes = new ArrayList<>();
+        JsonFactory factory = new JsonFactory();
+        try (JsonParser parser = factory.createParser(jsonResponse)) {
+            if (parser.nextToken() != JsonToken.START_ARRAY) {
+                throw new IllegalStateException("Expected an array");
+            }
+            while (parser.nextToken() != JsonToken.END_ARRAY) {
+                Like like = new Like();
+                while (parser.nextToken() != JsonToken.END_OBJECT) {
+                    String fieldName = parser.getCurrentName();
+                    parser.nextToken(); // move to value
+                    switch (fieldName) {
+                        case "post_id":
+                            like.setPost_id(parser.getIntValue());
+                            break;
+                        case "user_email":
+                            like.setUser_email(parser.getText());
+                            break;
+                    }
+                }
+                likes.add(like);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return likes;
     }
 }
