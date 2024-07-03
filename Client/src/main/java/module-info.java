@@ -14,6 +14,7 @@ module org.example.client {
     requires GNAvatarView;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    exports org.example.model to com.fasterxml.jackson.databind;
 
     opens org.example.client to javafx.fxml;
     exports org.example.client;

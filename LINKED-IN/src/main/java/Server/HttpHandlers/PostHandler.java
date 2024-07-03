@@ -72,9 +72,10 @@ public class PostHandler implements HttpHandler {
             response = "Unauthorized";
             exchange.sendResponseHeaders(401, response.length());
         }
-        if (pathParts.length == 3) {
-            if (pathParts[2].equals("all")) { // post/all
-                response = postController.getAllPostsOfOneUser(email);
+        if (pathParts.length == 4) {
+            if (pathParts[2].equals("all")) { // post/all/email
+                String targetEmail = pathParts[3];
+                response = postController.getAllPostsOfOneUser(targetEmail);
                 if (response == null) {
                     response = "No posts found";
                     exchange.sendResponseHeaders(404, response.length());

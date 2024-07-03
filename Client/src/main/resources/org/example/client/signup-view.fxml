@@ -24,7 +24,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="84.0" prefWidth="500.0">
                <children>
-                  <Label style="-fx-font-family: Comic Sans MS;" text="LINKED IN" textFill="#2949d9">
+                  <Label  text="LINKED IN" textFill="#2949d9">
                      <font>
                         <Font name="System Bold Italic" size="55.0" />
                      </font>
@@ -33,7 +33,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <Label style="-fx-font-family: Comic Sans MS;" text="EMAIL" textFill="WHITE">
+                  <Label  text="EMAIL" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -45,12 +45,12 @@
                      <children>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="emailTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" style="-fx-font-family: Comic Sans MS;" />
+                              <TextField fx:id="emailTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <Label style="-fx-font-family: Comic Sans MS;" text="PASSWORD" textFill="WHITE">
+                  <Label  text="PASSWORD" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -62,12 +62,12 @@
                      <children>
                         <AnchorPane prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="passwordTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" style="-fx-font-family: Comic Sans MS;" />
+                              <TextField fx:id="passwordTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <Label style="-fx-font-family: Comic Sans MS;" text="FIRST NAME" textFill="WHITE">
+                  <Label  text="FIRST NAME" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -79,12 +79,12 @@
                      <children>
                         <AnchorPane prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="firstNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" style="-fx-font-family: Comic Sans MS;" />
+                              <TextField fx:id="firstNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <Label style="-fx-font-family: Comic Sans MS;" text="LAST NAME" textFill="WHITE">
+                  <Label  text="LAST NAME" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -96,7 +96,7 @@
                      <children>
                         <AnchorPane prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="lastNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" style="-fx-font-family: Comic Sans MS;" />
+                              <TextField fx:id="lastNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
                            </children>
                         </AnchorPane>
                      </children>
@@ -107,18 +107,18 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Label style="-fx-font-family: Comic Sans MS;" text="Already Have an Account?" textFill="WHITE">
+                        <Label  text="Already Have an Account?" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonController" style="-fx-font-family: Comic Sans MS;" text="Login" />
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonController"  text="Login" />
                      </children>
                   </HBox>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label fx:id="resultLabel" alignment="CENTER" style="-fx-font-family: Comic Sans MS;" textFill="#ec0808" />
-                        <Button fx:id="signupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupController" prefHeight="36.0" prefWidth="106.0" style="-fx-font-family: Comic Sans MS;" text="Sign Up">
+                        <Label fx:id="resultLabel" alignment="CENTER"  textFill="#ec0808" />
+                        <Button fx:id="signupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupController" prefHeight="36.0" prefWidth="106.0"  text="Sign Up">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
