@@ -19,6 +19,10 @@ public class Post {
         this.senderEmail = senderEmail;
     }
 
+    public Post() {
+
+    }
+
     public String getSenderEmail() {
         return senderEmail;
     }
