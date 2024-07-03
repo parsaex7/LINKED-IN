@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.signUpController">
    <children>
       <ImageView fitHeight="670.0" fitWidth="950.0" pickOnBounds="true">
@@ -24,7 +23,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="84.0" prefWidth="500.0">
                <children>
-                  <Label  text="LINKED IN" textFill="#2949d9">
+                  <Label text="LINKED IN" textFill="#2949d9">
                      <font>
                         <Font name="System Bold Italic" size="55.0" />
                      </font>
@@ -33,7 +32,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <Label  text="EMAIL" textFill="WHITE">
+                  <Label text="EMAIL" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -45,12 +44,12 @@
                      <children>
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="emailTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
+                              <TextField fx:id="emailTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <Label  text="PASSWORD" textFill="WHITE">
+                  <Label text="PASSWORD" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -62,12 +61,12 @@
                      <children>
                         <AnchorPane prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="passwordTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
+                              <TextField fx:id="passwordTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <Label  text="FIRST NAME" textFill="WHITE">
+                  <Label text="FIRST NAME" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -79,12 +78,12 @@
                      <children>
                         <AnchorPane prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="firstNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
+                              <TextField fx:id="firstNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
                            </children>
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <Label  text="LAST NAME" textFill="WHITE">
+                  <Label text="LAST NAME" textFill="WHITE">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -96,7 +95,7 @@
                      <children>
                         <AnchorPane prefHeight="30.0" prefWidth="500.0">
                            <children>
-                              <TextField fx:id="lastNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0"  />
+                              <TextField fx:id="lastNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -107,18 +106,18 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Label  text="Already Have an Account?" textFill="WHITE">
+                        <Label text="Already Have an Account?" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonController"  text="Login" />
+                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonController" text="Login" stylesheets="@../assets/style.css" />
                      </children>
                   </HBox>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label fx:id="resultLabel" alignment="CENTER"  textFill="#ec0808" />
-                        <Button fx:id="signupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupController" prefHeight="36.0" prefWidth="106.0"  text="Sign Up">
+                        <Label fx:id="resultLabel" alignment="CENTER" textFill="#ec0808" />
+                        <Button fx:id="signupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupController" prefHeight="36.0" prefWidth="106.0" text="Sign Up" stylesheets="@../assets/style.css">
                            <font>
                               <Font name="System Bold Italic" size="14.0" />
                            </font>
