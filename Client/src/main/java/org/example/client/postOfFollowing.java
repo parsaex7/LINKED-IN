@@ -83,6 +83,11 @@ public class postOfFollowing {
         Button like=new Button("LIKE");
         Button coment=new Button("Coment");
         VBox personBlock = new VBox(nameLabel, message,like,coment);
+        if(isLikedBefore(post.getPostId())){
+            like.setStyle("-fx-background-color: RED");
+            likecliked=true;
+        }
+
         like.setOnMouseClicked(mouseEvent -> {
             //TODO:
             if(likecliked==false){
@@ -107,7 +112,32 @@ public class postOfFollowing {
 
                     }
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                }
+            }
+            else{
+                try {
+                    URL url=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("DELETE");
+                    connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                    int statusCode = connection.getResponseCode();
+                    if(statusCode==200){
+                        connection.disconnect();
+                        like.setStyle("-fx-background-color: White");
+                        likecliked=false;
+                        URL url1=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
+                        HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
+                        connection1.setRequestMethod("GET");
+                        connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                        int statusCode1 = connection.getResponseCode();
+                        String response1 = Functions.getResponse(connection1);
+                        List<Like> likes=parseLikes(response1);
+                        like.setText(String.valueOf(likes.size()));
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -179,5 +209,26 @@ public class postOfFollowing {
             e.printStackTrace();
         }
         return likes;
+    }
+    public boolean isLikedBefore(int postId){
+        boolean result=false;
+        List<Like> likes=new ArrayList<>();
+        try {
+            URL url1 = new URL(Functions.getFirstOfUrl() + "like/" + postId);
+            HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
+            connection1.setRequestMethod("GET");
+            connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+            String response1 = Functions.getResponse(connection1);
+            likes = parseLikes(response1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        for(Like like:likes){
+            if(like.getPost_id()==postId){
+                result=true;
+                break;
+            }
+        }
+        return result;
     }
 }
