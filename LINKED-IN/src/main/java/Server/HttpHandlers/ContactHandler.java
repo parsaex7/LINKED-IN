@@ -90,12 +90,10 @@ public class ContactHandler implements HttpHandler {
                 response = "Unauthorized";
                 exchange.sendResponseHeaders(401, response.length());
             }
-        }
-        else {
+        } else {
             response = "Invalid request";
             exchange.sendResponseHeaders(400, response.length());
         }
-
         return response;
     }
 
@@ -114,18 +112,18 @@ public class ContactHandler implements HttpHandler {
             }
 
             if (email != null) {
-                    contactController.createContact(
-                            jsonObject.getString("profilelink"),
-                            email,
-                            jsonObject.getString("phonenumber"),
-                            jsonObject.getString("numbertype"),
-                            jsonObject.getString("address"),
-                            jsonObject.getString("contactid"),
-                            jsonObject.getString("birthdayaccess"));
-                    response = "Contact added successfully";
+                contactController.createContact(
+                        jsonObject.getString("profilelink"),
+                        email,
+                        jsonObject.getString("phonenumber"),
+                        jsonObject.getString("numbertype"),
+                        jsonObject.getString("address"),
+                        jsonObject.getString("contactid"),
+                        jsonObject.getString("birthdayaccess"));
+                response = "Contact added successfully";
                 exchange.sendResponseHeaders(200, response.length());
-                }
-            } else {
+            }
+        } else {
             response = "Invalid request";
             exchange.sendResponseHeaders(400, response.length());
         }
@@ -170,22 +168,17 @@ public class ContactHandler implements HttpHandler {
                 response = "Unauthorized";
                 exchange.sendResponseHeaders(401, response.length());
             } else {
-                if (contactController.getContact(email) != null) {
-                    contactController.updateContact(
-                            jsonObject.getString("profilelink"),
-                            email,
-                            jsonObject.getString("phonenumber"),
-                            jsonObject.getString("numbertype"),
-                            jsonObject.getString("address"),
-                            jsonObject.getString("contactid"),
-                            jsonObject.getString("birthdayaccess")
-                    );
-                    response = "Contact updated successfully";
-                    exchange.sendResponseHeaders(200, response.length());
-                } else {
-                    response = "Contact not found";
-                    exchange.sendResponseHeaders(404, response.length());
-                }
+                contactController.updateContact(
+                        jsonObject.getString("profilelink"),
+                        email,
+                        jsonObject.getString("phonenumber"),
+                        jsonObject.getString("numbertype"),
+                        jsonObject.getString("address"),
+                        jsonObject.getString("contactid"),
+                        jsonObject.getString("birthdayaccess")
+                );
+                response = "Contact updated successfully";
+                exchange.sendResponseHeaders(200, response.length());
             }
         } else {
             response = "Invalid request";
@@ -207,7 +200,7 @@ public class ContactHandler implements HttpHandler {
     }
 
     private boolean isValidJson(JSONObject jsonObject) {
-        return jsonObject.has("profilelink") && jsonObject.has("phonenumber") && jsonObject.has("numbertype") && jsonObject.has("address") && jsonObject.has("contactid") && jsonObject.has("birthdayaccess");
+        return jsonObject.has("phonenumber") && jsonObject.has("numbertype") && jsonObject.has("address") && jsonObject.has("contactid") && jsonObject.has("birthdayaccess");
     }
 
     private void sendResponse(HttpExchange exchange, String response) throws IOException {

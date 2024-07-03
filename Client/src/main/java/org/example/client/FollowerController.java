@@ -14,7 +14,8 @@ import java.util.List;
 public class FollowerController {
     @FXML
     private VBox followers;
-    private void initialize(){
+
+    public void initialize(){
         try {
 
             URL url = new URL(Functions.getFirstOfUrl() + "follow/" + "follower");

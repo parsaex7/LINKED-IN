@@ -36,6 +36,7 @@ public class logInViewController {
     @FXML
     private Label welcomeLabel;
 
+
     private GlassPane glassPane;
 
     public void loginButtonClicked() {
@@ -58,7 +59,6 @@ public class logInViewController {
                 } else if (statusCode >= 400) {
                     resultLabel.setText("Server error");
                 } else {
-                    resultLabel.setText("Login successful");
                     String response = Functions.getResponse(connection);
                     JSONObject jsonObject = new JSONObject(response);
                     String token = connection.getHeaderField("JWT");
@@ -68,6 +68,7 @@ public class logInViewController {
                     String city = jsonObject.isNull("city") ? null : jsonObject.getString("city");
                     String additionalName = jsonObject.isNull("additionalName") ? null : jsonObject.getString("additionalName");
                     Functions.saveUser(email, password, name, lastName, country, city, additionalName, token);
+
 
                     //save token for next time login
                     try {

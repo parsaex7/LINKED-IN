@@ -10,7 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.example.model.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -30,6 +33,16 @@ public class ProfileView {
     private Button logoutButton;
     @FXML
     private Button searchButton;
+    @FXML
+    private VBox mainPane;
+    @FXML
+    private Label additionLabel;
+    @FXML
+    private Label countryLabel;
+    @FXML
+    private Label hireLabel;
+    @FXML
+    private Label descriptionLabel;
 
     public void postButtonController(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("post-view.fxml"));
@@ -41,8 +54,15 @@ public class ProfileView {
 
     @FXML
     public void initialize() {
-        nameLabel.setText(LinkedInApplication.user.getName());
+        User user = LinkedInApplication.user;
+        nameLabel.setText(user.getName() + " " + user.getLastName());
         profileGNAvatar.setImage(new Image(getClass().getResource("/org/example/assets/profile.jpg").toExternalForm()));
+        if (user.getAdditionalName() != null) {
+            additionLabel.setText(user.getAdditionalName());
+            countryLabel.setText(user.getCountry() + ", " + user.getCity());
+            //TODO: change hire and description label
+        }
+
     }
 
     public void logoutButtonController(ActionEvent event) {
@@ -61,15 +81,7 @@ public class ProfileView {
         }
     }
     public void onSetting(ActionEvent event){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditEducation.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            Functions.fadeScene(stage, scene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void searchButtonController(ActionEvent event) {
@@ -90,5 +102,20 @@ public class ProfileView {
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Functions.fadeScene(stage, scene);
+    }
+
+    public void contactInfoController(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditContact.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void educationInfoController(MouseEvent mouseEvent) {
     }
 }

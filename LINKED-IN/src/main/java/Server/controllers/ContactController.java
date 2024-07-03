@@ -18,6 +18,10 @@ public class ContactController {
 
     public void updateContact(String profileLink, String email, String phoneNumber, String numberType, String address, String contactId, String birthdayAccess) throws SQLException {
         Contact contact = new Contact(profileLink, email, phoneNumber, numberType, address, contactId, birthdayAccess);
+        if (contactDAO.getContact(email) == null) {
+            contactDAO.saveContatcDetail(contact);
+            return;
+        }
         contactDAO.updateContact(contact);
     }
 
