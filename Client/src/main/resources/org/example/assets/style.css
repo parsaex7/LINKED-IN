@@ -43,3 +43,21 @@
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
+.scroll-bar:vertical.
+ .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical .thumb.
+ .scroll-bar:horizontal .thumb {
+    -fx-background-color: black;
+.scroll-bar:vertical .track.
+ .scroll-bar:horizontal .track {
+    -fx-background-color: black;
+}
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.scroll-pane > corner {
+    -fx-background-color: transparent;
+}

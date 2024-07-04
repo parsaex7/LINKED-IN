@@ -49,7 +49,7 @@ public class signUpController {
         } else if (password.length() < 8) {
             resultLabel.setText("Invalid password. At least 8 Character");
         }else if(!Functions.containsOnlyCharactersAndNumbers(password)){
-            resultLabel.setText("passWord should contains numbers and characters");
+            resultLabel.setText("Password should contains numbers and characters");
         }
         else {
             try {

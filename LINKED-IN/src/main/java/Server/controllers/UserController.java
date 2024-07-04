@@ -59,6 +59,7 @@ public class UserController {
     public String getUserByEmail(String email) throws SQLException, JsonProcessingException, UserNotExistException {
         User user = userDao.getUser(email);
         if (user == null) {
+            System.out.println(1);
             throw new UserNotExistException();
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
