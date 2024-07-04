@@ -64,6 +64,12 @@ public class ProfileView {
         displayUserInfo();
         displayFollowsCount("follower");
         displayFollowsCount("following");
+        if (followerLabel.getText().equals("0")) {
+            followerLabel.setOnMouseClicked(null);
+        }
+        if (followingLabel.getText().equals("0")) {
+            followingLabel.setOnMouseClicked(null);
+        }
     }
 
     public void logoutButtonController(ActionEvent event) {

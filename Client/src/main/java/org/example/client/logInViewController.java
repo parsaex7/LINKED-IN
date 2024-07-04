@@ -147,7 +147,6 @@ public class logInViewController {
             System.out.println("file not found");
         } catch (Exception e) {
             System.out.println("connection failed");
-            e.printStackTrace();
         }
     }
 
