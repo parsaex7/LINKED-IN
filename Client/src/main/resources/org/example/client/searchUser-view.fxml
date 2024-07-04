@@ -15,6 +15,6 @@
             <VBox fx:id="personContainer" prefHeight="622.0" prefWidth="950.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="back" onAction="#backController" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" text="&lt;Back" />
+      <Button fx:id="back" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" onAction="#backController" text="&lt;Back" />
    </children>
 </AnchorPane>
