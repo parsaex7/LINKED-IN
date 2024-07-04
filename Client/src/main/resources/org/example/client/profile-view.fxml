@@ -137,7 +137,7 @@
                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0">
                            <children>
                               <GNAvatarView fx:id="profileGNAvatar" layoutX="29.0" layoutY="86.0" prefHeight="114.0" prefWidth="108.0" stroke="BLACK" type="CIRCLE" />
-                              <Label fx:id="educationInfoButtonLabel" layoutX="262.0" layoutY="176.0" onMouseClicked="#educationInfoController" prefHeight="24.0" prefWidth="167.0" style="-fx-text-fill: #2949da;" text="Education Information" textFill="WHITE">
+                              <Label fx:id="contactInfoButtonLabel" layoutX="8.0" layoutY="325.0" onMouseClicked="#contactInfoController" prefHeight="24.0" prefWidth="150.0" style="-fx-text-fill: #2949da;" text="Contact Information">
                                  <font>
                                     <Font name="Comic Sans MS" size="15.0" />
                                  </font>
@@ -145,9 +145,27 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Label>
-                              <Label fx:id="contactInfoButtonLabel" layoutX="262.0" layoutY="152.0" onMouseClicked="#contactInfoController" prefHeight="24.0" prefWidth="150.0" style="-fx-text-fill: #2949da;" text="Contact Information">
+                              <Label layoutX="272.0" layoutY="164.0" style="-fx-text-fill: white;" text="Follower">
                                  <font>
-                                    <Font name="Comic Sans MS" size="15.0" />
+                                    <Font name="Comic Sans MS" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="390.0" layoutY="164.0" style="-fx-text-fill: white;" text="Following">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="17.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="followerLabel" layoutX="302.0" layoutY="190.0" onDragDetected="#followerController" style="-fx-text-fill: white;" text="0">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="13.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Label>
+                              <Label fx:id="followingLabel" layoutX="422.0" layoutY="190.0" onDragDetected="#folllowingController" style="-fx-text-fill: white;" text="0">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="13.0" />
                                  </font>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -161,6 +179,9 @@
             </StackPane>
          </children>
       </VBox>
-      <VBox prefHeight="670.0" prefWidth="200.0" style="-fx-background-color: #181a1b;" />
+      <VBox prefHeight="670.0" prefWidth="200.0" style="-fx-background-color: #181a1b;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></VBox>
    </children>
 </HBox>

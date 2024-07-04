@@ -19,114 +19,118 @@
             <Image url="@../assets/background.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="500.0">
+      <StackPane fx:id="mainPane" maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="84.0" prefWidth="500.0">
+            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="500.0">
                <children>
-                  <Label text="LINKED IN" textFill="#2949d9">
-                     <font>
-                        <Font name="System Bold Italic" size="55.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-               <children>
-                  <Label text="EMAIL" textFill="WHITE">
-                     <font>
-                        <Font name="Comic Sans MS" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="-200.0" />
-                     </VBox.margin>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <VBox alignment="CENTER" prefHeight="84.0" prefWidth="500.0">
                      <children>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="500.0">
-                           <children>
-                              <TextField fx:id="emailTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-                  <Label text="PASSWORD" textFill="WHITE">
-                     <font>
-                        <Font name="Comic Sans MS" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets left="-120.0" />
-                     </padding>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane prefHeight="30.0" prefWidth="500.0">
-                           <children>
-                              <TextField fx:id="passwordTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-                  <Label text="FIRST NAME" textFill="WHITE">
-                     <font>
-                        <Font name="Comic Sans MS" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets left="-120.0" />
-                     </padding>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane prefHeight="30.0" prefWidth="500.0">
-                           <children>
-                              <TextField fx:id="firstNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-                  <Label text="LAST NAME" textFill="WHITE">
-                     <font>
-                        <Font name="Comic Sans MS" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets left="-120.0" />
-                     </padding>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane prefHeight="30.0" prefWidth="500.0">
-                           <children>
-                              <TextField fx:id="lastNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                     <children>
-                        <Label text="Already Have an Account?" textFill="WHITE">
+                        <Label text="LINKED IN" textFill="#2949d9">
                            <font>
-                              <Font size="16.0" />
+                              <Font name="System Bold Italic" size="55.0" />
                            </font>
                         </Label>
-                        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonController" text="Login" stylesheets="@../assets/style.css" />
                      </children>
-                  </HBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                      <children>
-                        <Label fx:id="resultLabel" alignment="CENTER" textFill="#ec0808" />
-                        <Button fx:id="signupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupController" prefHeight="36.0" prefWidth="106.0" text="Sign Up" stylesheets="@../assets/style.css">
+                        <Label text="EMAIL" textFill="WHITE">
                            <font>
-                              <Font name="System Bold Italic" size="14.0" />
+                              <Font name="Comic Sans MS" size="15.0" />
                            </font>
-                        </Button>
+                           <VBox.margin>
+                              <Insets left="-200.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="500.0">
+                                 <children>
+                                    <TextField fx:id="emailTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <Label text="PASSWORD" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets left="-120.0" />
+                           </padding>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane prefHeight="30.0" prefWidth="500.0">
+                                 <children>
+                                    <TextField fx:id="passwordTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <Label text="FIRST NAME" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets left="-120.0" />
+                           </padding>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane prefHeight="30.0" prefWidth="500.0">
+                                 <children>
+                                    <TextField fx:id="firstNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                        <Label text="LAST NAME" textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets left="-120.0" />
+                           </padding>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <AnchorPane prefHeight="30.0" prefWidth="500.0">
+                                 <children>
+                                    <TextField fx:id="lastNameTextField" layoutX="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                           <children>
+                              <Label text="Already Have an Account?" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonController" stylesheets="@../assets/style.css" text="Login" />
+                           </children>
+                        </HBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="resultLabel" alignment="CENTER" textFill="#ec0808" />
+                              <Button fx:id="signupButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupController" prefHeight="36.0" prefWidth="106.0" stylesheets="@../assets/style.css" text="Sign Up">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </children>
             </VBox>
          </children>
-      </VBox>
+      </StackPane>
    </children>
 </StackPane>
