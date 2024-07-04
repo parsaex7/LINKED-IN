@@ -8,12 +8,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.SearchController">
    <children>
-      <TextField fx:id="searchTextField" layoutX="14.0" layoutY="14.0" />
-      <Button fx:id="search" layoutX="261.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSerach" text="Search" />
+      <TextField fx:id="searchTextField" layoutX="400.0" layoutY="14.0" />
+      <Button fx:id="search" layoutX="637.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSerach" text="Search" />
       <ScrollPane fx:id="resultScrollPane" layoutY="52.0" prefHeight="572.0" prefWidth="950.0">
          <content>
             <VBox fx:id="personContainer" prefHeight="622.0" prefWidth="950.0" />
          </content>
       </ScrollPane>
+      <Button fx:id="back" onAction="#backController" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" text="&lt;Back" />
    </children>
 </AnchorPane>
