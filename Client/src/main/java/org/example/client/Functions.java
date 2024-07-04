@@ -31,6 +31,28 @@ public class Functions {
         return (parts[0].matches("//d+")) &&(parts[1].matches("//d+")) &&(parts[2].matches("//d+"));
 
     }
+    public static boolean containsOnlyCharactersAndNumbers(String input) {
+//
+        int numberOfChar=0;
+        int nnumberOfnum=0;
+        boolean result=true;
+        char[] pass=input.toCharArray();
+        for(int i=0;i<pass.length;i++){
+            if(65<=pass[i]&&pass[i]<=90){
+                numberOfChar++;
+            }
+            else if(97<=pass[i]&&pass[i]<=122){
+                numberOfChar++;
+            }
+            else if(48<=pass[i]&&pass[i]<=57){
+                nnumberOfnum++;
+            }
+        }
+        if((numberOfChar==0)||(nnumberOfnum==0)){
+            result=false;
+        }
+        return result;
+    }
 
     public static String getFirstOfUrl(){
         return "http://localhost:8000/";

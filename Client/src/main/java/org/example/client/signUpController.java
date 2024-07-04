@@ -42,7 +42,10 @@ public class signUpController {
             resultLabel.setText("Invalid email");
         } else if (password.length() < 8) {
             resultLabel.setText("Invalid password. At least 8 Character");
-        } else {
+        }else if(!Functions.containsOnlyCharactersAndNumbers(password)){
+            resultLabel.setText("passWord should contains numbers and characters");
+        }
+        else {
             try {
                 URL url = new URL(Functions.getFirstOfUrl() + "user");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
