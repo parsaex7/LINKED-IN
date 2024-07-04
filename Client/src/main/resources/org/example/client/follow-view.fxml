@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="670.0" maxWidth="950.0" minHeight="670.0" minWidth="950.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #181a1b;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.FollowController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0">
+         <children>
+            <Button layoutX="32.0" layoutY="35.0" mnemonicParsing="false" onAction="#backController" prefHeight="38.0" prefWidth="72.0" stylesheets="@../assets/style.css" text="BACK" />
+         </children>
+      </AnchorPane>
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-border-color: black;">
+         <children>
+            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background: #181a1b; -fx-border-color: black;">
+               <content>
+                  <VBox fx:id="mainPane" prefHeight="495.0" prefWidth="495.0" spacing="5.0">
+                     <children>
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="495.0">
+                           <children>
+                              <Label fx:id="headerLabel" style="-fx-text-fill: #2949da;" text="label">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="30.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children></VBox>
+   </children>
+</StackPane>
