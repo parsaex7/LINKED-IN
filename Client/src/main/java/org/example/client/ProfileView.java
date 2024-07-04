@@ -18,6 +18,8 @@ import org.example.model.User;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ProfileView {
@@ -43,6 +45,10 @@ public class ProfileView {
     private Label hireLabel;
     @FXML
     private Label descriptionLabel;
+    @FXML
+    private Label followerLabel;
+    @FXML
+    private Label followingLabel;
 
     public void postButtonController(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("post-view.fxml"));
@@ -53,7 +59,7 @@ public class ProfileView {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         User user = LinkedInApplication.user;
         nameLabel.setText(user.getName() + " " + user.getLastName());
         profileGNAvatar.setImage(new Image(getClass().getResource("/org/example/assets/profile.jpg").toExternalForm()));
@@ -62,6 +68,21 @@ public class ProfileView {
             countryLabel.setText(user.getCountry() + ", " + user.getCity());
             //TODO: change hire and description label
         }
+        URL url = new URL(Functions.getFirstOfUrl() + "follow/following");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+        connection.setRequestMethod("GET");
+        int statusCode = connection.getResponseCode();
+        if (statusCode == 200) {
+            String response = Functions.getResponse(connection);
+
+        } else if (statusCode == 410) {//no follower
+            followingLabel.setText("0");
+        } else {
+            followingLabel.setText("ERROR");
+        }
+
+
 
     }
 

@@ -16,7 +16,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.example.model.GlassPane;
 import org.json.JSONObject;
 public class signUpController {
 
@@ -34,6 +36,10 @@ public class signUpController {
     private Label resultLabel;
     @FXML
     private Button loginButton;
+    @FXML
+    private StackPane mainPane;
+
+    private GlassPane glassPane;
 
     public void signupController(ActionEvent event) {
         String email = emailTextField.getText();
@@ -90,4 +96,18 @@ public class signUpController {
         Scene scene = new Scene(root);
         Functions.fadeScene(stage, scene);
     }
-}
+    @FXML
+    public void initialize() {
+        glassPane = new GlassPane();
+        glassPane.setPickOnBounds(false);
+        mainPane.getChildren().add(glassPane);
+        emailTextField.setMouseTransparent(false);
+        passwordTextField.setMouseTransparent(false);
+        firstNameTextField.setMouseTransparent(false);
+        lastNameTextField.setMouseTransparent(false);
+        loginButton.setMouseTransparent(false);
+        signupButton.setMouseTransparent(false);
+
+    }
+
+    }
