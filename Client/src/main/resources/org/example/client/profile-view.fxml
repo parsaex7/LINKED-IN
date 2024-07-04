@@ -155,7 +155,7 @@
                                     <Font name="Comic Sans MS" size="17.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="followerLabel" layoutX="302.0" layoutY="190.0" onDragDetected="#followerController" style="-fx-text-fill: white;" text="0">
+                              <Label fx:id="followerLabel" layoutX="302.0" layoutY="190.0" onDragDetected="#followerController" onMouseClicked="#followerController" style="-fx-text-fill: white;" text="0">
                                  <font>
                                     <Font name="Comic Sans MS" size="13.0" />
                                  </font>
@@ -163,7 +163,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Label>
-                              <Label fx:id="followingLabel" layoutX="422.0" layoutY="190.0" onDragDetected="#folllowingController" style="-fx-text-fill: white;" text="0">
+                              <Label fx:id="followingLabel" layoutX="422.0" layoutY="190.0" onMouseClicked="#followingController" style="-fx-text-fill: white;" text="0">
                                  <font>
                                     <Font name="Comic Sans MS" size="13.0" />
                                  </font>
