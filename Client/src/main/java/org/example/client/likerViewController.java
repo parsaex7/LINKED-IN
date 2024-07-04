@@ -26,14 +26,15 @@ public class likerViewController {
     private Button back;
     @FXML
     private VBox personContainer;
-    private int postId;
+    private static int postId;
 
-    public static void setPostId(int postId) {
-        postId = postId;
+    public static void setPostId(int postId1) {
+         postId=postId1;
     }
 
     public void initialize(){
         try {
+            System.out.println(postId);
             URL url1 = new URL(Functions.getFirstOfUrl() + "like/" + postId);
             HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
             connection1.setRequestMethod("GET");
