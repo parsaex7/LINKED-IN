@@ -66,5 +66,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </VBox>
+
    </children>
 </HBox>
