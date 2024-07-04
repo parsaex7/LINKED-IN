@@ -85,7 +85,8 @@ public class postOfFollowing {
         Label message = new Label(post.getMessage());
         Button like=new Button("LIKE");
         Button coment=new Button("Coment");
-        VBox personBlock = new VBox(nameLabel, message,like,coment);
+        Label showLikes=new Label("Show Likes");
+        VBox personBlock = new VBox(nameLabel, message,like,coment,showLikes);
         if(isLikedBefore(post.getPostId())){
             like.setStyle("-fx-background-color: RED");
             like.setText("LIKED:"+getNumberOfLikes(post.getPostId()));
@@ -93,20 +94,19 @@ public class postOfFollowing {
         else {
             like.setText("LIKES:"+getNumberOfLikes(post.getPostId()));
         }
-        like.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() == 2) {
+        showLikes.setOnMouseClicked(mouseEvent -> {
                 try {
                     likerViewController.setPostId(post.getPostId());
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("liker-view.fxml"));
                     Parent root = loader.load();
-                    Stage stage = (Stage) like.getScene().getWindow();
+                    Stage stage = (Stage) showLikes.getScene().getWindow();
                     Scene scene = new Scene(root);
                     Functions.fadeScene(stage, scene);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-            }
-            else{
+        });
+        like.setOnMouseClicked(mouseEvent -> {
                 if (!like.getText().startsWith("LIKED")) {
                 try {
                     URL url = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
@@ -156,7 +156,7 @@ public class postOfFollowing {
                     e.printStackTrace();
                 }
             }
-        }
+
         });
         coment.setOnMouseClicked(mouseEvent -> {
             if(mouseEvent.getClickCount()==1){
@@ -285,5 +285,16 @@ public class postOfFollowing {
             }
         }
         return result;
+    }
+    public void onBackButtonPressed(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) postContainer.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
