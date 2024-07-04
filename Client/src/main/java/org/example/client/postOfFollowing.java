@@ -6,11 +6,15 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.example.model.Like;
 import org.example.model.Post;
 
@@ -89,50 +93,61 @@ public class postOfFollowing {
         }
 
         like.setOnMouseClicked(mouseEvent -> {
-            //TODO:
-            if(likecliked==false){
+            if (mouseEvent.getClickCount() == 2) {
                 try {
-                    URL url=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-                    int statusCode = connection.getResponseCode();
-                    if(statusCode==200){
-                        connection.disconnect();
-                        like.setStyle("-fx-background-color: RED");
-                        likecliked=true;
-                        URL url1=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
-                        HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
-                        connection1.setRequestMethod("GET");
-                        connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-                        int statusCode1 = connection.getResponseCode();
-                        String response1 = Functions.getResponse(connection1);
-                        List<Like> likes=parseLikes(response1);
-                        like.setText(String.valueOf(likes.size()));
-
-                    }
-                } catch (Exception e) {
+                    likerViewController.setPostId(post.getPostId());
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("liker-view.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) like.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    Functions.fadeScene(stage, scene);
+                }catch (Exception e){
                     e.printStackTrace();
                 }
             }
             else{
+                if (likecliked == false) {
                 try {
-                    URL url=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
+                    URL url = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("DELETE");
+                    connection.setRequestMethod("POST");
                     connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
                     int statusCode = connection.getResponseCode();
-                    if(statusCode==200){
+                    if (statusCode == 200) {
                         connection.disconnect();
-                        like.setStyle("-fx-background-color: White");
-                        likecliked=false;
-                        URL url1=new URL(Functions.getFirstOfUrl()+"like/"+post.getPostId());
+                        like.setStyle("-fx-background-color: RED");
+                        likecliked = true;
+                        URL url1 = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
                         HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
                         connection1.setRequestMethod("GET");
                         connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
                         int statusCode1 = connection.getResponseCode();
                         String response1 = Functions.getResponse(connection1);
-                        List<Like> likes=parseLikes(response1);
+                        List<Like> likes = parseLikes(response1);
+                        like.setText(String.valueOf(likes.size()));
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    URL url = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("DELETE");
+                    connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                    int statusCode = connection.getResponseCode();
+                    if (statusCode == 200) {
+                        connection.disconnect();
+                        like.setStyle("-fx-background-color: White");
+                        likecliked = false;
+                        URL url1 = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
+                        HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
+                        connection1.setRequestMethod("GET");
+                        connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                        int statusCode1 = connection.getResponseCode();
+                        String response1 = Functions.getResponse(connection1);
+                        List<Like> likes = parseLikes(response1);
                         like.setText(String.valueOf(likes.size()));
 
                     }
@@ -140,6 +155,7 @@ public class postOfFollowing {
                     e.printStackTrace();
                 }
             }
+        }
         });
         coment.setOnMouseClicked(mouseEvent -> {
             //ToDO:
