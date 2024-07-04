@@ -1,7 +1,12 @@
 package org.example.client;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Functions {
@@ -114,5 +121,18 @@ public class Functions {
             ftIn.setToValue(1.0);
             ftIn.play();
         });
+    }
+    public static List<String> parseEmails(String jsonResponse) throws IOException {
+        List<String> emails = new ArrayList<>();
+        JsonFactory factory = new JsonFactory();
+        try (JsonParser parser = factory.createParser(jsonResponse)) {
+            if (parser.nextToken() != JsonToken.START_ARRAY) {
+                throw new IllegalStateException("Expected a JSON array");
+            }
+            while (parser.nextToken() != JsonToken.END_ARRAY) {
+                emails.add(parser.getText());
+            }
+        }
+        return emails;
     }
 }

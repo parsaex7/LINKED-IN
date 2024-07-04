@@ -127,7 +127,7 @@ public class FollowHandler implements HttpHandler {
                         exchange.sendResponseHeaders(200, response.length());
                     } catch (followingNotFound e) {
                         response = "No followers found";
-                        exchange.sendResponseHeaders(404, response.length());
+                        exchange.sendResponseHeaders(410, response.length());
                     } catch (UserNotExistException e) {
                         response = "User not found";
                         exchange.sendResponseHeaders(404, response.length());
