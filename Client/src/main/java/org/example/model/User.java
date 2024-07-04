@@ -33,6 +33,10 @@ public class User {
             this.additionalName = additionalName;
         }
 
+    public User() {
+
+    }
+
     public String getEmail() {
         return email;
     }

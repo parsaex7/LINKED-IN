@@ -56,6 +56,7 @@ public class UserHandler implements HttpHandler {
                 exchange.sendResponseHeaders(200, response.length());
             } else { // user/email
                 try {
+                    System.out.println(pathParts[2]);
                     response = userController.getUserByEmail(pathParts[2]);
                     exchange.sendResponseHeaders(200, response.length());
                 } catch (UserNotExistException e) {

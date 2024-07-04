@@ -49,7 +49,6 @@ public class LoginHandler implements HttpHandler {
                         os.close();
                     }
                 } else if (pathParts.length == 2) {
-                    System.out.println("HERE");
                     String email = JwtController.verifyToken(exchange);
                     if (email == null) {
                         response = "Unauthorized";

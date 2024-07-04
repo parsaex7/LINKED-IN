@@ -34,10 +34,17 @@ public class EditContactController {
     private TextField contactIdTextField;
     @FXML
     private Label result;
+    @FXML
+    private Button editButton;
 
     private Contact contact;
 
     public void initialize() throws IOException {
+        if (!otherProfileView.isAuth) {
+            editButton.setVisible(false);
+            numberTypeChoiceBox.setDisable(true);
+            accessChoiceBox.setDisable(true);
+        }
         accessChoiceBox.getItems().add("ME");
         accessChoiceBox.getItems().add("EVERYONE");
         accessChoiceBox.getItems().add("CONTACTS");

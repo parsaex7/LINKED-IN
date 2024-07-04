@@ -41,6 +41,35 @@ public class FollowController {
     }
 
     private void showFollows(String stat) throws IOException {
+        if (otherProfileView.isAuth) {
+            showFollowsForAuth(stat);
+        } else {
+            showFollowsForNonAuth(stat);
+        }
+
+    }
+
+    private void showFollowsForNonAuth(String stat) throws IOException {
+        URL url = new URL(Functions.getFirstOfUrl() + "follow/" + stat + "/" + otherProfileView.user.getEmail());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+        connection.setRequestMethod("GET");
+        int statusCode = connection.getResponseCode();
+        if (statusCode == 200) {
+            String response = Functions.getResponse(connection);
+            List<String> emails = Functions.parseEmails(response);
+            int i = 1;
+            for (String email : emails) {
+                mainPane.getChildren().add(createPersonBlock(email, i));
+                i++;
+            }
+        } else {
+            createPersonBlock("ERROR", 1);
+        }
+        connection.disconnect();
+    }
+
+    private void showFollowsForAuth(String stat) throws IOException {
         URL url = new URL(Functions.getFirstOfUrl() + "follow/" + stat);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
@@ -61,10 +90,18 @@ public class FollowController {
     }
 
     public void backController(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) headerLabel.getScene().getWindow();
-        Scene scene = new Scene(root);
-        Functions.fadeScene(stage, scene);
+        if (!otherProfileView.isAuth) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("otherProfile-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) headerLabel.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) headerLabel.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        }
     }
 }
