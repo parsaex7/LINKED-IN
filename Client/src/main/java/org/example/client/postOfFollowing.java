@@ -172,6 +172,16 @@ public class postOfFollowing {
             }
             else if(mouseEvent.getClickCount()==2){
                 //TODO:
+                try {
+                    commentOfPostController.setPostId(post.getPostId());
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("commentsOfPost-view.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) coment.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    Functions.fadeScene(stage, scene);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
         personBlock.setCursor(Cursor.CLOSED_HAND);
