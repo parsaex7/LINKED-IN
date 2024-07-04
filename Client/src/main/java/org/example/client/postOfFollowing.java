@@ -158,7 +158,21 @@ public class postOfFollowing {
         }
         });
         coment.setOnMouseClicked(mouseEvent -> {
-            //ToDO:
+            if(mouseEvent.getClickCount()==1){
+                AddCommentViewController.setPostId(post.getPostId());
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("addComment-view.fxml"));
+                    Stage stage = (Stage) coment.getScene().getWindow();
+                    Parent root = loader.load();
+                    Scene scene = new Scene(root);
+                    Functions.fadeScene(stage, scene);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            else if(mouseEvent.getClickCount()==2){
+                //TODO:
+            }
         });
         personBlock.setCursor(Cursor.CLOSED_HAND);
         personBlock.setOnMouseClicked(evnt -> {
