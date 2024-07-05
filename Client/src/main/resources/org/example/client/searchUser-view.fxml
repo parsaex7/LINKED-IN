@@ -56,7 +56,7 @@
             </HBox>
             <ScrollPane fx:id="resultScrollPane" maxHeight="630.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="500.0" style="-fx-background: #181a1b; -fx-border-color: black;">
                <content>
-                  <VBox fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="495.0" />
+                  <VBox fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="495.0" />
                </content>
             </ScrollPane>
          </children>
