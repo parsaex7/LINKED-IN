@@ -72,8 +72,14 @@ public class ContactHandler implements HttpHandler {
                 response = contactController.getContacts();
                 exchange.sendResponseHeaders(200, response.length());
             } else {
-                response = "Invalid request";
-                exchange.sendResponseHeaders(400, response.length());
+                String email = pathParts[2];
+                response = contactController.getContact(email);
+                if (response == null) {
+                    response = "not-found";
+                    exchange.sendResponseHeaders(404, response.length());
+                } else {
+                    exchange.sendResponseHeaders(200, response.length());
+                }
             }
         } else if (pathParts.length == 2) {
             String email = JwtController.verifyToken(exchange);
@@ -84,6 +90,7 @@ public class ContactHandler implements HttpHandler {
                     exchange.sendResponseHeaders(404, response.length());
                 } else {
                     exchange.sendResponseHeaders(200, response.length());
+                    System.out.println(response);
                     return response;
                 }
             } else {

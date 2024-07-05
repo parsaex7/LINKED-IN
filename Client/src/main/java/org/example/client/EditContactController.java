@@ -37,13 +37,15 @@ public class EditContactController {
     @FXML
     private Button editButton;
 
-    private Contact contact;
 
     public void initialize() throws IOException {
         if (!otherProfileView.isAuth) {
             editButton.setVisible(false);
             numberTypeChoiceBox.setDisable(true);
             accessChoiceBox.setDisable(true);
+            contactIdTextField.setDisable(true);
+            addressTextField.setDisable(true);
+            phoneNumberTextField.setDisable(true);
         }
         accessChoiceBox.getItems().add("ME");
         accessChoiceBox.getItems().add("EVERYONE");
@@ -51,7 +53,17 @@ public class EditContactController {
         numberTypeChoiceBox.getItems().add("MOBILE");
         numberTypeChoiceBox.getItems().add("WORK");
         numberTypeChoiceBox.getItems().add("HOME");
+
+        if (otherProfileView.isAuth) {
+            getAuthContact();
+        } else {
+            getNotAuthContact(otherProfileView.user.getEmail());
+        }
         //http://localhost:8000/contact
+
+    }
+
+    private void getAuthContact() throws IOException {
         URL url = new URL(Functions.getFirstOfUrl() + "contact");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
@@ -66,13 +78,51 @@ public class EditContactController {
                 String address = jsonObject.isNull("address") ? "" : jsonObject.getString("address");
                 String contactId = jsonObject.isNull("contactId") ? "" : jsonObject.getString("contactId");
                 String birthDayAccess = jsonObject.isNull("birthdayAccess") ? "" : jsonObject.getString("birthdayAccess");
-                contact = new Contact(phoneNumber, numberType, address, contactId, birthDayAccess);
+                Contact contact = new Contact(phoneNumber, numberType, address, contactId, birthDayAccess);
                 phoneNumberTextField.setText(phoneNumber);
                 addressTextField.setText(address);
                 contactIdTextField.setText(contactId);
                 accessChoiceBox.setValue(birthDayAccess);
                 numberTypeChoiceBox.setValue(numberType.toUpperCase());
             }
+        } else if (statusCode == 404) {
+            phoneNumberTextField.setText("");
+            addressTextField.setText("");
+            contactIdTextField.setText("");
+            accessChoiceBox.setValue("");
+            numberTypeChoiceBox.setValue("");
+        } else {
+            result.setText("ERROR");
+            System.out.println(statusCode);
+        }
+    }
+
+    private void getNotAuthContact(String email) throws IOException {
+        URL url = new URL(Functions.getFirstOfUrl() + "contact/" + email);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+        connection.setRequestMethod("GET");
+        int statusCode = connection.getResponseCode();
+        if (statusCode == 200) {
+            String response = Functions.getResponse(connection);
+            JSONObject jsonObject = new JSONObject(response);
+            String phoneNumber = jsonObject.isNull("phoneNumber") ? "" : jsonObject.getString("phoneNumber");
+            String numberType = jsonObject.isNull("numberType") ? "" : jsonObject.getString("numberType");
+            String address = jsonObject.isNull("address") ? "" : jsonObject.getString("address");
+            String contactId = jsonObject.isNull("contactId") ? "" : jsonObject.getString("contactId");
+            String birthDayAccess = jsonObject.isNull("birthdayAccess") ? "" : jsonObject.getString("birthdayAccess");
+            Contact contact = new Contact(phoneNumber, numberType, address, contactId, birthDayAccess);
+            phoneNumberTextField.setText(phoneNumber);
+            addressTextField.setText(address);
+            contactIdTextField.setText(contactId);
+            accessChoiceBox.setValue(birthDayAccess);
+            numberTypeChoiceBox.setValue(numberType.toUpperCase());
+        } else if (statusCode == 404) {
+            phoneNumberTextField.setText("");
+            addressTextField.setText("");
+            contactIdTextField.setText("");
+            accessChoiceBox.setValue("");
+            numberTypeChoiceBox.setValue("");
         } else {
             result.setText("ERROR");
             System.out.println(statusCode);
@@ -99,7 +149,7 @@ public class EditContactController {
                 Functions.sendResponse(connection, jsonObject.toString());
                 int statusCode = connection.getResponseCode();
                 if (statusCode == 200) {
-                result.setText("Updated Successfully");
+                    result.setText("Updated Successfully");
                 } else {
                     result.setText("error");
                 }
@@ -110,15 +160,19 @@ public class EditContactController {
         }
     }
 
-    public void backController(ActionEvent event) {
-        try {
+    public void backController(ActionEvent event) throws IOException {
+        if (otherProfileView.isAuth) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             Functions.fadeScene(stage, scene);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("otherProfile-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
         }
     }
 }
