@@ -29,6 +29,8 @@ import java.util.List;
 
 public class SearchController {
     @FXML
+    private Button searchPostButton;
+    @FXML
     private Button setting;
     @FXML
     private Button postButton;
@@ -42,6 +44,17 @@ public class SearchController {
     private TextField searchTextField;
     @FXML
     private ScrollPane resultScrollPane;
+    public void onsearchPostButton(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("searchPost-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void onSearch() {
         try {

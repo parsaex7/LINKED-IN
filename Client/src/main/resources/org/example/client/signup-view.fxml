@@ -68,6 +68,12 @@
                               </AnchorPane>
                            </children>
                         </HBox>
+                        <Label text="Repeat Password                           " textFill="WHITE">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="passwordTextField1" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="250.0" styleClass="text-field" stylesheets="@../assets/style.css" />
                         <Label text="FIRST NAME" textFill="WHITE">
                            <font>
                               <Font name="Comic Sans MS" size="15.0" />

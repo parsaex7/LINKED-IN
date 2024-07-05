@@ -38,6 +38,8 @@ public class signUpController {
     private Button loginButton;
     @FXML
     private StackPane mainPane;
+    @FXML
+    private TextField passwordTextField1;
 
     private GlassPane glassPane;
 
@@ -50,6 +52,9 @@ public class signUpController {
             resultLabel.setText("Invalid password. At least 8 Character");
         }else if(!Functions.containsOnlyCharactersAndNumbers(password)){
             resultLabel.setText("Password should contains numbers and characters");
+        }
+        else if(!passwordTextField1.getText().equals(password)){
+            resultLabel.setText("Check the Password");
         }
         else {
             try {

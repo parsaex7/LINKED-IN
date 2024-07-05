@@ -25,6 +25,7 @@
                         <Button mnemonicParsing="false" onAction="#profileController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="PROFILE" />
                         <Button fx:id="postButton" mnemonicParsing="false" onAction="#postButtonController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="POST" />
                         <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SEARCH" />
+                        <Button fx:id="searchPostButton" onAction="#onsearchPostButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SearchPost" />
                         <Button fx:id="setting" mnemonicParsing="false" onAction="#onSetting" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SETTING" />
                         <VBox alignment="BOTTOM_LEFT" prefHeight="491.0" prefWidth="95.0">
                            <children>
