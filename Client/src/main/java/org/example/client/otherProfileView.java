@@ -21,8 +21,7 @@ import java.net.URL;
 import java.util.List;
 
 public class otherProfileView {
-    @FXML
-    private Button setting;
+
     @FXML
     private Button postButton;
     @FXML
@@ -78,6 +77,15 @@ public class otherProfileView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void profileController(ActionEvent event) throws IOException {
+        otherProfileView.isAuth = true;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
     }
 
     public void followingController(MouseEvent event) throws IOException {

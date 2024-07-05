@@ -56,9 +56,9 @@ public class SearchController {
         }
     }
 
-    public void onSearch(){
+    public void onSearch() {
         try {
-            if(!mainPane.getChildren().isEmpty()){
+            if (!mainPane.getChildren().isEmpty()) {
                 mainPane.getChildren().clear();
             }
             URL url = new URL(Functions.getFirstOfUrl() + "search/" + searchTextField.getText());
@@ -77,16 +77,17 @@ public class SearchController {
                 });
                 System.out.println(emails);
                 for (String email : emails) {
-                    if(!email.equals(LinkedInApplication.user.getEmail())) {
+                    if (!email.equals(LinkedInApplication.user.getEmail())) {
                         mainPane.getChildren().add(createPersonBlock(email));
                     }
                 }
                 connection.disconnect();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public void backController(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
@@ -121,7 +122,7 @@ public class SearchController {
         hbox.setAlignment(Pos.CENTER_LEFT);
 
         VBox personBlock = new VBox(hbox);
-        nameLabel.setOnMouseClicked(event-> {
+        nameLabel.setOnMouseClicked(event -> {
             try {
                 otherProfileView.user = getUser(nameLabel.getText());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("otherProfile-view.fxml"));
@@ -159,10 +160,11 @@ public class SearchController {
 
         return personBlock;
     }
-    public boolean isFollow(String emailOfFollowing){
-        List<String> emails=new ArrayList<>();
+
+    public boolean isFollow(String emailOfFollowing) {
+        List<String> emails = new ArrayList<>();
         try {
-            URL url = new URL(Functions.getFirstOfUrl() + "follow"+"/"+"following");//follow/following
+            URL url = new URL(Functions.getFirstOfUrl() + "follow" + "/" + "following");//follow/following
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
@@ -178,15 +180,23 @@ public class SearchController {
                 emails = objectMapper.readValue(response, new TypeReference<List<String>>() {
                 });
             }
-        }catch (Exception e){
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if(emails.contains(emailOfFollowing)){
+        if (emails.contains(emailOfFollowing)) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
+    }
+
+    public void profileController(ActionEvent event) throws IOException {
+        otherProfileView.isAuth = true;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
     }
 
     public void postButtonController(ActionEvent event) throws IOException {
@@ -196,7 +206,8 @@ public class SearchController {
         Scene scene = new Scene(root);
         Functions.fadeScene(stage, scene);
     }
-    public void onSetting(ActionEvent event){
+
+    public void onSetting(ActionEvent event) {
 
     }
 
@@ -211,6 +222,7 @@ public class SearchController {
             e.printStackTrace();
         }
     }
+
     public VBox createNoUserFoundBlock() {
         VBox noUserBlock = new VBox();
         noUserBlock.setAlignment(Pos.CENTER);
