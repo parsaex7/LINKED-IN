@@ -1,28 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="670.0" prefWidth="950.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.postViewController">
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.postViewController">
    <children>
-      <Button fx:id="back" mnemonicParsing="false" onAction="#onBack" style="-fx-background-color: black;" text="&lt;Back" textFill="WHITE">
-         <font>
-            <Font name="System Bold Italic" size="20.0" />
-         </font></Button>
-      <Label layoutX="14.0" layoutY="43.0" text="Your Text : " textFill="#f4f1f1">
-         <font>
-            <Font name="System Bold Italic" size="38.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="textArea" layoutX="175.0" layoutY="137.0" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: black;" wrapText="true" />
-      <Button onAction="#onPost" fx:id="post" layoutX="391.0" layoutY="505.0" style="-fx-background-color: black;" text="Post" textFill="WHITE">
-         <font>
-            <Font name="System Bold Italic" size="50.0" />
-         </font>
-      </Button>
-      <Label fx:id="result" layoutX="461.0" layoutY="480.0" prefHeight="18.0" prefWidth="202.0" textFill="#f4f0f0" />
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <StackPane style="-fx-background-color: #181a1b;">
+               <children>
+                  <VBox prefHeight="670.0" prefWidth="85.0" spacing="5.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="HOME">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#profileController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="PROFILE" />
+                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="POST" />
+                        <Button mnemonicParsing="false" onAction="#searchButtonController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SEARCH" />
+                        <Button mnemonicParsing="false" onAction="#onSetting" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SETTING" />
+                        <VBox alignment="BOTTOM_LEFT" prefHeight="491.0" prefWidth="95.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onBack" prefHeight="30.0" prefWidth="80.0" stylesheets="@../assets/style.css" text="BACK">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+      <VBox prefHeight="670.0" prefWidth="150.0" style="-fx-background-color: #181a1b;" />
+      <VBox alignment="TOP_CENTER" prefHeight="670.0" prefWidth="500.0" style="-fx-border-color: black; -fx-background-color: #181a1b;">
+         <children>
+            <Label text="Your Text : " textFill="#2949da">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="34.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="textArea" prefHeight="300.0" prefWidth="600.0" style="-fx-control-inner-background: #181a1b;" styleClass="text-area" wrapText="true" />
+            <Label fx:id="result" prefHeight="18.0" prefWidth="202.0" textFill="#f4f0f0" />
+            <HBox alignment="CENTER" spacing="60.0">
+               <VBox.margin>
+                  <Insets top="60.0" />
+               </VBox.margin>
+               <children>
+                  <Button fx:id="post" onAction="#onPost" prefHeight="32.0" prefWidth="60.0" text="Post" textFill="WHITE" stylesheets="@../assets/style.css">
+                     <font>
+                        <Font name="Comic Sans MS" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#fileController" prefHeight="32.0" prefWidth="62.0" text="File" stylesheets="@../assets/style.css">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="670.0" prefWidth="200.0" style="-fx-background-color: #181a1b;">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </VBox>
    </children>
-</AnchorPane>
+</HBox>

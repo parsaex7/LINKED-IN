@@ -88,6 +88,14 @@ public class otherProfileView {
         Functions.fadeScene(stage, scene);
     }
 
+    public void postButtonController(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("post-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) postButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
+    }
+
     public void followingController(MouseEvent event) throws IOException {
         isAuth = false;
         ProfileView.stat = "following";
@@ -157,11 +165,5 @@ public class otherProfileView {
         Functions.fadeScene(stage, scene);
     }
 
-    public void postButtonController(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("post-view.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) postButton.getScene().getWindow();
-        Scene scene = new Scene(root);
-        Functions.fadeScene(stage, scene);
-    }
+
 }

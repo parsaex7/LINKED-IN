@@ -18,12 +18,9 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 public class postViewController {
-    @FXML
-    private Button back;
+
     @FXML
     private TextArea textArea;
-    @FXML
-    private Button post;
     @FXML
     private Label result;
 
@@ -40,6 +37,9 @@ public class postViewController {
     }
     public void onPost() {
         try {
+            if (textArea.getText().isEmpty()) {
+                result.setText("Please write something");
+            }
             URL url = new URL(Functions.getFirstOfUrl() + "post");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
@@ -62,5 +62,34 @@ public class postViewController {
         }catch (Exception e){
             result.setText("Internal Error");
         }
+    }
+    public void onSetting(ActionEvent event){
+
+    }
+
+    public void searchButtonController(ActionEvent event) {
+        try {
+            otherProfileView.isAuth = true;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("searchUser-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void profileController(ActionEvent event) throws IOException {
+        otherProfileView.isAuth = true;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
+    }
+
+    public void fileController(ActionEvent event) {
+
     }
 }
