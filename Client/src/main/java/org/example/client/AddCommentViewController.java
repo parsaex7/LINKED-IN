@@ -23,7 +23,7 @@ public class AddCommentViewController {
     private Button commentButton;
     @FXML
     private TextArea commentText;
-    public void onCommentButtonText(){
+    public void onCommentButton(){
         try {
             URL url = new URL(Functions.getFirstOfUrl() + "comment/"+postId);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -34,6 +34,7 @@ public class AddCommentViewController {
             jsonObject.put("comment", commentText.getText());
             Functions.sendResponse(connection, jsonObject.toString());
             int statusCode = connection.getResponseCode();
+            String response=Functions.getResponse(connection);
             if (statusCode == 200) {
                 result.setText("comment added Successfully");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("postOfFollowing-view.fxml"));
@@ -42,6 +43,7 @@ public class AddCommentViewController {
                 Scene scene = new Scene(root);
                 Functions.fadeScene(stage, scene);
             } else {
+                System.out.println(statusCode);
                 result.setText("Internal Error");
             }
         }catch (Exception e){

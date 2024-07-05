@@ -29,13 +29,13 @@ public class commentOfPostController {
     private VBox personContainer;
     private static int postId;
 
-    public static void setPostId(int postId) {
-        commentOfPostController.postId = postId;
+    public static void setPostId(int postId1) {
+      postId = postId1;
     }
 
     public void initialize(){
         try {
-            URL url1 = new URL(Functions.getFirstOfUrl() + "comment"+"/"+"all" + postId);//comment/all/post_id
+            URL url1 = new URL(Functions.getFirstOfUrl() + "comment"+"/"+"all/" + postId);//comment/all/post_id
             HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
             connection1.setRequestMethod("GET");
             connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());

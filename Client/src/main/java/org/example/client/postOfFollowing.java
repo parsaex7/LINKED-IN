@@ -86,7 +86,8 @@ public class postOfFollowing {
         Button like=new Button("LIKE");
         Button coment=new Button("Coment");
         Label showLikes=new Label("Show Likes");
-        VBox personBlock = new VBox(nameLabel, message,like,coment,showLikes);
+        Label showComments=new Label("Show Comments");
+        VBox personBlock = new VBox(nameLabel, message,like,coment,showLikes,showComments);
         if(isLikedBefore(post.getPostId())){
             like.setStyle("-fx-background-color: RED");
             like.setText("LIKED:"+getNumberOfLikes(post.getPostId()));
@@ -94,6 +95,18 @@ public class postOfFollowing {
         else {
             like.setText("LIKES:"+getNumberOfLikes(post.getPostId()));
         }
+        showComments.setOnMouseClicked(mouseEvent -> {
+            try {
+                commentOfPostController.setPostId(post.getPostId());
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("commentsOfPost-view.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) coment.getScene().getWindow();
+                Scene scene = new Scene(root);
+                Functions.fadeScene(stage, scene);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
         showLikes.setOnMouseClicked(mouseEvent -> {
                 try {
                     likerViewController.setPostId(post.getPostId());
@@ -118,15 +131,6 @@ public class postOfFollowing {
                         connection.disconnect();
                         like.setStyle("-fx-background-color: RED");
                         like.setText("LIKED:"+getNumberOfLikes(post.getPostId()));
-//                        URL url1 = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
-//                        HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
-//                        connection1.setRequestMethod("GET");
-//                        connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-//                        int statusCode1 = connection.getResponseCode();
-//                        String response1 = Functions.getResponse(connection1);
-//                        List<Like> likes = parseLikes(response1);
-//                        like.setText(String.valueOf(likes.size()));
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -142,14 +146,6 @@ public class postOfFollowing {
                         connection.disconnect();
                         like.setStyle("-fx-background-color: White");
                         like.setText("LIKES:"+getNumberOfLikes(post.getPostId()));
-//                        URL url1 = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
-//                        HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
-//                        connection1.setRequestMethod("GET");
-//                        connection1.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-//                        int statusCode1 = connection.getResponseCode();
-//                        String response1 = Functions.getResponse(connection1);
-//                        List<Like> likes = parseLikes(response1);
-//                        like.setText(String.valueOf(likes.size()));
 
                     }
                 } catch (Exception e) {
@@ -159,7 +155,6 @@ public class postOfFollowing {
 
         });
         coment.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getClickCount()==1){
                 AddCommentViewController.setPostId(post.getPostId());
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("addComment-view.fxml"));
@@ -170,20 +165,7 @@ public class postOfFollowing {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-            }
-            else if(mouseEvent.getClickCount()==2){
-                //TODO:
-                try {
-                    commentOfPostController.setPostId(post.getPostId());
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("commentsOfPost-view.fxml"));
-                    Parent root = loader.load();
-                    Stage stage = (Stage) coment.getScene().getWindow();
-                    Scene scene = new Scene(root);
-                    Functions.fadeScene(stage, scene);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
+
         });
         personBlock.setCursor(Cursor.CLOSED_HAND);
         personBlock.setOnMouseClicked(evnt -> {
