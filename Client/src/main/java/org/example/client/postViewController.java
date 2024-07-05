@@ -92,4 +92,12 @@ public class postViewController {
     public void fileController(ActionEvent event) {
 
     }
+
+    public void homeController(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) result.getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
+    }
 }

@@ -17,7 +17,7 @@
                <children>
                   <VBox prefHeight="670.0" prefWidth="85.0" spacing="5.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="HOME">
+                        <Button mnemonicParsing="false" onAction="#homeController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="HOME">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>

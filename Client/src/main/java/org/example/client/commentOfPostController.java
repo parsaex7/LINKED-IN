@@ -89,7 +89,7 @@ public class commentOfPostController {
     }
     public void onBack(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("postOfFollowing-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) back.getScene().getWindow();
             Scene scene = new Scene(root);
