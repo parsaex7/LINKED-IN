@@ -3,14 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.postViewController">
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.homeController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
@@ -18,13 +17,13 @@
                <children>
                   <VBox prefHeight="670.0" prefWidth="85.0" spacing="5.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#homeController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="HOME">
+                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="HOME">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#profileController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="PROFILE" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="POST" />
+                        <Button mnemonicParsing="false" onAction="#postController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="POST" />
                         <Button mnemonicParsing="false" onAction="#searchButtonController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SEARCH" />
                         <Button mnemonicParsing="false" onAction="#onSetting" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SETTING" />
                         <VBox alignment="BOTTOM_LEFT" prefHeight="491.0" prefWidth="95.0">
@@ -48,30 +47,11 @@
       <VBox prefHeight="670.0" prefWidth="150.0" style="-fx-background-color: #181a1b;" />
       <VBox alignment="TOP_CENTER" prefHeight="670.0" prefWidth="500.0" style="-fx-border-color: black; -fx-background-color: #181a1b;">
          <children>
-            <Label text="Your Text : " textFill="#2949da">
-               <font>
-                  <Font name="Comic Sans MS Bold Italic" size="34.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="textArea" prefHeight="300.0" prefWidth="600.0" style="-fx-control-inner-background: #181a1b;" styleClass="text-area" wrapText="true" />
-            <Label fx:id="result" prefHeight="18.0" prefWidth="202.0" textFill="#f4f0f0" />
-            <HBox alignment="CENTER" spacing="60.0">
-               <VBox.margin>
-                  <Insets top="60.0" />
-               </VBox.margin>
-               <children>
-                  <Button fx:id="post" onAction="#onPost" prefHeight="32.0" prefWidth="60.0" stylesheets="@../assets/style.css" text="Post" textFill="WHITE">
-                     <font>
-                        <Font name="Comic Sans MS" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#fileController" prefHeight="32.0" prefWidth="62.0" stylesheets="@../assets/style.css" text="File">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
+            <ScrollPane fx:id="resultScrollPane" prefHeight="670.0" prefWidth="500.0" style="-fx-border-color: black;">
+               <content>
+                  <VBox fx:id="postContainer" prefHeight="670.0" prefWidth="495.0" style="-fx-background-color: #181a1b; -fx-border-color: black;" />
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
       <VBox prefHeight="670.0" prefWidth="200.0" style="-fx-background-color: #181a1b;">

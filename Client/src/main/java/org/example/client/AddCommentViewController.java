@@ -37,7 +37,7 @@ public class AddCommentViewController {
             String response=Functions.getResponse(connection);
             if (statusCode == 200) {
                 result.setText("comment added Successfully");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("postOfFollowing-view.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
                 Stage stage = (Stage) commentText.getScene().getWindow();
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
@@ -52,7 +52,7 @@ public class AddCommentViewController {
     }
     public void onBackButton(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("postOfFollowing-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
             Stage stage = (Stage) commentText.getScene().getWindow();
             Parent root = loader.load();
             Scene scene = new Scene(root);

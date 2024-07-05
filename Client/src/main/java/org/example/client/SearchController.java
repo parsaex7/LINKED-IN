@@ -100,6 +100,14 @@ public class SearchController {
         }
     }
 
+    public void homeController(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) mainPane.getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
+    }
+
 
     public VBox createPersonBlock(String email) {
         Label nameLabel = new Label(email);
