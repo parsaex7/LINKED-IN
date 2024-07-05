@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.SearchController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
@@ -23,7 +22,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="PROFILE" />
+                        <Button mnemonicParsing="false" onAction="#profileController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="PROFILE" />
                         <Button fx:id="postButton" mnemonicParsing="false" onAction="#postButtonController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="POST" />
                         <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonController" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SEARCH" />
                         <Button fx:id="setting" mnemonicParsing="false" onAction="#onSetting" prefHeight="30.0" prefWidth="80.0" styleClass=".button" stylesheets="@../assets/style.css" text="SETTING" />

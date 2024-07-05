@@ -27,6 +27,9 @@ public class ContactController {
 
     public String getContact(String email) throws SQLException, JsonProcessingException {
         Contact contact = contactDAO.getContact(email);
+        if (contact == null) {
+            return null;
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(contact);
     }
