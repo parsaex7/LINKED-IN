@@ -19,8 +19,8 @@
             <Font name="System Bold Italic" size="56.0" />
          </font>
       </Label>
-      <TextArea fx:id="comnetText" layoutX="295.0" layoutY="203.0" prefHeight="264.0" prefWidth="358.0" wrapText="true" />
-      <Button fx:id="commentButton" onAction="#onCommentButtonText" layoutX="395.0" layoutY="526.0" mnemonicParsing="false" text="Comment">
+      <TextArea fx:id="commentText" layoutX="295.0" layoutY="203.0" prefHeight="264.0" prefWidth="358.0" wrapText="true" />
+      <Button fx:id="commentButton" onAction="#onCommentButton" layoutX="395.0" layoutY="526.0" mnemonicParsing="false" text="Comment">
          <font>
             <Font name="System Bold Italic" size="27.0" />
          </font>
