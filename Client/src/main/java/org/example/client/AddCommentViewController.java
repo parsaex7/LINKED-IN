@@ -60,7 +60,7 @@ public class AddCommentViewController {
         }
     }
 
-    public static void setPostId(int postId) {
-        AddCommentViewController.postId = postId;
+    public static void setPostId(int postId1) {
+        postId = postId1;
     }
 }
