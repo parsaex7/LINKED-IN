@@ -2,6 +2,7 @@ package org.example.client;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
+import java.awt.event.ActionEvent;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -33,6 +35,8 @@ public class AddEduController {
     private TextField accessEdu;
     @FXML
     private Button add;
+    @FXML
+    private Button back;
     public void onAdd(){
         try {
             URL url = new URL(Functions.getFirstOfUrl() + "education");
@@ -66,6 +70,17 @@ public class AddEduController {
             }
         }catch (Exception e){
             //result.setText("Server Error");
+        }
+    }
+    public void onBack(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

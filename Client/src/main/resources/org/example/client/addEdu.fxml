@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="670.0" prefWidth="950.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.client.AddEduController">
    <children>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="&lt;BAck" />
+      <Button  fx:id="back" onAction="#onBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="&lt;BAck" />
       <Label layoutX="77.0" layoutY="71.0" text="School :" textFill="#f4eeee">
          <font>
             <Font name="System Bold Italic" size="30.0" />
