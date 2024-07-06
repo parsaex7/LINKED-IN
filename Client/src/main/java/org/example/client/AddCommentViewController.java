@@ -52,11 +52,19 @@ public class AddCommentViewController {
     }
     public void onBackButton(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
-            Stage stage = (Stage) commentText.getScene().getWindow();
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Functions.fadeScene(stage, scene);
+            if (SearchPostController.onPostSearch) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("searchPost-view.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) result.getScene().getWindow();
+                Scene scene = new Scene(root);
+                Functions.fadeScene(stage, scene);
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) result.getScene().getWindow();
+                Scene scene = new Scene(root);
+                Functions.fadeScene(stage, scene);
+            }
         }catch (Exception e){
             result.setText("ERROR");
         }

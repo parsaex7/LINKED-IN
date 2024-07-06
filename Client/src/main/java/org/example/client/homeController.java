@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import org.example.model.Like;
 import org.example.model.Post;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -80,7 +82,20 @@ public class homeController {
                 }
             }
             for (Post post : posts) {
-                postContainer.getChildren().add(createPersonBlock(post));
+                if (post.getFile_path() != null) {
+                    VBox vBox = createPersonBlock(post);
+                    File file = new File("src\\main\\resources\\org\\example\\post\\" + post.getFile_path());
+                    ImageView imageView = new ImageView(new Image(file.toURI().toString()));
+                    imageView.setFitWidth(300);
+                    imageView.setFitHeight(300);
+                    VBox image = new VBox(imageView);
+                    image.setAlignment(Pos.CENTER);
+                    image.setPadding(new Insets(10));
+                    vBox.getChildren().add(1, image);
+                    postContainer.getChildren().add(vBox);
+                } else {
+                    postContainer.getChildren().add(createPersonBlock(post));
+                }
             }
             if (posts.isEmpty()) {
                 postContainer.getChildren().add(new Label("NO POST"));
@@ -131,10 +146,13 @@ public class homeController {
         like.setFitHeight(20);
         like.setFitWidth(20);
         Label likeCount = new Label();
-        like.setOnMouseClicked(event -> handleLikeClick(postId, like, likeCount));
-        updateLikeButtonStyle(postId, like, likeCount);
+        likeCount.setPadding(new Insets(0, 0, 0, 7));
+        likeCount.setStyle("-fx-text-fill: WHITE; -fx-font-family: Comic Sans MS; -fx-font-size: 11px;");
         VBox vBox = new VBox(like, likeCount);
+        vBox.setCursor(Cursor.HAND);
         vBox.setSpacing(10);
+        vBox.setOnMouseClicked(event -> handleLikeClick(postId, like, likeCount));
+        updateLikeButtonStyle(postId, like, likeCount);
         return vBox;
     }
 
@@ -176,6 +194,7 @@ public class homeController {
 
     private Button createCommentButton(int postId) {
         Button comment = new Button("Comment");
+        comment.setCursor(Cursor.HAND);
         comment.setStyle(getClass().getResource("/org/example/assets/style.css").toExternalForm());
         comment.setOnMouseClicked(event -> handleCommentClick(postId));
         return comment;
@@ -191,6 +210,7 @@ public class homeController {
 
     private Button createAddCommentButton(int postId) {
         Button comment = new Button("Add Comment");
+        comment.setCursor(Cursor.HAND);
         comment.setStyle(getClass().getResource("/org/example/assets/style.css").toExternalForm());
         comment.setOnMouseClicked(event -> handleAddComment(postId));
         return comment;
@@ -279,6 +299,11 @@ public class homeController {
                             break;
                         case "senderEmail":
                             post.setSenderEmail(parser.getText());
+                            break;
+                        case "file_path":
+                            post.setFile_path(parser.getText());
+                            if (post.getFile_path().equals("null")) { post.setFile_path(null);}
+                            break;
                     }
                 }
                 posts.add(post);
@@ -331,7 +356,7 @@ public class homeController {
                 likes = parseLikes(response1);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return likes.size();
     }
@@ -347,7 +372,7 @@ public class homeController {
             String response1 = Functions.getResponse(connection1);
             likes = parseLikes(response1);
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         for (Like like : likes) {
             if (like.getUser_email().equals(LinkedInApplication.user.getEmail())) {

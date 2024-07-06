@@ -50,11 +50,19 @@ public class likerViewController {
     }
     public void onBackButtonPressed(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) back.getScene().getWindow();
-            Scene scene = new Scene(root);
-            Functions.fadeScene(stage, scene);
+            if (SearchPostController.onPostSearch) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("searchPost-view.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) back.getScene().getWindow();
+                Scene scene = new Scene(root);
+                Functions.fadeScene(stage, scene);
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) back.getScene().getWindow();
+                Scene scene = new Scene(root);
+                Functions.fadeScene(stage, scene);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

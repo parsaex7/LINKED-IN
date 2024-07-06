@@ -7,6 +7,7 @@ public class Post {
     private int postId;
     private String message;
     private String senderEmail;
+    private String file_path;
 
     public Post(String message, String senderEmail) {
         this.message = message;
@@ -21,6 +22,14 @@ public class Post {
 
     public Post() {
 
+    }
+
+    public String getFile_path() {
+        return file_path;
+    }
+
+    public void setFile_path(String file_path) {
+        this.file_path = file_path;
     }
 
     public String getSenderEmail() {
