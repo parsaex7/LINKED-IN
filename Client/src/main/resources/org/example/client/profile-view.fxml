@@ -173,6 +173,16 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Label>
+                              <Label layoutX="14.0" layoutY="362.0" onMouseClicked="#addEduController" prefHeight="29.0" prefWidth="142.0" style="-fx-text-fill: #2949da;" text="Add New Education">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="18.0" layoutY="391.0" onMouseClicked="#editEduController" prefHeight="22.0" prefWidth="135.0" style="-fx-text-fill: #2949da;" text="Edit Education">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>

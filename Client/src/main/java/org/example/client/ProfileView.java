@@ -184,4 +184,19 @@ public class ProfileView {
         connection.disconnect();
     }
 
+    public void editEduController() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("editEducation.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) followerLabel.getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
+    }
+
+    public void addEduController() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addEdu.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) followerLabel.getScene().getWindow();
+        Scene scene = new Scene(root);
+        Functions.fadeScene(stage, scene);
+    }
 }

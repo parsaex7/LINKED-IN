@@ -7,11 +7,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -34,6 +38,10 @@ public class HashTagController {
     @FXML
     private Button back;
 
+
+    private Image likeImage = new Image(getClass().getResource("/org/example/assets/like.png").toExternalForm());
+    private Image unlikeImage = new Image(getClass().getResource("/org/example/assets/unlike.png").toExternalForm());
+
     public static void setToSearch(String toSearch1) {
         toSearch = toSearch1;
     }
@@ -49,10 +57,13 @@ public class HashTagController {
         }
     }
     public void initialize(){
+        if (!postContainer.getChildren().isEmpty()) {
+            postContainer.getChildren().removeAll();
+        }
         List<Post> posts = new ArrayList<>();
         List<Post> Validposts = new ArrayList<>();
         try {
-            URL url=new URL(Functions.getFirstOfUrl()+"post/"+"all/"+"all/"+"s");
+            URL url=new URL(Functions.getFirstOfUrl()+"post/"+"all/"+"all");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
@@ -96,6 +107,10 @@ public class HashTagController {
                             break;
                         case "senderEmail":
                             post.setSenderEmail(parser.getText());
+                        case "file_path":
+                            post.setFile_path(parser.getText());
+                            if (post.getFile_path().equals("null")) { post.setFile_path(null);}
+                            break;
                     }
                 }
                 posts.add(post);
@@ -105,122 +120,173 @@ public class HashTagController {
         }
         return posts;
     }
-    public VBox createPostBlock(Post post) {
-        Label nameLabel = new Label(post.getSenderEmail());
-        TextFlow textFlow=new TextFlow();
-        String text=post.getMessage();
-        String [] words=text.split("\\s+");
+    private TextFlow createPostText(String text) {
+        TextFlow textFlow = new TextFlow();
+        textFlow.setStyle("-fx-text-fill: black; -fx-font-family: Comic Sans MS; -fx-font-size: 13px;");
+        textFlow.setLineSpacing(5);
+        textFlow.setPadding(new Insets(10, 0, 10, 5));
+        String[] words = text.split("\\s+");
         for (String word : words) {
             Text wordText = new Text(word + " ");
             if (word.startsWith("#")) {
                 wordText.setFill(Color.BLUE);
-                // Set an action for hashtags (e.g., open a new window)
-                wordText.setOnMouseClicked(event -> {
-                    //TODO:NOW
-                    try {
-                        HashTagController.setToSearch(word);
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("HashTag-view.fxml"));
-                        Parent root = loader.load();
-                        Stage stage = (Stage) postContainer.getScene().getWindow();
-                        Scene scene = new Scene(root);
-                        Functions.fadeScene(stage, scene);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                });
+                wordText.setOnMouseClicked(event -> handleHashtagClick(word));
+            } else {
+                wordText.setFill(Color.WHITE);
             }
             textFlow.getChildren().add(wordText);
         }
-        Label message = new Label(post.getMessage());
-        Button like=new Button("LIKE");
-        Button coment=new Button("Coment");
-        Label showLikes=new Label("Show Likes");
-        Label showComments=new Label("Show Comments");
-        VBox personBlock = new VBox(nameLabel, textFlow,like,coment,showLikes,showComments);
-        if(isLikedBefore(post.getPostId())){
-            like.setStyle("-fx-background-color: RED");
-            like.setText("LIKED:"+getNumberOfLikes(post.getPostId()));
+        return textFlow;
+    }
+
+    private void handleHashtagClick(String word) {
+        try {
+            HashTagController.setToSearch(word);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("HashTag-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) postContainer.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else {
-            like.setText("LIKES:"+getNumberOfLikes(post.getPostId()));
+    }
+
+    private VBox createLikeButton(int postId) {
+        ImageView like = new ImageView(unlikeImage);
+        like.setCursor(Cursor.HAND);
+        like.setFitHeight(20);
+        like.setFitWidth(20);
+        Label likeCount = new Label();
+        likeCount.setPadding(new Insets(0, 0, 0, 7));
+        likeCount.setStyle("-fx-text-fill: black; -fx-font-family: Comic Sans MS; -fx-font-size: 11px;");
+        VBox vBox = new VBox(like, likeCount);
+        vBox.setCursor(Cursor.HAND);
+        vBox.setSpacing(10);
+        vBox.setOnMouseClicked(event -> handleLikeClick(postId, like, likeCount));
+        updateLikeButtonStyle(postId, like, likeCount);
+        return vBox;
+    }
+
+    private void handleLikeClick(int postId, ImageView like, Label likeCount) {
+        if (like.getImage() == unlikeImage) {
+            try {
+                URL url = new URL(Functions.getFirstOfUrl() + "like/" + postId);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                int statusCode = connection.getResponseCode();
+                if (statusCode == 200) {
+                    connection.disconnect();
+                    like.setImage(likeImage);
+                    int numberOfLikes = getNumberOfLikes(postId);
+                    likeCount.setText(" " + String.valueOf(numberOfLikes));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                URL url = new URL(Functions.getFirstOfUrl() + "like/" + postId);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("DELETE");
+                connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
+                int statusCode = connection.getResponseCode();
+                if (statusCode == 200) {
+                    connection.disconnect();
+                    like.setImage(unlikeImage);
+                    int numberOfLikes = getNumberOfLikes(postId);
+                    likeCount.setText(" " + String.valueOf(numberOfLikes));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        showComments.setOnMouseClicked(mouseEvent -> {
-            try {
-                commentOfPostController.setPostId(post.getPostId());
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("commentsOfPost-view.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) coment.getScene().getWindow();
-                Scene scene = new Scene(root);
-                Functions.fadeScene(stage, scene);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        });
-        showLikes.setOnMouseClicked(mouseEvent -> {
-            try {
-                likerViewController.setPostId(post.getPostId());
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("liker-view.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) showLikes.getScene().getWindow();
-                Scene scene = new Scene(root);
-                Functions.fadeScene(stage, scene);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        });
-        like.setOnMouseClicked(mouseEvent -> {
-            if (!like.getText().startsWith("LIKED")) {
-                try {
-                    URL url = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-                    int statusCode = connection.getResponseCode();
-                    if (statusCode == 200) {
-                        connection.disconnect();
-                        like.setStyle("-fx-background-color: RED");
-                        like.setText("LIKED:"+getNumberOfLikes(post.getPostId()));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    URL url = new URL(Functions.getFirstOfUrl() + "like/" + post.getPostId());
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("DELETE");
-                    connection.setRequestProperty("JWT", LinkedInApplication.user.getToken());
-                    int statusCode = connection.getResponseCode();
-                    if (statusCode == 200) {
-                        connection.disconnect();
-                        like.setStyle("-fx-background-color: White");
-                        like.setText("LIKES:"+getNumberOfLikes(post.getPostId()));
+    }
 
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+    private Button createCommentButton(int postId) {
+        Button comment = new Button("Comment");
+        comment.setCursor(Cursor.HAND);
+        comment.setStyle(getClass().getResource("/org/example/assets/style.css").toExternalForm());
+        comment.setOnMouseClicked(event -> handleCommentClick(postId));
+        return comment;
+    }
 
-        });
-        coment.setOnMouseClicked(mouseEvent -> {
-            AddCommentViewController.setPostId(post.getPostId());
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("addComment-view.fxml"));
-                Stage stage = (Stage) coment.getScene().getWindow();
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                Functions.fadeScene(stage, scene);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+    private Label createShowLikes(int postId) {
+        Label label = new Label("Show Likes");
+        label.setStyle("-fx-text-fill: black; -fx-font-family: Comic Sans MS; -fx-font-size: 13px;");
+        label.setCursor(Cursor.HAND);
+        label.setOnMouseClicked(e -> handleShowLikes(postId));
+        return label;
+    }
 
-        });
-        personBlock.setCursor(Cursor.CLOSED_HAND);
-        personBlock.setOnMouseClicked(evnt -> {
-//            TODO:move to profile page
-        });
-        personBlock.setStyle("-fx-border-color: black; -fx-padding: 10px;");
+    private Button createAddCommentButton(int postId) {
+        Button comment = new Button("Add Comment");
+        comment.setCursor(Cursor.HAND);
+        comment.setStyle(getClass().getResource("/org/example/assets/style.css").toExternalForm());
+        comment.setOnMouseClicked(event -> handleAddComment(postId));
+        return comment;
+    }
+
+    private void handleAddComment(int postId) {
+        AddCommentViewController.setPostId(postId);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("addComment-view.fxml"));
+            Stage stage = (Stage) postContainer.getScene().getWindow();
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleShowLikes(int postId) {
+        try {
+            likerViewController.setPostId(postId);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("liker-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) postContainer.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleCommentClick(int postId) {
+        try {
+            commentOfPostController.setPostId(postId);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("commentsOfPost-view.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) postContainer.getScene().getWindow();
+            Scene scene = new Scene(root);
+            Functions.fadeScene(stage, scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateLikeButtonStyle(int postId, ImageView like, Label likeCount) {
+        int numberOfLikes = getNumberOfLikes(postId);
+        if (isLikedBefore(postId)) {
+            like.setImage(likeImage);
+        } else {
+            like.setImage(unlikeImage);
+        }
+        likeCount.setText(String.valueOf(numberOfLikes));
+    }
+
+    public VBox createPostBlock(Post post) {
+        VBox personBlock = new VBox();
+        HBox hBox = new HBox(createLikeButton(post.getPostId()), createCommentButton(post.getPostId()), createShowLikes(post.getPostId()), createAddCommentButton(post.getPostId()));
+        hBox.setSpacing(50);
+        Label senderEmailLabel = new Label(post.getSenderEmail());
+        senderEmailLabel.setStyle("-fx-text-fill: black; -fx-font-family: Comic Sans MS; -fx-font-size: 13px;");
+        personBlock.getChildren().add(senderEmailLabel);
+        personBlock.getChildren().add(createPostText(post.getMessage()));
+        personBlock.getChildren().add(hBox);
+        personBlock.setStyle("-fx-border-color: black; -fx-padding: 10px; -fx-spacing: 5px;");
         return personBlock;
     }
     List<Post> getValidPosts(List<Post> posts){
@@ -243,7 +309,7 @@ public class HashTagController {
             String response1 = Functions.getResponse(connection1);
             likes = parseLikes(response1);
         }catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         for(Like like:likes){
             if(like.getUser_email().equals(LinkedInApplication.user.getEmail())){
@@ -263,7 +329,7 @@ public class HashTagController {
             String response1 = Functions.getResponse(connection1);
             likes = parseLikes(response1);
         }catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return likes.size();
     }
