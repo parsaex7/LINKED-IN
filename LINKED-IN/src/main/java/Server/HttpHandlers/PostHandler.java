@@ -73,7 +73,7 @@ public class PostHandler implements HttpHandler {
             exchange.sendResponseHeaders(401, response.length());
         }
         if (pathParts.length == 4) {
-            if (pathParts[2].equals("all")) { // post/all/email
+            if (pathParts[2].equals("all") && !pathParts[3].equals("all")) { // post/all/email
                 String targetEmail = pathParts[3];
                 response = postController.getAllPostsOfOneUser(targetEmail);
                 if (response == null) {
@@ -82,32 +82,30 @@ public class PostHandler implements HttpHandler {
                 } else {
                     exchange.sendResponseHeaders(200, response.length());
                 }
-            } else { //post/post_id
-                try {
-                    int postId = Integer.parseInt(pathParts[2]);
-                    response = postController.getPost(postId, email);
+            } else if (pathParts[2].equals("all")) {
+                    response = postController.getAllPosts();
                     if (response != null) {
                         exchange.sendResponseHeaders(200, response.length());
                     } else {
-                        response = "Post not found OR access denied";
+                        response = "No posts found";
                         exchange.sendResponseHeaders(404, response.length());
                     }
-                } catch (NumberFormatException e) {
-                    response = "Invalid post id";
-                    exchange.sendResponseHeaders(400, response.length());
-                }
             }
-        } else if (pathParts.length == 4) {
-            if (pathParts[2].equals("all") && pathParts[3].equals("all")) { //post/all/all
-                response = postController.getAllPosts();
+        } else if (pathParts.length == 3){ //post/post_id
+            try {
+                int postId = Integer.parseInt(pathParts[2]);
+                response = postController.getPost(postId, email);
                 if (response != null) {
                     exchange.sendResponseHeaders(200, response.length());
                 } else {
-                    response = "No posts found";
+                    response = "Post not found OR access denied";
                     exchange.sendResponseHeaders(404, response.length());
                 }
+            } catch (NumberFormatException e) {
+                response = "Invalid post id";
+                exchange.sendResponseHeaders(400, response.length());
             }
-        } else {
+        }else {
             response = "Invalid path";
             exchange.sendResponseHeaders(400, response.length());
         }
@@ -116,14 +114,25 @@ public class PostHandler implements HttpHandler {
 
     private String handlePostRequest(HttpExchange exchange, PostController postController, String[] pathParts) throws IOException, SQLException {
         String response = "";//post
+        String email = JwtController.verifyToken(exchange);
         if (pathParts.length == 2) {
             JSONObject jsonObject = getJsonObject(exchange);
             String message = jsonObject.getString("message");
-            String email = JwtController.verifyToken(exchange);
-            System.out.println(exchange.getRequestHeaders().get("JWT"));
             if (email != null) {
                 postController.addPost(message, email);
                 response = "Post added";
+                exchange.sendResponseHeaders(200, response.length());
+            } else {
+                response = "Unauthorized";
+                exchange.sendResponseHeaders(401, response.length());
+            }
+        } else if (pathParts.length == 3){
+            if (email != null) {
+                JSONObject jsonObject = getJsonObject(exchange);
+                String message = jsonObject.getString("message");
+                String file_path = pathParts[2];
+                postController.addFile(message, email, file_path);
+                response = "ok";
                 exchange.sendResponseHeaders(200, response.length());
             } else {
                 response = "Unauthorized";

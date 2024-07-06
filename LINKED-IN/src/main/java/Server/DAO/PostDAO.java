@@ -40,6 +40,16 @@ public class PostDAO {
         statement.executeUpdate();
     }
 
+    public void saveFile(Post post) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO posts (user_email, post_text, file_path) VALUES (?,?,?)");
+
+        statement.setString(1, post.getSenderEmail());
+        statement.setString(2, post.getMessage());
+        statement.setString(3, post.getFile_path());
+
+        statement.executeUpdate();
+    }
+
     public void updatePost(Post post) throws SQLException {
         PreparedStatement statement = connection.prepareStatement("UPDATE posts SET post_text = ? WHERE post_id = ?");
 
@@ -99,7 +109,7 @@ public class PostDAO {
         ArrayList<Post> posts = new ArrayList<>();
 
         while (resultSet.next()) {
-            Post post = new Post(resultSet.getInt("post_id"), resultSet.getString("post_text"), resultSet.getString("user_email"));
+            Post post = new Post(resultSet.getInt("post_id"), resultSet.getString("post_text"), resultSet.getString("user_email"), resultSet.getString("file_path"));
             posts.add(post);
         }
 
@@ -114,7 +124,7 @@ public class PostDAO {
         ArrayList<Post> posts = new ArrayList<>();
 
         while (resultSet.next()) {
-            Post post = new Post(resultSet.getInt("post_id"), resultSet.getString("post_text"), resultSet.getString("user_email"));
+            Post post = new Post(resultSet.getInt("post_id"), resultSet.getString("post_text"), resultSet.getString("user_email"), resultSet.getString("file_path"));
             posts.add(post);
         }
 

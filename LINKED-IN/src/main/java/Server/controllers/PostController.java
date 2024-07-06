@@ -20,6 +20,11 @@ public class PostController {
         postDAO.savePost(post);
     }
 
+    public void addFile(String message, String senderEmail, String file_path) throws SQLException {
+        Post post = new Post(message, senderEmail, file_path);
+        postDAO.saveFile(post);
+    }
+
     public void updatePost(int postId, String message, String senderEmail) throws SQLException {
         Post post = new Post(postId, message, senderEmail);
         postDAO.updatePost(post);

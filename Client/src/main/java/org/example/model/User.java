@@ -14,6 +14,7 @@ public class User {
         private Date birthDate;
         private Date registrationDate;
         private String token;
+        private String hire;
 
         public User(String email, String password, String token, String name, String lastName) {
             this.email = email;
@@ -115,5 +116,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getHire() {
+        return hire;
+    }
+
+    public void setHire(String hire) {
+        this.hire = hire;
     }
 }
